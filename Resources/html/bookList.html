@@ -1,0 +1,15 @@
+<div class="row" ng-controller="bookController as bkCtrl">
+    <div class="col-sm-4" ng-repeat="book in bkCtrl.books">
+        <img class="img-responsive img-thumbnail" ng-src="/book_shop/Resources/img/{{book.Image}}"/>
+        <p ng-bind="book.Name"></p>
+        <p>Price: {{book.Price | currency}}</p>
+        <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+                <a class="btn btn-primary" ng-href="#/book/{{book.idBook}}" role="button">Details</a>
+            </div>
+            <div class="btn-group" role="group">
+                <button class="btn btn-success">Buy</button>
+            </div>
+        </div>
+    </div>
+</div>

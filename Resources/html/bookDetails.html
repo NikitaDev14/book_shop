@@ -1,0 +1,10 @@
+<div class="row" ng-controller="bookController as bkCtrl">
+    <div class="col-sm-12">
+        <img class="img-responsive img-thumbnail" ng-src="/book_shop/Resources/img/{{bkCtrl.books.Image}}"/>
+        <p ng-bind="bkCtrl.books.Name"></p>
+        <p>Authors: {{bkCtrl.books.Authors}}</p>
+        <p>Genres: {{bkCtrl.books.Genres}}</p>
+        <p ng-bind="bkCtrl.books.Description"></p>
+        <p>Price: {{bkCtrl.books.Price | currency}}</p>
+    </div>
+</div>
