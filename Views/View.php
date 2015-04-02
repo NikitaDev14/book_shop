@@ -11,26 +11,36 @@
 	class View
 	{
 		private $dataContainer;
+		private $book;
+		private $author;
+		private $genre;
 
 		public function __construct()
 		{
 			$this->dataContainer = \Models\Utilities\DataContainer::getInstance();
+			$this->book = new \Models\Performers\Book();
+			$this->author = new \Models\Performers\Author();
+			$this->genre = new \Models\Performers\Genre();
 		}
 
-		public function index()
+		public function render()
 		{
-			require_once 'Resources/html/index.html';
-		}
+			$nextPage = $this->dataContainer->getNextPage();
 
-		public function getBookList()
-		{
-			$data =
-				[
-					'books' => (new \Models\Performers\Book())->getBooks(),
-					'authors' => (new \Models\Performers\Author())->getAuthors(),
-					'genres' => (new \Models\Performers\Genre())->getGenres()
-				];
+			if('index' === $nextPage)
+			{
+				require_once 'Resources/html/index.html';
+			}
+			else
+			{
+				$data =
+					[
+						'books' => $this->book->getBooks(),
+						'authors' => $this->author->getAuthors(),
+						'genres' => $this->genre->getGenres()
+					];
 
-			echo json_encode($data);
+				echo json_encode($data);
+			}
 		}
 	}

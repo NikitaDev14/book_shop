@@ -15,6 +15,11 @@ bookShop.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: '/book_shop/Resources/html/bookDetails.html',
             controller: 'bookController'
         })
+        .state('signup', {
+            url: '/signup',
+            templateUrl: '/book_shop/Resources/html/signup.html',
+            controller: 'signupController'
+        })
         .state('cart', {
             url: '/cart',
             templateUrl: '/book_shop/Resources/html/cart.html',

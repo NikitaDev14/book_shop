@@ -74,17 +74,21 @@
 			$a = new \Controllers\ControllerIndex();
 			$b = new \Views\View();
 
-			if(empty($_GET['client']))
-			{
-				$a->actionIndex();
-
-				$b->index();
-			}
-			else
+			if(!empty($_GET['action']))
 			{
 				$a->actionBookList();
 
-				$b->getBookList();
+				$b->render();
+			}
+			elseif(!empty($_POST['action']))
+			{
+				$a = new \Controllers\ControllerSignup();
+			}
+			else
+			{
+				$a->actionIndex();
+
+				$b->render();
 			}
 		}
 	}

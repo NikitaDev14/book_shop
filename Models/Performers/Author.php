@@ -7,16 +7,8 @@
  */
 	namespace Models\Performers;
 
-	class Author
+	class Author extends \Models\Model
 	{
-		private $database;
-
-		public function __construct()
-		{
-			$this->database =
-				new \Models\Interfaces\Database('mysql:dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS);
-		}
-
 		public function getAuthors()
 		{
 			return $this->database->setQuery('CALL getAuthors(:author)')->

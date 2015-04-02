@@ -7,16 +7,8 @@
 	 */
 	namespace Models\Performers;
 
-	class Book
+	class Book extends \Models\Model
 	{
-		private $database;
-
-		public function __construct()
-		{
-			$this->database =
-				new \Models\Interfaces\Database('mysql:dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS);
-		}
-
 		public function getBooks()
 		{
 			return $this->database->setQuery('CALL getBooks()')->execute()->getResult();

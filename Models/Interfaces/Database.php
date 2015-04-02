@@ -13,9 +13,9 @@
 		private $db;
 		private $sth;
 
-		public function __construct($dbNameHost, $dbUser, $dbPass)
+		public function __construct()
 		{
-			$this->db = new \PDO($dbNameHost, $dbUser, $dbPass);
+			$this->db = new \PDO('mysql:dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS);
 		}
 
 		public function setQuery($query)
