@@ -1,0 +1,35 @@
+<div class="container-fluid" ng-controller="cartCtrl as cart">
+    <div header></div>
+    <form name="cartForm">
+        <table class="table table-bordered table-hover">
+            <tr class="info">
+                <th>№</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Count</th>
+                <th>Amount</th>
+                <th>Delete</th>
+            </tr>
+            <tr ng-repeat="product in cart.cartInst.products">
+                <td ng-bind="product.id"></td>
+                <td>
+                    <a class="btn btn-link" href="#/product/{{product.id}}" role="button" ng-bind="product.smallDescr"></a>
+                </td>
+                <td ng-bind="product.price"></td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control" type="number" min="1" ng-change="cart.cartInst.save()" ng-model="product.count" ng-init="product.count" required>
+                    </div>
+                </td>
+                <td ng-bind="product.price * product.count"></td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="cart.cartInst.remove(product)">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <h3>Total amount: {{cart.cartInst.getTotalAmount() | currency}}</h3>
+        <a class="btn btn-primary" href="#/order" role="button" ng-class="{'disabled': cart.isDisabled() || cartForm.$invalid}">Validate order</a>
+    </form>
+</div>

@@ -1,24 +1,27 @@
+<div header></div>
 <div class="row" ng-controller="bookController as bkCtrl">
-    <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            Author <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="author in bkCtrl.authors">
-                <a ng-href="#/author={{author.Name}}" ng-bind="author.Name"></a>
-            </li>
-        </ul>
+    <div class="col-sm-3">
+        <h4>Author</h4>
+        <select class="form-control" ng-model="filterAuthor" ng-options="auth.Name for auth in bkCtrl.authors">
+            <option value="">--Filter by authors--</option>
+        </select>
+        <h4>Genre</h4>
+        <select class="form-control" ng-model="filterGenre" ng-options="genr.Name for genr in bkCtrl.genres">
+            <option value="">--Filter by genres--</option>
+        </select>
     </div>
-    <div class="col-sm-4" ng-repeat="book in bkCtrl.books">
-        <img class="img-responsive img-thumbnail" ng-src="/book_shop/Resources/img/{{book.Image}}"/>
-        <p ng-bind="book.Name"></p>
-        <p>Price: {{book.Price | currency}}</p>
-        <div class="btn-group btn-group-justified" role="group">
-            <div class="btn-group" role="group">
-                <a class="btn btn-primary" ng-href="#/book/{{book.idBook}}" role="button">Details</a>
-            </div>
-            <div class="btn-group" role="group">
-                <button class="btn btn-success">Add to cart</button>
+    <div class="col-sm-9">
+        <div class="col-sm-4" ng-repeat="book in bkCtrl.books.filter(filterAuthor.Name, filterGenre.Name)">
+            <img class="img-responsive img-thumbnail" ng-src="/book_shop/Resources/img/{{book.Image}}"/>
+            <p ng-bind="book.Name"></p>
+            <p>Price: {{book.Price | currency}}</p>
+            <div class="btn-group btn-group-justified" role="group">
+                <div class="btn-group" role="group">
+                    <a class="btn btn-primary" ng-href="#/book/{{book.idBook}}" role="button">Details</a>
+                </div>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-success">Add to cart</button>
+                </div>
             </div>
         </div>
     </div>

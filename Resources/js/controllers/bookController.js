@@ -1,7 +1,7 @@
 /**
  * Created by Developer on 01.04.2015.
  */
-bookShop.controller('bookController', function (bookService, bookFactory, $stateParams) {
+bookShop.controller('bookController', function ($scope, bookService, bookFactory, $stateParams) {
     var self = this;
 
     bookService.getBooks(function (data) {
@@ -15,7 +15,7 @@ bookShop.controller('bookController', function (bookService, bookFactory, $state
         }
         else
         {
-            self.books = bookFactory.list;
+            self.books = bookFactory;
         }
     });
 });
