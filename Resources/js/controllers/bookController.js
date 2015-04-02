@@ -5,7 +5,10 @@ bookShop.controller('bookController', function (bookService, bookFactory, $state
     var self = this;
 
     bookService.getBooks(function (data) {
-        bookFactory.init(data);
+        bookFactory.init(data.books);
+
+        self.authors = data.authors;
+        self.genres = data.genres;
 
         if($stateParams.id !== undefined) {
             self.books = bookFactory.list[$stateParams.id];

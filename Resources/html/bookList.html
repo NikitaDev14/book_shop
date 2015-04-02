@@ -1,4 +1,14 @@
 <div class="row" ng-controller="bookController as bkCtrl">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            Author <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="author in bkCtrl.authors">
+                <a ng-href="#/author={{author.Name}}" ng-bind="author.Name"></a>
+            </li>
+        </ul>
+    </div>
     <div class="col-sm-4" ng-repeat="book in bkCtrl.books">
         <img class="img-responsive img-thumbnail" ng-src="/book_shop/Resources/img/{{book.Image}}"/>
         <p ng-bind="book.Name"></p>
@@ -8,7 +18,7 @@
                 <a class="btn btn-primary" ng-href="#/book/{{book.idBook}}" role="button">Details</a>
             </div>
             <div class="btn-group" role="group">
-                <button class="btn btn-success">Buy</button>
+                <button class="btn btn-success">Add to cart</button>
             </div>
         </div>
     </div>

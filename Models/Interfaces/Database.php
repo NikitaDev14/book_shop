@@ -27,10 +27,16 @@
 
 		public function setParam($params)
 		{
+			/*
 			$count = count($params);
 
 			for ($i = 0; $i < $count; $i++) {
 				$this->sth->bindParam($i, $params[$i]);
+			}
+			*/
+			foreach($params as $param)
+			{
+				$this->sth->bindParam(key($params), $param);
 			}
 
 			return $this;
@@ -40,6 +46,14 @@
 		{
 			$this->sth->execute();
 
+			return $this;
+		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getResult()
+		{
 			return $this->sth->fetchAll();
 		}
 

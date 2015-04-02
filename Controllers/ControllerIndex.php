@@ -15,7 +15,6 @@
 		public function __construct()
 		{
 			$this->dataContainer = \Models\Utilities\DataContainer::getInstance();
-
 		}
 
 		public function actionIndex()

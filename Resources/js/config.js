@@ -10,6 +10,11 @@ bookShop.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: '/book_shop/Resources/html/bookList.html',
             controller: 'bookController'
         })
+        .state('filter', {
+            url: '/:author/:genre',
+            templateUrl: '/book_shop/Resources/html/bookList.html',
+            controller: 'bookController'
+        })
         .state('bookDetails', {
             url: '/book/:id',
             templateUrl: '/book_shop/Resources/html/bookDetails.html',

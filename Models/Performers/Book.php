@@ -19,6 +19,6 @@
 
 		public function getBooks()
 		{
-			return $this->database->setQuery('CALL getBooks()')->execute();
+			return $this->database->setQuery('CALL getBooks()')->execute()->getResult();
 		}
 	}

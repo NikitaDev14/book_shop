@@ -9,7 +9,7 @@
 
 		public static function getInstance()
 		{
-			if(!self::$instance)
+			if(null === self::$instance)
 			{
 				self::$instance = new Router();
 			}
@@ -74,7 +74,7 @@
 			$a = new \Controllers\ControllerIndex();
 			$b = new \Views\View();
 
-			if(empty($_GET['book']))
+			if(empty($_GET['client']))
 			{
 				$a->actionIndex();
 
