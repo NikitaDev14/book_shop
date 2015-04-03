@@ -11,16 +11,12 @@
 	class View
 	{
 		private $dataContainer;
-		private $book;
-		private $author;
-		private $genre;
+		private $objFactory;
 
 		public function __construct()
 		{
 			$this->dataContainer = \Models\Utilities\DataContainer::getInstance();
-			$this->book = new \Models\Performers\Book();
-			$this->author = new \Models\Performers\Author();
-			$this->genre = new \Models\Performers\Genre();
+			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
 
 		public function render()
@@ -35,9 +31,9 @@
 			{
 				$data =
 					[
-						'books' => $this->book->getBooks(),
-						'authors' => $this->author->getAuthors(),
-						'genres' => $this->genre->getGenres()
+						'books' => $this->objFactory->getBook()->getBooks(),
+						'authors' => $this->objFactory->getAuthor()->getAuthors(),
+						'genres' => $this->objFactory->getGenre()->getGenres()
 					];
 
 				echo json_encode($data);

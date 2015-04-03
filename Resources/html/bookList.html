@@ -11,11 +11,11 @@
         </select>
     </div>
     <div class="col-sm-9">
-        <div class="col-sm-4" ng-repeat="book in bkCtrl.books.filter(filterAuthor.Name, filterGenre.Name)">
+        <div class="col-md-4" ng-repeat="book in bkCtrl.books.filter(filterAuthor.Name, filterGenre.Name)">
             <img class="img-responsive img-thumbnail" ng-src="/book_shop/Resources/img/{{book.Image}}"/>
             <p ng-bind="book.Name"></p>
             <p>Price: {{book.Price | currency}}</p>
-            <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
                 <div class="btn-group" role="group">
                     <a class="btn btn-primary" ng-href="#/book/{{book.idBook}}" role="button">Details</a>
                 </div>

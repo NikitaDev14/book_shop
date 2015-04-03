@@ -82,7 +82,9 @@
 			}
 			elseif(!empty($_POST['action']))
 			{
-				$a = new \Controllers\ControllerSignup();
+				$a = new \Controllers\ControllerSignup($_POST);
+
+				$a->actionSignup();
 			}
 			else
 			{

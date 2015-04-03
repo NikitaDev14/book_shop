@@ -12,11 +12,9 @@
 	{
 		private static $instance;
 
-		private $nextPage;
+		private $params;
 
-		private function __construct()
-		{
-		}
+		private function __construct() {}
 
 		public static function getInstance()
 		{
@@ -27,14 +25,17 @@
 			return self::$instance;
 		}
 
-		public function getNextPage()
+		public function getParams()
 		{
-			return $this->nextPage;
+			return $this->params;
 		}
 
-		public function setNextPage($nextPage)
+		public function setParams($params)
 		{
-			$this->nextPage = $nextPage;
+			foreach($params as $key => $val)
+			{
+				$this->params[$key] = $val;
+			}
 
 			return self::$instance;
 		}

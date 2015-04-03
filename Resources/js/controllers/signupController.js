@@ -10,7 +10,7 @@ bookShop.controller('signupController', function ($scope, $location, $http) {
     };
 
     this.signup = function () {
-        $http.post('index.php', {action: 'Signup', email: $scope.email, password: $scope.password}).success(function (response) {
+        $http.post('index.php', {action: 'Signup', email: $scope.email, password: $scope.password, passwordRepeat: $scope.passwordRepeat}).success(function (response) {
             self.response = response;
         });
     };

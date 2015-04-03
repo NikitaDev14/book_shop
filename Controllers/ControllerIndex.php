@@ -51,12 +51,12 @@
 			}
 			*/
 
-			$this->dataContainer->setNextPage('index');
+			$this->dataContainer->setParams(['nextPage' => 'index']);
 		}
 
 		public function actionBookList()
 		{
-			$this->dataContainer->setNextPage('bookList');
+			$this->dataContainer->setParams(['nextPage' => 'bookList']);
 		}
 		/*
 		function action_bookdetails()
