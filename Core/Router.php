@@ -71,9 +71,25 @@
 			}
 			*/
 
-			$a = new \Controllers\ControllerIndex();
-			$b = new \Views\View();
+			$controllerName = 'Index';
+			$view = new \Views\View();
 
+			if(!empty($_GET['action']))
+			{
+				$controllerName = $_GET['action'];
+			}
+			elseif(!empty($_POST['action']))
+			{
+				$controllerName = $_POST['action'];
+			}
+
+			$controllerPath = '\Controllers\Controller' . $controllerName;
+
+			$controllerObj = new $controllerPath();
+
+			$controllerObj->run($controllerName);
+
+			/*
 			if(!empty($_GET['action']))
 			{
 				$a->actionBookList();
@@ -82,13 +98,14 @@
 			{
 				$a = new \Controllers\ControllerSignup();
 
-				$a->actionSignup($_POST);
+				$a->run($_POST);
 			}
 			else
 			{
-				$a->actionIndex();
+				$a->run();
 			}
+			*/
 
-			$b->render();
+			$view->render();
 		}
 	}

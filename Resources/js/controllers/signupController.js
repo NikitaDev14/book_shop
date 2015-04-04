@@ -15,9 +15,7 @@ bookShop.controller('signupController', function ($scope, $http) {
             password: $scope.password,
             passwordRepeat: $scope.passwordRepeat
         }).success(function (response) {
-            self.response = response;
-
-            if(self.response === "1") {
+            if(response === "1") {
                 self.message = 'You are registered successfully.';
             }
             else

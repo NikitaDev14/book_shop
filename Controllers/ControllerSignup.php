@@ -16,7 +16,7 @@
 		{
 			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
-		public function actionSignup($form)
+		public function run($form)
 		{
 			$formData = $this->objFactory->getObjHttp()->
 				setParams($form)->getParams();
@@ -34,8 +34,6 @@
 				$result = (bool) $this->objFactory->getUser()->
 					addUser($formData['email'], $formData['password']);
 			}
-
-			//echo $result;
 
 			$this->objFactory->getObjDataContainer()->setParams(['nextPage' => 'Signup', 'result' => $result]);
 		}

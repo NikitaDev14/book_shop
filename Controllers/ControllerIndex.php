@@ -17,7 +17,7 @@
 			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
 
-		public function actionIndex()
+		public function run()
 		{
 			/*
 			$filter = array();
