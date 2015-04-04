@@ -3,12 +3,12 @@
  * Created by PhpStorm.
  * User: Developer
  * Date: 04.04.2015
- * Time: 18:42
+ * Time: 23:15
  */
 
 	namespace Controllers;
 
-	class ControllerBook
+	class ControllerUser
 	{
 		private $objFactory;
 
@@ -18,7 +18,9 @@
 		}
 		public function run()
 		{
+			$result = $this->objFactory->getObjValidatorUser()->isValidUser();
+
 			$this->objFactory->getObjDataContainer()->
-				setParams(['nextPage' => 'BookList', 'result' => true]);
+				setParams(['nextPage' => 'Echo', 'result' => $result]);
 		}
 	}

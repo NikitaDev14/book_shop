@@ -33,10 +33,21 @@
 		public function setForm($form)
 		{
 			$this->form = $form;
+
+			return self::$instance;
 		}
 		public function isValidForm()
 		{
-			return $this->objFactory->getUser()->
-				isValidUser($this->form['email'], $this->form['password']);
+			if(isset($this->form['email'], $this->form['password']))
+			{
+				$result = $this->objFactory->getUser()->
+					isValidLogin($this->form['email'], $this->form['password']);
+			}
+			else
+			{
+				$result = false;
+			}
+
+			return $result;
 		}
 	}

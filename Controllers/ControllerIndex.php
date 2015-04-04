@@ -50,7 +50,8 @@
 			}
 			*/
 
-			$this->objFactory->getObjDataContainer()->setParams(['nextPage' => 'Index', 'result' => true]);
+			$this->objFactory->getObjDataContainer()->
+				setParams(['nextPage' => 'Index', 'result' => true]);
 		}
 		/*
 		function action_bookdetails()

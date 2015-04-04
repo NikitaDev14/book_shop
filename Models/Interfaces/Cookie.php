@@ -18,7 +18,17 @@
 		}
 		public function setCookie($name, $value)
 		{
-			setcookie($name, $value, $this->expire);
+			setcookie($name, $value, time() + $this->expire);
+
+			return $this;
+		}
+		public function getCookie($name)
+		{
+			return $_COOKIE[$name];
+		}
+		public function deleteCookie($name)
+		{
+			setcookie($name, '', time() - $this->expire);
 
 			return $this;
 		}

@@ -4,7 +4,7 @@
         <div class="form-group has-feedback" ng-class="(signupForm.email.$valid)? 'has-success' : 'has-error'">
             <label for="inputEmail" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" aria-describedby="emailStatus" ng-model="email" ng-pattern="signCtrl.template.email" required>
+                <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" aria-describedby="emailStatus" ng-model="email" ng-pattern="signCtrl.template.email" required>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signupForm.email.$valid"></span>
                 <span id="emailStatus" class="sr-only" ng-show="signupForm.email.$valid">(success)</span>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signupForm.email.$invalid"></span>

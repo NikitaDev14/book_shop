@@ -3,12 +3,12 @@
  * Created by PhpStorm.
  * User: Developer
  * Date: 04.04.2015
- * Time: 15:57
+ * Time: 22:12
  */
 
 	namespace Views\Pallets;
 
-	class SignupPallet
+	class EchoPallet
 	{
 		public function generate($result)
 		{

@@ -21,15 +21,12 @@
 			$formData = $this->objFactory->getObjHttp()->
 				setParams($form)->getParams();
 
-			$validator = $this->objFactory->getObjValidatorLogin();
-
-			$validator->setForm($formData);
-
-			$userId = $validator->isValidForm();
+			$userId = $this->objFactory->getObjValidatorLogin()
+				->setForm($formData)->isValidForm();
 
 			$result = false;
 
-			if(null != $userId)
+			if(!empty($userId))
 			{
 				$userId = $userId[0]['idUser'];
 
@@ -41,14 +38,10 @@
 					setCookie('id', $userId)->
 					setCookie('session', $sessionId);
 
-				var_dump($sessionId);
-				var_dump($userId[0]['idUser']);
-
-				$result = true;
+				$result = $userId;
 			}
 
-			var_dump($result);
-
-			//$this->objFactory->getObjDataContainer()->setParams(['nextPage' => 'Signup', 'result' => $result]);
+			$this->objFactory->getObjDataContainer()->
+				setParams(['nextPage' => 'Echo', 'result' => $result]);
 		}
 	}

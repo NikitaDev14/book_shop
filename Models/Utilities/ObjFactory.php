@@ -46,6 +46,10 @@
 		{
 			return \Models\Validators\ValidatorLogin::getInstance();
 		}
+		public function getObjValidatorUser()
+		{
+			return \Models\Validators\ValidatorUser::getInstance();
+		}
 		public function getObjHttp()
 		{
 			return \Models\Interfaces\Http::getInstance();

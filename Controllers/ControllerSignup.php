@@ -35,6 +35,7 @@
 					addUser($formData['email'], $formData['password']);
 			}
 
-			$this->objFactory->getObjDataContainer()->setParams(['nextPage' => 'Signup', 'result' => $result]);
+			$this->objFactory->getObjDataContainer()->
+				setParams(['nextPage' => 'Echo', 'result' => $result]);
 		}
 	}

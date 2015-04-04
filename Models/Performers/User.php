@@ -21,13 +21,12 @@
 		{
 			return (bool) $this->objFactory->getObjDatabase()->
 				setQuery('CALL exsistsUser(?)')->
-				setParam([$email])->
-				execute()->getResult();
+				setParam([$email])->execute()->getResult();
 		}
-		public function isValidUser($email, $password)
+		public function isValidLogin($email, $password)
 		{
 			return $this->objFactory->getObjDatabase()->
-				setQuery('CALL isValidUser(?, ?)')->
+				setQuery('CALL isValidLogin(?, ?)')->
 				setParam([$email, $password])->
 				execute()->getResult();
 		}
@@ -37,5 +36,18 @@
 				setQuery('CALL sessionStart(?, ?)')->
 				setParam([$idUser, $sessionId])->
 				execute()->getResult();
+		}
+		public function isValidUser($idUser, $sessionId)
+		{
+			return $this->objFactory->getObjDatabase()->
+				setQuery('CALL isValidUser(?, ?)')->
+				setParam([$idUser, $sessionId])->
+				execute()->getResult();
+		}
+		public function sessionDestroy($idUser)
+		{
+			return $this->objFactory->getObjDatabase()->
+				setQuery('CALL sessionDestroy(?)')->
+				setParam([$idUser])->execute()->getResult();
 		}
 	}
