@@ -28,7 +28,8 @@
 		{
 			if(null === self::$database)
 			{
-				self::$database = new \Models\Interfaces\Database(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+				self::$database =
+					new \Models\Interfaces\Database(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 			}
 
 			return self::$database;
@@ -41,9 +42,21 @@
 		{
 			return \Models\Validators\ValidatorSignup::getInstance();
 		}
+		public function getObjValidatorLogin()
+		{
+			return \Models\Validators\ValidatorLogin::getInstance();
+		}
 		public function getObjHttp()
 		{
 			return \Models\Interfaces\Http::getInstance();
+		}
+		public function getObjSession()
+		{
+			return \Models\Interfaces\Session::getInstance();
+		}
+		public function getObjCookie()
+		{
+			return new \Models\Interfaces\Cookie(COOKIE_EXPIRE);
 		}
 		public function getBook()
 		{

@@ -72,22 +72,29 @@
 			*/
 
 			$controllerName = 'Index';
+
 			$view = new \Views\View();
+
+			$form = false;
 
 			if(!empty($_GET['action']))
 			{
 				$controllerName = $_GET['action'];
+
+				$form = $_GET;
 			}
 			elseif(!empty($_POST['action']))
 			{
 				$controllerName = $_POST['action'];
+
+				$form = $_POST;
 			}
 
 			$controllerPath = '\Controllers\Controller' . $controllerName;
 
 			$controllerObj = new $controllerPath();
 
-			$controllerObj->run($controllerName);
+			$controllerObj->run($form);
 
 			/*
 			if(!empty($_GET['action']))

@@ -12,8 +12,6 @@
 	{
 		public function addUser($email, $password)
 		{
-			//echo $email . ' ; ' . $password . '</br>';
-
 			return $this->objFactory->getObjDatabase()->
 				setQuery('CALL addUser(?, ?)')->
 				setParam([$email, $password])->
@@ -24,6 +22,20 @@
 			return (bool) $this->objFactory->getObjDatabase()->
 				setQuery('CALL exsistsUser(?)')->
 				setParam([$email])->
+				execute()->getResult();
+		}
+		public function isValidUser($email, $password)
+		{
+			return $this->objFactory->getObjDatabase()->
+				setQuery('CALL isValidUser(?, ?)')->
+				setParam([$email, $password])->
+				execute()->getResult();
+		}
+		public function sessionStart($idUser, $sessionId)
+		{
+			return $this->objFactory->getObjDatabase()->
+				setQuery('CALL sessionStart(?, ?)')->
+				setParam([$idUser, $sessionId])->
 				execute()->getResult();
 		}
 	}

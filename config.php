@@ -9,3 +9,5 @@
 
 	define('EMAIL_TEMPLATE', '/[0-9a-z_]+@[0-9a-z_]+\\.[a-z]{1,5}/i');
 	define('PASSWORD_TEMPLATE', '/.{4,}/');
+
+	define('COOKIE_EXPIRE', time()+60*15);

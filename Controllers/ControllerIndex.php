@@ -16,7 +16,6 @@
 		{
 			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
-
 		public function run()
 		{
 			/*
@@ -52,11 +51,6 @@
 			*/
 
 			$this->objFactory->getObjDataContainer()->setParams(['nextPage' => 'Index', 'result' => true]);
-		}
-
-		public function actionBookList()
-		{
-			$this->objFactory->getObjDataContainer()->setParams(['nextPage' => 'BookList', 'result' => true]);
 		}
 		/*
 		function action_bookdetails()

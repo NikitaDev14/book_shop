@@ -56,6 +56,6 @@ var bookShop = angular.module('bookShop', ['ui.router'], function ($httpProvider
 
 bookShop.service('bookService', function ($http) {
     this.getBooks = function (callback) {
-        $http.get('index.php?action=BookList').success(callback);
+        $http.get('index.php?action=Book').success(callback);
     };
 });
