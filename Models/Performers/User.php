@@ -12,7 +12,18 @@
 	{
 		public function addUser($email, $password)
 		{
-			return $this->database->setQuery('CALL addUser(:email, :password')->
-				setParam([':email' => $email, ':password' => $password])->execute()->getResult();
+			//echo $email . ' ; ' . $password . '</br>';
+
+			return $this->objFactory->getObjDatabase()->
+				setQuery('CALL addUser(?, ?)')->
+				setParam([$email, $password])->
+				execute()->getResult();
+		}
+		public function exsistsUser($email)
+		{
+			return (bool) $this->objFactory->getObjDatabase()->
+				setQuery('CALL exsistsUser(?)')->
+				setParam([$email])->
+				execute()->getResult();
 		}
 	}

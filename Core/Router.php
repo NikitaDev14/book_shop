@@ -77,20 +77,18 @@
 			if(!empty($_GET['action']))
 			{
 				$a->actionBookList();
-
-				$b->render();
 			}
 			elseif(!empty($_POST['action']))
 			{
-				$a = new \Controllers\ControllerSignup($_POST);
+				$a = new \Controllers\ControllerSignup();
 
-				$a->actionSignup();
+				$a->actionSignup($_POST);
 			}
 			else
 			{
 				$a->actionIndex();
-
-				$b->render();
 			}
+
+			$b->render();
 		}
 	}

@@ -25,4 +25,9 @@ bookShop.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: '/book_shop/Resources/html/cart.html',
             controller: 'cartController'
         })
+        .state('login', {
+            url: '/login',
+            templateUrl: '/book_shop/Resources/html/login.html',
+            controller: 'loginController'
+        })
 });

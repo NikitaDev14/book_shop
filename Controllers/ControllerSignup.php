@@ -10,24 +10,33 @@
 
 	class ControllerSignup
 	{
-		private $form;
-		private $validator;
-		private $dataContainer;
+		private $objFactory;
 
-		public function __construct($form)
+		public function __construct()
 		{
-			$this->form = \Models\Interfaces\Http::getInstance()->setParams($form)->getParams();
-			$this->validator = \Models\Validators\ValidatorSignup::getInstance();
-			$this->dataContainer = \Models\Utilities\DataContainer::getInstance();
+			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
-		public function actionSignup()
+		public function actionSignup($form)
 		{
-			$this->validator->setForm($this->form);
+			$formData = $this->objFactory->getObjHttp()->
+				setParams($form)->getParams();
 
-			$result = $this->validator->isValidForm();
+			$validator = $this->objFactory->getObjValidatorSignup();
 
-			var_dump($result);
+			$validator->setForm($formData);
 
-			$this->dataContainer->setNextPage($result);
+			$isValidForm = $validator->isValidForm();
+
+			$result = false;
+
+			if($isValidForm)
+			{
+				$result = (bool) $this->objFactory->getUser()->
+					addUser($formData['email'], $formData['password']);
+			}
+
+			//echo $result;
+
+			$this->objFactory->getObjDataContainer()->setParams(['nextPage' => 'Signup', 'result' => $result]);
 		}
 	}

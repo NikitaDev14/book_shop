@@ -10,11 +10,11 @@
 
 	class ControllerIndex
 	{
-		private $dataContainer;
+		private $objFactory;
 
 		public function __construct()
 		{
-			$this->dataContainer = \Models\Utilities\DataContainer::getInstance();
+			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
 
 		public function actionIndex()
@@ -51,12 +51,12 @@
 			}
 			*/
 
-			$this->dataContainer->setParams(['nextPage' => 'index']);
+			$this->objFactory->getObjDataContainer()->setParams(['nextPage' => 'Index', 'result' => true]);
 		}
 
 		public function actionBookList()
 		{
-			$this->dataContainer->setParams(['nextPage' => 'bookList']);
+			$this->objFactory->getObjDataContainer()->setParams(['nextPage' => 'BookList', 'result' => true]);
 		}
 		/*
 		function action_bookdetails()

@@ -11,7 +11,8 @@
 	{
 		public function getGenres()
 		{
-			return $this->database->setQuery('CALL getGenres(:genre)')->
-				setParam([':genre' => 0])->execute()->getResult();
+			return $this->objFactory->getObjDatabase()->
+				setQuery('CALL getGenres(?)')->
+				setParam([0])->execute()->getResult();
 		}
 	}

@@ -11,7 +11,8 @@
 	{
 		public function getAuthors()
 		{
-			return $this->database->setQuery('CALL getAuthors(:author)')->
-				setParam([':author' => 0])->execute()->getResult();
+			return $this->objFactory->getObjDatabase()->
+			setQuery('CALL getAuthors(?)')->
+				setParam([0])->execute()->getResult();
 		}
 	}

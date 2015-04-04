@@ -1,0 +1,23 @@
+<div class="container" ng-controller="signupController as signCtrl">
+    <div header></div>
+    <form class="form-horizontal" name="signupForm" ng-submit="signCtrl.signup()">
+        <div class="form-group has-feedback">
+            <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+                <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="email" required>
+            </div>
+        </div>
+        <div class="form-group has-feedback" ng-class="(signupForm.password.$valid)? 'has-success' : 'has-error'">
+            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="password" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" data-toggle="modal">Login</button>
+            </div>
+        </div>
+    </form>
+    <p ng-bind="signCtrl.message"></p>
+</div>

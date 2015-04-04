@@ -1,5 +1,5 @@
 /**
- * Created by Developer on 02.04.2015.
+ * Created by Developer on 04.04.2015.
  */
 bookShop.controller('signupController', function ($scope, $http) {
     var self = this;
@@ -10,11 +10,7 @@ bookShop.controller('signupController', function ($scope, $http) {
     };
 
     this.signup = function () {
-        $http.post('index.php', {
-            action: 'Signup', email: $scope.email,
-            password: $scope.password,
-            passwordRepeat: $scope.passwordRepeat
-        }).success(function (response) {
+        $http.post('index.php', {action: 'Signup', email: $scope.email, password: $scope.password, passwordRepeat: $scope.passwordRepeat}).success(function (response) {
             self.response = response;
 
             if(self.response === "1") {

@@ -10,11 +10,11 @@
 
 	class Model
 	{
-		protected $database;
+		protected $objFactory;
 
 		public function __construct()
 		{
-			$this->database =
-				new \Models\Interfaces\Database();
+			$this->objFactory =
+				\Models\Utilities\ObjFactory::getInstance();
 		}
 	}

@@ -11,6 +11,7 @@
 	{
 		public function getBooks()
 		{
-			return $this->database->setQuery('CALL getBooks()')->execute()->getResult();
+			return $this->objFactory->getObjDatabase()->
+				setQuery('CALL getBooks()')->execute()->getResult();
 		}
 	}

@@ -4,7 +4,7 @@
         <div class="form-group has-feedback" ng-class="(signupForm.email.$valid)? 'has-success' : 'has-error'">
             <label for="inputEmail" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" aria-describedby="emailStatus" ng-model="email" ng-pattern="signCtrl.template.email" ng-trim="true" required>
+                <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" aria-describedby="emailStatus" ng-model="email" ng-pattern="signCtrl.template.email" required>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signupForm.email.$valid"></span>
                 <span id="emailStatus" class="sr-only" ng-show="signupForm.email.$valid">(success)</span>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signupForm.email.$invalid"></span>
@@ -15,7 +15,7 @@
         <div class="form-group has-feedback" ng-class="(signupForm.password.$valid)? 'has-success' : 'has-error'">
             <label for="inputPassword" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" aria-describedby="passwordStatus" ng-model="password" ng-pattern="signCtrl.template.password" ng-trim="true" required>
+                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" aria-describedby="passwordStatus" ng-model="password" ng-pattern="signCtrl.template.password" required>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signupForm.password.$valid"></span>
                 <span id="passwordStatus" class="sr-only" ng-show="signupForm.password.$valid">(success)</span>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signupForm.password.$invalid"></span>
@@ -26,7 +26,7 @@
         <div class="form-group has-feedback" ng-class="(signupForm.passwordRepeat.$valid)? 'has-success' : 'has-error'">
             <label for="inputRepeatPassword" class="col-sm-2 control-label">Repeat password</label>
             <div class="col-sm-10">
-                <input type="password" name="passwordRepeat" class="form-control" id="inputRepeatPassword" placeholder="Repeat password" aria-describedby="repeatPasswordStatus" ng-model="passwordRepeat" ng-pattern="password" ng-trim="true" required>
+                <input type="password" name="passwordRepeat" class="form-control" id="inputRepeatPassword" placeholder="Repeat password" aria-describedby="repeatPasswordStatus" ng-model="passwordRepeat" ng-pattern="password" required>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signupForm.passwordRepeat.$valid"></span>
                 <span id="repeatPasswordStatus" class="sr-only" ng-show="signupForm.passwordRepeat.$valid">(success)</span>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signupForm.passwordRepeat.$invalid"></span>
@@ -36,9 +36,9 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-class="{'disabled': signupForm.$invalid}">Signup</button>
+                <button type="submit" class="btn btn-primary" data-toggle="modal" ng-class="{'disabled': signupForm.$invalid}">Signup</button>
             </div>
         </div>
     </form>
-    <p ng-bind="signCtrl.response"></p>
+    <p ng-bind="signCtrl.message"></p>
 </div>

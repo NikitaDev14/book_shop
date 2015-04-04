@@ -10,6 +10,7 @@
 
 	class ObjFactory
 	{
+		private static $database;
 		private static $instance;
 
 		private function __construct() {}
@@ -23,7 +24,27 @@
 
 			return self::$instance;
 		}
+		public function getObjDatabase()
+		{
+			if(null === self::$database)
+			{
+				self::$database = new \Models\Interfaces\Database(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+			}
 
+			return self::$database;
+		}
+		public function getObjDataContainer()
+		{
+			return \Models\Utilities\DataContainer::getInstance();
+		}
+		public function getObjValidatorSignup()
+		{
+			return \Models\Validators\ValidatorSignup::getInstance();
+		}
+		public function getObjHttp()
+		{
+			return \Models\Interfaces\Http::getInstance();
+		}
 		public function getBook()
 		{
 			return new \Models\Performers\Book();

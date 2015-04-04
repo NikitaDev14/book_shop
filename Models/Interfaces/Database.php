@@ -13,9 +13,9 @@
 		private $db;
 		private $sth;
 
-		public function __construct()
+		public function __construct($name, $host, $user, $pass)
 		{
-			$this->db = new \PDO('mysql:dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS);
+			$this->db = new \PDO('mysql:dbname=' . $name . ';host=' . $host, $user, $pass);
 		}
 
 		public function setQuery($query)
@@ -27,17 +27,20 @@
 
 		public function setParam($params)
 		{
-			/*
 			$count = count($params);
 
-			for ($i = 0; $i < $count; $i++) {
-				$this->sth->bindParam($i, $params[$i]);
+			for ($i = 1; $i <= $count; $i++)
+			{
+				$this->sth->bindParam($i, $params[$i - 1]);
+			}
+			/*
+			foreach($params as $key => $val)
+			{
+				echo $key . ' ; ' . $val . '</br>';
+
+				$this->sth->bindParam($key, $val);
 			}
 			*/
-			foreach($params as $param)
-			{
-				$this->sth->bindParam(key($params), $param);
-			}
 
 			return $this;
 		}

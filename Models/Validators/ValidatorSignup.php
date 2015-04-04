@@ -11,14 +11,13 @@
 	class ValidatorSignup
 	{
 		private $form;
-		private $database;
+		private $objFactory;
 
 		private static $instance;
 
 		private function __construct()
 		{
-			$this->database =
-				new \Models\Interfaces\Database();
+			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
 
 		public static function getInstance()
@@ -38,10 +37,11 @@
 
 		public function isValidEmail()
 		{
-			$userExsists = $this->database->setQuery('CALL getUser(:email)')->
-				setParam([':email' => $this->form['email']])->execute()->getResult();
+			$userExsists = $this->objFactory->getUser()->
+				exsistsUser($this->form['email']);
 
-			return preg_match(EMAIL_TEMPLATE, $this->form['email']) && !$userExsists;
+			return preg_match(EMAIL_TEMPLATE, $this->form['email']) &&
+				!$userExsists;
 		}
 
 		public function isValidPassword()
