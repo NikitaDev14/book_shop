@@ -37,7 +37,7 @@
 
 		public function isValidEmail()
 		{
-			$userExsists = $this->objFactory->getUser()->
+			$userExsists = $this->objFactory->getObjUser()->
 				exsistsUser($this->form['email']);
 
 			return preg_match(EMAIL_TEMPLATE, $this->form['email']) &&

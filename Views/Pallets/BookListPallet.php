@@ -20,9 +20,9 @@
 		{
 			$data =
 				[
-					'books' => $this->objFactory->getBook()->getBooks(),
-					'authors' => $this->objFactory->getAuthor()->getAuthors(),
-					'genres' => $this->objFactory->getGenre()->getGenres()
+					'books' => $this->objFactory->getObjBook()->getBooks(),
+					'authors' => $this->objFactory->getObjAuthor()->getAuthors(),
+					'genres' => $this->objFactory->getObjGenre()->getGenres()
 				];
 
 			echo json_encode($data);

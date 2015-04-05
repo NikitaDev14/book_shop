@@ -2,13 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: Developer
- * Date: 04.04.2015
- * Time: 18:42
+ * Date: 05.04.2015
+ * Time: 14:08
  */
 
 	namespace Controllers;
 
-	class ControllerBook
+	class ControllerCart
 	{
 		private $objFactory;
 
@@ -16,9 +16,11 @@
 		{
 			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
-		public function getList()
+		public function getCart()
 		{
+			$result = $this->objFactory->getObjValidatorUser()->isValidUser();
+
 			$this->objFactory->getObjDataContainer()->
-				setParams(['nextPage' => 'BookList', 'result' => true]);
+				setParams(['nextPage' => 'Cart', 'result' => $result]);
 		}
 	}

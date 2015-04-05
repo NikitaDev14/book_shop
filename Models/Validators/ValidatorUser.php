@@ -34,20 +34,19 @@
 			$idUser = $cookie->getCookie('id');
 			$sessionId = $cookie->getCookie('session');
 
-			if(isset($idUser, $sessionId))
+			if(!empty($idUser) && !empty($sessionId))
 			{
-				$user = $this->objFactory->getUser()->
+				$user = $this->objFactory->getObjUser()->
 					isValidUser($idUser, $sessionId);
 
 				if($user[0]['idUser'] === $idUser &&
 					$user[0]['SessionId'] === $sessionId)
 				{
-					$result = true;
+					$result = $idUser;
 				}
 				else
 				{
-					$cookie->deleteCookie('id');
-					$cookie->deleteCookie('session');
+					$cookie->deleteCookie('id')->deleteCookie('session');
 
 					$result = false;
 				}

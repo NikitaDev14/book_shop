@@ -40,7 +40,7 @@
 		{
 			if(isset($this->form['email'], $this->form['password']))
 			{
-				$result = $this->objFactory->getUser()->
+				$result = $this->objFactory->getObjUser()->
 					isValidLogin($this->form['email'], $this->form['password']);
 			}
 			else

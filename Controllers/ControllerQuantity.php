@@ -2,13 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: Developer
- * Date: 04.04.2015
- * Time: 23:29
+ * Date: 05.04.2015
+ * Time: 12:54
  */
 
 	namespace Controllers;
 
-	class ControllerLogout
+	class ControllerQuantity
 	{
 		private $objFactory;
 
@@ -20,14 +20,14 @@
 		{
 			$result = $this->objFactory->getObjValidatorUser()->isValidUser();
 
+			$quantity = null;
+
 			if(false !== $result)
 			{
-				$this->objFactory->getObjUser()->sessionDestroy($result);
-				$this->objFactory->getObjCookie()->
-					deleteCookie('id')->deleteCookie('session');
+				$quantity = $this->objFactory->getObjCart()->getCart($result)[0]['Quantity'];
 			}
 
 			$this->objFactory->getObjDataContainer()->
-				setParams(['nextPage' => 'Logout', 'result' => $result]);
+				setParams(['nextPage' => 'Echo', 'result' => $quantity]);
 		}
 	}

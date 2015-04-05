@@ -10,7 +10,14 @@ bookShop.controller('loginController', function ($scope, $http) {
             email: $scope.email,
             password: $scope.password
         }).success(function (response) {
-            self.response = response;
+            if('' === response) {
+                self.response = 'Wrong data';
+            }
+            else {
+                $scope.email = $scope.password = '';
+
+                self.response = 'Hello';
+            }
         });
     };
 

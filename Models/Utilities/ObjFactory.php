@@ -62,20 +62,24 @@
 		{
 			return new \Models\Interfaces\Cookie(COOKIE_EXPIRE);
 		}
-		public function getBook()
+		public function getObjBook()
 		{
 			return new \Models\Performers\Book();
 		}
-		public function getAuthor()
+		public function getObjAuthor()
 		{
 			return new \Models\Performers\Author();
 		}
-		public function getGenre()
+		public function getObjGenre()
 		{
 			return new \Models\Performers\Genre();
 		}
-		public function getUser()
+		public function getObjUser()
 		{
 			return new \Models\Performers\User();
+		}
+		public function getObjCart()
+		{
+			return new \Models\Performers\Cart();
 		}
 	}

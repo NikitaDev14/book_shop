@@ -18,7 +18,7 @@ bookShop.config(function($stateProvider, $urlRouterProvider) {
         .state('signup', {
             url: '/signup',
             templateUrl: '/book_shop/Resources/html/signup.html',
-            controller: 'signupController'
+            controller: 'userController'
         })
         .state('cart', {
             url: '/cart',
@@ -28,6 +28,6 @@ bookShop.config(function($stateProvider, $urlRouterProvider) {
         .state('login', {
             url: '/login',
             templateUrl: '/book_shop/Resources/html/login.html',
-            controller: 'loginController'
+            controller: 'userController'
         })
 });

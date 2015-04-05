@@ -24,7 +24,16 @@
 		}
 		public function getCookie($name)
 		{
-			return $_COOKIE[$name];
+			if(!empty($_COOKIE[$name]))
+			{
+				$result = $_COOKIE[$name];
+			}
+			else
+			{
+				$result = false;
+			}
+
+			return $result;
 		}
 		public function deleteCookie($name)
 		{

@@ -31,7 +31,7 @@
 
 			if($isValidForm)
 			{
-				$result = (bool) $this->objFactory->getUser()->
+				$result = (bool) $this->objFactory->getObjUser()->
 					addUser($formData['email'], $formData['password']);
 			}
 

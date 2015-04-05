@@ -32,7 +32,7 @@
 
 				$sessionId = $this->objFactory->getObjSession()->getSessionId();
 
-				$this->objFactory->getUser()->sessionStart($userId, $sessionId);
+				$this->objFactory->getObjUser()->sessionStart($userId, $sessionId);
 
 				$this->objFactory->getObjCookie()->
 					setCookie('id', $userId)->
