@@ -95,9 +95,9 @@
 
 			$controllerPath = '\Controllers\Controller' . $controllerName;
 
-			$controllerObj = new $controllerPath();
+			$controllerObj = new $controllerPath($form);
 
-			$controllerObj->$actionName($form);
+			$controllerObj->$actionName();
 
 			/*
 			if(!empty($_GET['action']))

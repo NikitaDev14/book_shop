@@ -8,14 +8,8 @@
 
 	namespace Controllers;
 
-	class ControllerBook
+	class ControllerBook extends \Controllers\BaseController
 	{
-		private $objFactory;
-
-		public function __construct()
-		{
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
-		}
 		public function getList()
 		{
 			$this->objFactory->getObjDataContainer()->

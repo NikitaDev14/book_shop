@@ -20,7 +20,7 @@
                     <a class="btn btn-primary" ng-href="#/book/{{book.idBook}}" role="button">Details</a>
                 </div>
                 <div class="btn-group" role="group" ng-controller="cartController as cartCtrl">
-                    <button class="btn btn-success" ng-click="cartCtrl.addToCart(book)">Add to cart</button>
+                    <button class="btn btn-success" ng-click="cartCtrl.cart.add(book)">Add to cart</button>
                 </div>
             </div>
         </div>

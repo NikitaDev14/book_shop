@@ -7,16 +7,10 @@ bookShop.controller('cartController', function (userService, cartService, cartFa
     userService.isValidUser(function (isValid) {
         if('1' === isValid) {
             cartService.getCart(function (data) {
-                console.log(data);
 
-                cartFactory.init(data);
+                self.cart = cartFactory;
 
-                self.bookCount = function () {
-                    return cartFactory.getBookCount();
-                };
-                self.addToCart = function (book, count) {
-                    cartFactory.add(book, count);
-                };
+                self.cart.init(data);
             });
         }
     });

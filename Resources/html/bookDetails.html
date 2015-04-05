@@ -8,13 +8,13 @@
         <p>Description: {{bkCtrl.books.Description}}</p>
         <p>Price: {{bkCtrl.books.Price | currency}}</p>
 
-        <form class="form-horizontal" name="countForm">
+        <form class="form-horizontal" name="countForm" ng-controller="cartController as cartCtrl">
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Quantity</div>
                     <input type="number" class="form-control" name="count" ng-model="count" ng-init="count = 1" min="1" required>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" ng-class="{'disabled': countForm.count.$invalid}">Add to cart</button>
+                        <button class="btn btn-default" type="button" ng-class="{'disabled': countForm.count.$invalid}" ng-click="cartCtrl.cart.add(bkCtrl.books, count)">Add to cart</button>
                     </span>
                 </div>
             </div>

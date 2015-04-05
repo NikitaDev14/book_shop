@@ -2,7 +2,7 @@
     <div class="col-xs-6" ng-controller="cartController as cartCtrl">
         <a class="btn btn-warning" href="#/" role="button">Main page</a>
         <a class="btn btn-info" href="#/cart" role="button">
-            Cart <span class="badge" ng-bind="cartCtrl.bookCount()"></span>
+            Cart <span class="badge" ng-bind="cartCtrl.cart.getBookCount()"></span>
         </a>
     </div>
     <div class="col-xs-6 text-right" ng-controller="userController as userCtrl">

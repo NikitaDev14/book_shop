@@ -8,14 +8,8 @@
 
 	namespace Controllers;
 
-	class ControllerUser
+	class ControllerUser extends \Controllers\BaseController
 	{
-		private $objFactory;
-
-		public function __construct()
-		{
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
-		}
 		public function validate()
 		{
 			$result = (bool) $this->objFactory->getObjValidatorUser()->isValidUser();
@@ -23,10 +17,10 @@
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => 'Echo', 'result' => $result]);
 		}
-		public function login($form)
+		public function login()
 		{
 			$formData = $this->objFactory->getObjHttp()->
-			setParams($form)->getParams();
+			setParams($this->form)->getParams();
 
 			$userId = $this->objFactory->getObjValidatorLogin()
 				->setForm($formData)->isValidForm();
@@ -66,10 +60,10 @@
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => 'Logout', 'result' => $result]);
 		}
-		public function singup($form)
+		public function singup()
 		{
 			$formData = $this->objFactory->getObjHttp()->
-				setParams($form)->getParams();
+				setParams($this->form)->getParams();
 
 			$validator = $this->objFactory->getObjValidatorSignup();
 

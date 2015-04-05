@@ -5,6 +5,9 @@ SET TIME_ZONE = "+02:00";
 USE book_shop;
 
 DELIMITER $$
+--
+-- Процедуры
+--
 DROP PROCEDURE IF EXISTS `addAuthor`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `addAuthor`(IN `author` VARCHAR(45) CHARSET utf8)
     MODIFIES SQL DATA
@@ -93,6 +96,53 @@ BEGIN
     END LOOP insertGenres;
 END$$
 
+DROP PROCEDURE IF EXISTS `addToCart`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `addToCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `quantity` INT(6) UNSIGNED)
+    MODIFIES SQL DATA
+    COMMENT '@idUser @idBook @quantity'
+BEGIN
+	DECLARE exsistsQuantity INT(6) UNSIGNED;
+    DECLARE price DECIMAL(6,2) UNSIGNED;
+
+    SELECT u2b.Quantity
+    INTO exsistsQuantity
+    FROM users2books AS u2b
+    WHERE u2b.idUser = idUser
+    	AND u2b.idBook = idBook;
+
+    IF(exsistsQuantity IS NULL) THEN
+
+        SELECT books.Price
+        INTO price
+        FROM books
+        WHERE books.idBook = idBook;
+
+    	INSERT INTO users2books (users2books.idUser, users2books.idBook, users2books.Quantity, price)
+        VALUES (idUser, idBook, quantity, price);
+
+    ELSE
+
+    	UPDATE users2books
+        SET users2books.Quantity = quantity + exsistsQuantity
+        WHERE users2books.idUser = idUser
+        	AND users2books.idBook = idBook;
+
+    END IF;
+
+    SELECT ROW_COUNT();
+END$$
+
+DROP PROCEDURE IF EXISTS `addUser`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `addUser`(IN `email` VARCHAR(255) CHARSET utf8, IN `passw` VARCHAR(45) CHARSET utf8)
+    MODIFIES SQL DATA
+    COMMENT '@email @password'
+BEGIN
+	INSERT INTO users (users.Email, users.Password)
+    VALUES (email, PASSWORD(passw));
+
+    SELECT LAST_INSERT_ID();
+END$$
+
 DROP PROCEDURE IF EXISTS `deleteAuthor`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteAuthor`(IN `idAuthor` INT(6) UNSIGNED)
     MODIFIES SQL DATA
@@ -115,6 +165,18 @@ BEGIN
     SELECT ROW_COUNT();
 END$$
 
+DROP PROCEDURE IF EXISTS `deleteFromCart`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteFromCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED)
+    MODIFIES SQL DATA
+    COMMENT '@idUser @idBook'
+BEGIN
+	DELETE FROM users2books
+    WHERE users2books.idUser = idUser
+    	AND users2books.idBook = idBook;
+
+    SELECT ROW_COUNT();
+END$$
+
 DROP PROCEDURE IF EXISTS `deleteGenre`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteGenre`(IN `idGenre` INT(6) UNSIGNED)
     MODIFIES SQL DATA
@@ -126,6 +188,16 @@ BEGIN
     SELECT ROW_COUNT();
 END$$
 
+DROP PROCEDURE IF EXISTS `exsistsUser`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `exsistsUser`(IN `email` VARCHAR(255) CHARSET utf8)
+    READS SQL DATA
+    COMMENT '@email'
+BEGIN
+   	SELECT users.idUser
+    FROM users
+    WHERE users.Email = email;
+END$$
+
 DROP PROCEDURE IF EXISTS `getAuthors`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAuthors`(IN `idAuthor` INT(6) UNSIGNED)
     READS SQL DATA
@@ -133,12 +205,23 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getAuthors`(IN `idAuthor` INT(6) UN
 BEGIN
 	IF(idAuthor = 0)THEN
     	SELECT authors.idAuthor, authors.Name
-        FROM authors;
+        FROM authors
+        ORDER BY authors.Name;
     ELSE
     	SELECT authors.idAuthor, authors.Name
         FROM authors
         WHERE authors.idAuthor = idAuthor;
     END IF;
+END$$
+
+DROP PROCEDURE IF EXISTS `getBookCount`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBookCount`(IN `idUser` INT(6) UNSIGNED)
+    READS SQL DATA
+    COMMENT '@idUser'
+BEGIN
+	SELECT SUM(users2books.Quantity) AS Quantity
+    FROM users2books
+    WHERE users2books.idUser = idUser;
 END$$
 
 DROP PROCEDURE IF EXISTS `getBookDetails`$$
@@ -165,19 +248,30 @@ DROP PROCEDURE IF EXISTS `getBooks`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getBooks`()
     READS SQL DATA
 BEGIN
-	   	SELECT GROUP_CONCAT(DISTINCT authors.Name) AS Authors, GROUP_CONCAT(DISTINCT genres.Name) AS Genres, books.idBook, books.Name, books.Image, books.Price, descriptions.Content AS Description
+	   	SELECT GROUP_CONCAT(DISTINCT authors.Name) AS Authors, GROUP_CONCAT(DISTINCT genres.Name) AS Genres, books.idBook, books.Name, books.Image, books.Price, books.Description
         	FROM genres
             	JOIN genres2books
                 	ON genres.idGenre = genres2books.idGenre
                 JOIN books
                     ON genres2books.idBook = books.idBook
-                JOIN descriptions
-                	ON books.idBook = descriptions.idBook
                 JOIN authors2books
                 	ON books.idBook = authors2books.idBook
                 JOIN authors
                 	ON authors2books.idAuthor = authors.idAuthor
-        GROUP BY(books.idBook);
+        GROUP BY(books.idBook)
+        ORDER BY books.Name;
+END$$
+
+DROP PROCEDURE IF EXISTS `getCart`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getCart`(IN `idUser` INT(6) UNSIGNED)
+    READS SQL DATA
+    COMMENT '@idUser'
+BEGIN
+	SELECT u2b.idBook, u2b.Quantity, u2b.Price, books.Name
+    FROM users2books AS u2b
+    JOIN books
+    	ON u2b.idBook = books.idBook
+    WHERE u2b.idUser = idUser;
 END$$
 
 DROP PROCEDURE IF EXISTS `getGenres`$$
@@ -187,12 +281,70 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getGenres`(IN `idGenre` INT(6) UNSI
 BEGIN
 	IF(idGenre = 0)THEN
     	SELECT genres.idGenre, genres.Name
-        FROM genres;
+        FROM genres
+        ORDER BY genres.Name;
     ELSE
     	SELECT genres.idGenre, genres.Name
         FROM genres
         WHERE genres.idGenre = idGenre;
     END IF;
+END$$
+
+DROP PROCEDURE IF EXISTS `getUser`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUser`(IN `idUser` INT(6) UNSIGNED)
+    READS SQL DATA
+    COMMENT '@idUser'
+BEGIN
+	SELECT users.idUser, users.Email, discounts.Size AS Discount
+    FROM users
+    	JOIN discounts
+        	ON users.idDiscount = discounts.idDiscount
+    WHERE users.idUser = idUser;
+END$$
+
+DROP PROCEDURE IF EXISTS `isValidLogin`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `isValidLogin`(IN `email` VARCHAR(255) CHARSET utf8, IN `passw` VARCHAR(45) CHARSET utf8)
+    READS SQL DATA
+    COMMENT '@email @password'
+BEGIN
+   	SELECT users.idUser
+    FROM users
+    WHERE users.Email = email
+    	AND users.Password = PASSWORD(passw);
+END$$
+
+DROP PROCEDURE IF EXISTS `isValidUser`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `isValidUser`(IN `idUser` INT(6) UNSIGNED, IN `sessionId` VARCHAR(45) CHARSET utf8)
+    READS SQL DATA
+    COMMENT '@idUser @sessionId'
+BEGIN
+	SELECT users.idUser, users.SessionId
+    FROM users
+    WHERE users.idUser = idUser AND users.SessionId = sessionId;
+END$$
+
+DROP PROCEDURE IF EXISTS `sessionDestroy`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sessionDestroy`(IN `idUser` INT(6) UNSIGNED)
+    MODIFIES SQL DATA
+    COMMENT '@idUser'
+BEGIN
+	UPDATE users
+    SET users.SessionId = ''
+    WHERE users.idUser = idUser;
+
+    SELECT ROW_COUNT();
+END$$
+
+DROP PROCEDURE IF EXISTS `sessionStart`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sessionStart`(IN `idUser` INT(6) UNSIGNED, IN `sessionId` VARCHAR(45) CHARSET utf8)
+    MODIFIES SQL DATA
+    COMMENT '@idUser @sessionId'
+BEGIN
+	UPDATE users
+    SET users.SessionId = sessionId
+    WHERE users.idUser = idUser;
+
+    SELECT ROW_COUNT();
 END$$
 
 DROP PROCEDURE IF EXISTS `updateAuthor`$$
@@ -239,6 +391,23 @@ BEGIN
     SELECT ROW_COUNT();
 END$$
 
+DROP PROCEDURE IF EXISTS `updateQuantityInCart`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateQuantityInCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `quantity` INT(6) UNSIGNED)
+    MODIFIES SQL DATA
+    COMMENT '@idUser @idBook @quantity'
+BEGIN
+	UPDATE users2books
+    SET users2books.Quantity = quantity
+    WHERE users2books.idUser = idUser
+    	AND users2books.idBook = idBook;
+
+    SELECT ROW_COUNT();
+END$$
+
+--
+-- Функции
+--
+
 DROP FUNCTION IF EXISTS `strSplit`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `strSplit`(`str` TEXT CHARSET utf8, `pos` INT(6) UNSIGNED) RETURNS text CHARSET utf8
     NO SQL
@@ -247,6 +416,8 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
 
 CREATE TABLE authors(
     idAuthor INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
