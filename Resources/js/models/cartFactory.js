@@ -6,26 +6,40 @@ bookShop.factory('cartFactory', function () {
         books: {}
     };
 
-    this.cart.load = function() {
-        this.books = JSON.parse(localStorage.getItem('cart')) || {};
+    this.cart.init = function(data) {
+
+        var length = data.length || 1;
+
+        for(var i = 0; i < length; i++) {
+            //this.books[data[book].idBook] = data[book];
+            this.books[data[i].idBook] = {
+                'idBook': data[i].idBook,
+                'Quantity': Number(data[i].Quantity || 0),
+                'Price': Number(data[i].Price)
+            }
+        }
     };
     this.cart.save = function () {
         localStorage.setItem('cart', JSON.stringify(this.books));
     };
-    this.cart.add = function(product, count) {
-        product.count = (count || 1) + ((this.books[product.id] === undefined)? 0 : Number(this.books[product.id].count));
+    this.cart.add = function(book, count) {
 
-        this.books[product.id] = product;
-        this.save();
+        if(undefined === this.books[book.idBook]) {
+            this.init(book);
+        }
+        //book.Quantity = (count || 1) + ((this.books[book.idBook] === undefined)? 0 : this.books[book.idBook].Quantity);
+
+        this.books[book.idBook].Quantity += count || 1;
+
+        //this.books[book.idBook] = book;
+        //this.save();
     };
-    this.cart.getProductCount = function () {
+    this.cart.getBookCount = function () {
         var result = 0;
 
         for(book in this.books) {
-            result += this.books[book].count;
+            result += this.books[book].Quantity;
         }
-
-        //return Object.keys(this.products).length;
 
         return result;
     };
