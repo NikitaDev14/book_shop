@@ -9,9 +9,10 @@
 
 	class Book extends \Models\Model
 	{
-		public function getBooks()
+		public function getBooks($idUser)
 		{
 			return $this->objFactory->getObjDatabase()->
-				setQuery('CALL getBooks()')->execute()->getResult();
+				setQuery('CALL getBooks(?)')->
+				setParam([$idUser])->execute()->getResult();
 		}
 	}

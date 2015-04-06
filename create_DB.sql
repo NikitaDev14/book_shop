@@ -103,6 +103,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `addToCart`(IN `idUser` INT(6) UNSIG
 BEGIN
 	DECLARE exsistsQuantity INT(6) UNSIGNED;
     DECLARE price DECIMAL(6,2) UNSIGNED;
+    DECLARE discount DECIMAL(3,3) UNSIGNED;
 
     SELECT u2b.Quantity
     INTO exsistsQuantity
@@ -112,13 +113,16 @@ BEGIN
 
     IF(exsistsQuantity IS NULL) THEN
 
-        SELECT books.Price
+        SELECT b.Price
         INTO price
-        FROM books
-        WHERE books.idBook = idBook;
+        FROM books AS b
+        WHERE b.idBook = idBook;
 
-    	INSERT INTO users2books (users2books.idUser, users2books.idBook, users2books.Quantity, price)
-        VALUES (idUser, idBook, quantity, price);
+        SELECT getDiscount(idUser)
+        INTO discount;
+
+    	INSERT INTO users2books (users2books.idUser, users2books.idBook, users2books.Quantity, users2books.Price)
+        VALUES (idUser, idBook, quantity, price-price*discount);
 
     ELSE
 
@@ -245,21 +249,27 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `getBooks`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBooks`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBooks`(IN `idUser` INT(6) UNSIGNED)
     READS SQL DATA
+    COMMENT '[@idUser]'
 BEGIN
-	   	SELECT GROUP_CONCAT(DISTINCT authors.Name) AS Authors, GROUP_CONCAT(DISTINCT genres.Name) AS Genres, books.idBook, books.Name, books.Image, books.Price, books.Description
-        	FROM genres
-            	JOIN genres2books
-                	ON genres.idGenre = genres2books.idGenre
-                JOIN books
-                    ON genres2books.idBook = books.idBook
-                JOIN authors2books
-                	ON books.idBook = authors2books.idBook
-                JOIN authors
-                	ON authors2books.idAuthor = authors.idAuthor
-        GROUP BY(books.idBook)
-        ORDER BY books.Name;
+	DECLARE discount DECIMAL(3,3) UNSIGNED;
+
+    SELECT getDiscount(idUser)
+    INTO discount;
+
+   	SELECT GROUP_CONCAT(DISTINCT a.Name) AS Authors, GROUP_CONCAT(DISTINCT g.Name) AS Genres, b.idBook, b.Name, b.Image, ROUND(b.Price-b.Price*discount, 2) AS Price, b.Description
+       	FROM genres AS g
+           	JOIN genres2books AS g2b
+               	ON g.idGenre = g2b.idGenre
+            JOIN books AS b
+                ON g2b.idBook = b.idBook
+            JOIN authors2books AS a2b
+              	ON b.idBook = a2b.idBook
+            JOIN authors AS a
+              	ON a2b.idAuthor = a.idAuthor
+    GROUP BY(b.idBook)
+    ORDER BY b.Name;
 END$$
 
 DROP PROCEDURE IF EXISTS `getCart`$$
@@ -407,6 +417,22 @@ END$$
 --
 -- Функции
 --
+DROP FUNCTION IF EXISTS `getDiscount`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `getDiscount`(`idUser` INT(6) UNSIGNED) RETURNS decimal(3,3) unsigned
+    READS SQL DATA
+    COMMENT '@idUser'
+BEGIN
+	DECLARE discount DECIMAL(3,3) UNSIGNED DEFAULT 0;
+
+	SELECT d.Size
+    INTO discount
+    FROM discounts AS d
+        JOIN users AS u
+            ON d.idDiscount = u.idDiscount
+    WHERE u.idUser = idUser;
+
+    RETURN discount;
+END$$
 
 DROP FUNCTION IF EXISTS `strSplit`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `strSplit`(`str` TEXT CHARSET utf8, `pos` INT(6) UNSIGNED) RETURNS text CHARSET utf8

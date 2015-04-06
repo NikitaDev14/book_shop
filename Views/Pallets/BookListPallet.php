@@ -16,11 +16,11 @@
 		{
 			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
-		public function generate()
+		public function generate($idUser)
 		{
 			$data =
 				[
-					'books' => $this->objFactory->getObjBook()->getBooks(),
+					'books' => $this->objFactory->getObjBook()->getBooks($idUser),
 					'authors' => $this->objFactory->getObjAuthor()->getAuthors(),
 					'genres' => $this->objFactory->getObjGenre()->getGenres()
 				];

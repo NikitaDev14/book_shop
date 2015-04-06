@@ -12,7 +12,9 @@
 	{
 		public function getList()
 		{
+			$result = $this->objFactory->getObjValidatorUser()->isValidUser();
+
 			$this->objFactory->getObjDataContainer()->
-				setParams(['nextPage' => 'BookList', 'result' => true]);
+				setParams(['nextPage' => 'BookList', 'result' => $result]);
 		}
 	}
