@@ -20,7 +20,7 @@
 		public function login()
 		{
 			$formData = $this->objFactory->getObjHttp()->
-			setParams($this->form)->getParams();
+				setParams($this->form)->getParams();
 
 			$userId = $this->objFactory->getObjValidatorLogin()
 				->setForm($formData)->isValidForm();
@@ -49,7 +49,7 @@
 		{
 			$result = $this->objFactory->getObjValidatorUser()->isValidUser();
 
-			if(false !== $result)
+			if(false != $result)
 			{
 				$this->objFactory->getObjUser()->sessionDestroy($result);
 

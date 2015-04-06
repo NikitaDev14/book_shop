@@ -18,7 +18,7 @@
                 <td>{{book.Price | currency}}</td>
                 <td>
                     <div class="form-group">
-                        <input class="form-control" type="number" min="1" ng-change="cartCtrl.cart.save(book.idBook, book.Quantity)" ng-model="book.Quantity" ng-init="book.Quantity" required>
+                        <input class="form-control" type="number" min="1" ng-change="cartCtrl.cart.save(book.idBook, book.Quantity)" ng-model="book.Quantity" ng-init="book.Quantity" ng-pattern="cartCtrl.countTemplate" required>
                     </div>
                 </td>
                 <td>{{book.Price * book.Quantity | currency}}</td>
@@ -30,6 +30,6 @@
             </tr>
         </table>
         <h3>Total amount: {{cartCtrl.cart.getTotalAmount() | currency}}</h3>
-        <a class="btn btn-primary" ng-href="#/order" role="button" ng-class="{'disabled': cartForm.$invalid}">Validate order</a>
+        <a class="btn btn-primary" ng-href="#/order" role="button" ng-class="{'disabled': cartForm.$invalid || !cartCtrl.cart.getTotalAmount()}">Validate order</a>
     </form>
 </div>

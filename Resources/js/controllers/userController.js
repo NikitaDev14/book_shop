@@ -19,44 +19,16 @@ bookShop.controller('userController', function ($scope, $http, userService, $loc
                 self.response = 'Wrong data';
             }
             else {
-                //$scope.email = $scope.password = '';
-
-                //self.response = 'Hello';
-
                 $location.path('/');
             }
         });
     };
-    /*
-    this.login = function () {
-        $http.post('index.php', {
-            action: 'Login',
-            email: $scope.email,
-            password: $scope.password
-        }).success(function (response) {
-            if('' === response) {
-                self.response = 'Wrong data';
-            }
-            else {
-                $scope.email = $scope.password = '';
-
-                self.response = 'Hello';
-
-                $location.path('/');
-            }
-        });
-    };
-    */
     this.logout = function () {
         userService.logout();
     };
     this.signup = function () {
         userService.signup($scope.email, $scope.password, $scope.passwordRepeat, function (data) {
             if('1' === data) {
-                //$scope.email = $scope.password = $scope.passwordRepeat = '';
-
-                //self.message = 'You are registered successfully.';
-
                 $location.path('/');
             }
             else
@@ -65,28 +37,4 @@ bookShop.controller('userController', function ($scope, $http, userService, $loc
             }
         });
     };
-    /*
-    this.signup = function () {
-        $http.post('index.php', {
-            action: 'Signup',
-            email: $scope.email,
-            password: $scope.password,
-            passwordRepeat: $scope.passwordRepeat
-        }).success(function (response) {
-            if('1' === response) {
-                $scope.email = $scope.password = $scope.passwordRepeat = '';
-
-                self.message = 'You are registered successfully.';
-
-                $location.path('/');
-            }
-            else
-            {
-                self.message = 'This email has already registered.';
-            }
-        });
-    };
-    */
-
-    //this.location = $location;
 });

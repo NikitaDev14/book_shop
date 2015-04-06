@@ -2,12 +2,12 @@
 <div class="row" ng-controller="bookController as bkCtrl">
     <div class="col-sm-3">
         <h4>Author</h4>
-        <select class="form-control" ng-model="filterAuthor" ng-options="auth.Name for auth in bkCtrl.authors">
-            <option value="">--Filter by authors--</option>
+        <select class="form-control" data-ng-attr-size="{{bkCtrl.authors.length+1}}" ng-model="filterAuthor" ng-options="auth.Name for auth in bkCtrl.authors">
+            <option value="">---</option>
         </select>
         <h4>Genre</h4>
-        <select class="form-control" ng-model="filterGenre" ng-options="genr.Name for genr in bkCtrl.genres">
-            <option value="">--Filter by genres--</option>
+        <select class="form-control" data-ng-attr-size="{{bkCtrl.genres.length+1}}" ng-model="filterGenre" ng-options="genr.Name for genr in bkCtrl.genres">
+            <option value="">---</option>
         </select>
     </div>
     <div class="col-sm-9">
@@ -20,7 +20,7 @@
                     <a class="btn btn-primary" ng-href="#/book/{{book.idBook}}" role="button">Details</a>
                 </div>
                 <div class="btn-group" role="group" ng-controller="cartController as cartCtrl">
-                    <button class="btn btn-success" ng-click="cartCtrl.cart.add(book)">Add to cart</button>
+                    <button class="btn btn-success" ng-click="cartCtrl.cart.add(book)" ng-class="{'disabled': !bkCtrl.isValidUser}">Add to cart</button>
                 </div>
             </div>
         </div>

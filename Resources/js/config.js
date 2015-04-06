@@ -30,4 +30,9 @@ bookShop.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: '/book_shop/Resources/html/login.html',
             controller: 'userController'
         })
+        .state('order', {
+            url: '/order',
+            templateUrl: '/book_shop/Resources/html/order.html',
+            controller: 'orderController'
+        })
 });

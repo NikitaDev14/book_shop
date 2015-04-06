@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-6" ng-controller="cartController as cartCtrl">
         <a class="btn btn-warning" href="#/" role="button">Main page</a>
-        <a class="btn btn-info" href="#/cart" role="button">
+        <a class="btn btn-info" href="#/cart" role="button" ng-class="{'disabled': !cartCtrl.isValidUser}">
             Cart <span class="badge" ng-bind="cartCtrl.cart.getBookCount()"></span>
         </a>
     </div>

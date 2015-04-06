@@ -82,4 +82,8 @@
 		{
 			return new \Models\Performers\Cart();
 		}
+		public function getObjOrder()
+		{
+			return new \Models\Performers\Order();
+		}
 	}

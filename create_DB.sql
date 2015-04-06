@@ -96,6 +96,30 @@ BEGIN
     END LOOP insertGenres;
 END$$
 
+DROP PROCEDURE IF EXISTS `addOrder`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `addOrder`(IN `idUser` INT(6) UNSIGNED, IN `idPayMethod` INT(6) UNSIGNED)
+    MODIFIES SQL DATA
+    COMMENT '@idUser @idPayMethod'
+BEGIN
+	DECLARE idOrder INT(6) UNSIGNED;
+
+	INSERT INTO orders (orders.idUser, orders.idPaymethod)
+    VALUES (idUser, idPayMethod);
+
+    SELECT LAST_INSERT_ID()
+    INTO idOrder;
+
+    INSERT INTO orders2books (orders2books.idOrder, orders2books.idBook, orders2books.Quantity, orders2books.Price)
+    SELECT idOrder, u2b.idBook, u2b.Quantity, u2b.Price
+    FROM users2books AS u2b
+    WHERE u2b.idUser = idUser;
+
+    DELETE FROM users2books
+    WHERE users2books.idUser = idUser;
+
+    SELECT idOrder;
+END$$
+
 DROP PROCEDURE IF EXISTS `addToCart`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `addToCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `quantity` INT(6) UNSIGNED)
     MODIFIES SQL DATA
@@ -300,6 +324,14 @@ BEGIN
     END IF;
 END$$
 
+DROP PROCEDURE IF EXISTS `getPayMethods`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPayMethods`()
+    READS SQL DATA
+BEGIN
+	SELECT pm.idPayMethod, pm.Name
+    FROM pay_methods AS pm;
+END$$
+
 DROP PROCEDURE IF EXISTS `getUser`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getUser`(IN `idUser` INT(6) UNSIGNED)
     READS SQL DATA
@@ -460,7 +492,9 @@ CREATE TABLE genres(
 CREATE TABLE books(
     idBook INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
     Name VARCHAR(45) NOT NULL,
-	price DECIMAL(6,2) UNSIGNED NOT NULL,
+	Price DECIMAL(6,2) UNSIGNED NOT NULL,
+	Image varchar(25) NOT NULL,
+    Description text NOT NULL
     PRIMARY KEY(idBook)
 ) Engine = InnoDB;
 
@@ -468,15 +502,16 @@ CREATE TABLE discounts(
     idDiscount INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
     Size DECIMAL(3,3) UNSIGNED NOT NULL UNIQUE,
     PRIMARY KEY(idDiscount)
+) ENGINE = InnoDB;
+
+INSERT INTO discounts (idDiscount, Size) VALUES
+(1, '0.050');
+
+CREATE TABLE IF NOT EXISTS order_status (
+    idStatus int(6) unsigned NOT NULL,
+    Name varchar(90) NOT NULL UNIQUE,
+    PRIMARY KEY(idStatus)
 ) ENGINE=InnoDB;
-	
-CREATE TABLE descriptions(
-    idBook INT(6) UNSIGNED NOT NULL,
-    Content TEXT(1000) NOT NULL,
-	FOREIGN KEY(idBook) REFERENCES books(idBook)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
-) Engine = InnoDB;
 	
 CREATE TABLE authors2books(
     idAuthor INT(6) UNSIGNED NOT NULL,

@@ -16,25 +16,14 @@ bookShop.factory('cartFactory', function (cartService) {
                 'Price': Number(data[book].Price)
             }
         }
-
-        /*
-         var length = data.length || 1;
-
-         for(var i = 0; i < length; i++) {
-         this.books[data[i].idBook] = {
-         'idBook': data[i].idBook,
-         'Quantity': Number(data[i].Quantity || 0),
-         'Price': Number(data[i].Price)
-         }
-         }
-         */
     };
     this.cart.save = function (book, count) {
-        //localStorage.setItem('cart', JSON.stringify(this.books));
 
-        cartService.updateCount(book, count, function (data) {
-            console.log(data);
-        });
+        if(0 < count) {
+            cartService.updateCount(book, count, function (data) {
+                console.log(data);
+            });
+        }
     };
     this.cart.add = function(book, count) {
         count = count || 1;
@@ -47,16 +36,12 @@ bookShop.factory('cartFactory', function (cartService) {
                 'Price': Number(book.Price)
             }
         }
-        //book.Quantity = (count || 1) + ((this.books[book.idBook] === undefined)? 0 : this.books[book.idBook].Quantity);
 
         this.books[book.idBook].Quantity += count;
 
         cartService.addToCart(book.idBook, count, function (data) {
             console.log(data);
         });
-
-        //this.books[book.idBook] = book;
-        //this.save();
     };
     this.cart.getBookCount = function () {
         var result = 0;
@@ -85,7 +70,6 @@ bookShop.factory('cartFactory', function (cartService) {
     };
     this.cart.clean = function () {
         this.books = {};
-        this.save();
     };
 
     return this.cart;
