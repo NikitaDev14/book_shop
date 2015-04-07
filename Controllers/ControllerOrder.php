@@ -18,7 +18,7 @@
 
 			if(true === $result)
 			{
-				$nextPage = 'Order';
+				$nextPage = 'PayMethodList';
 			}
 
 			$this->objFactory->getObjDataContainer()->
@@ -39,5 +39,19 @@
 
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => 'Echo', 'result' => $result]);
+		}
+		public function getOrders()
+		{
+			$result = $this->objFactory->getObjValidatorUser()->isValidUser();
+
+			$nextPage = 'Echo';
+
+			if(false !== $result)
+			{
+				$nextPage = 'OrderList';
+			}
+
+			$this->objFactory->getObjDataContainer()->
+				setParams(['nextPage' => $nextPage, 'result' => $result]);
 		}
 	}

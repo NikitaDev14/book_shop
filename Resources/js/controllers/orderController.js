@@ -29,6 +29,10 @@ bookShop.controller('orderController', function ($scope, userService, orderServi
             else{
                 $location.path('/');
             }
+
+            orderService.getOrders(function (orders) {
+                console.log(orders);
+            });
         }
         else
         {

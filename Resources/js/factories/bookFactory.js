@@ -19,8 +19,8 @@ bookShop.factory('bookFactory', function () {
         genre = genre || '';
 
         for(item in this.list) {
-            if(this.list[item].Authors.indexOf(author) !==
-                -1 && this.list[item].Genres.indexOf(genre) !== -1) {
+            if(this.list[item].Authors.indexOf(author) !== -1 &&
+                this.list[item].Genres.indexOf(genre) !== -1) {
 
                 result[this.list[item].idBook] = this.list[item];
             }

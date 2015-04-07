@@ -477,27 +477,31 @@ DELIMITER ;
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS authors;
 CREATE TABLE authors(
     idAuthor INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
     Name VARCHAR(45) NOT NULL UNIQUE,
     PRIMARY KEY(idAuthor)
 ) Engine = InnoDB;
-	
+
+DROP TABLE IF EXISTS genres;
 CREATE TABLE genres(
     idGenre INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
     Name VARCHAR(45) NOT NULL UNIQUE,
     PRIMARY KEY(idGenre)
 ) Engine = InnoDB;
-	
+
+DROP TABLE IF EXISTS books;
 CREATE TABLE books(
     idBook INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
     Name VARCHAR(45) NOT NULL,
 	Price DECIMAL(6,2) UNSIGNED NOT NULL,
 	Image varchar(25) NOT NULL,
-    Description text NOT NULL
+    Description text NOT NULL,
     PRIMARY KEY(idBook)
 ) Engine = InnoDB;
 
+DROP TABLE IF EXISTS discounts;
 CREATE TABLE discounts(
     idDiscount INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
     Size DECIMAL(3,3) UNSIGNED NOT NULL UNIQUE,
@@ -507,12 +511,51 @@ CREATE TABLE discounts(
 INSERT INTO discounts (idDiscount, Size) VALUES
 (1, '0.050');
 
-CREATE TABLE IF NOT EXISTS order_status (
-    idStatus int(6) unsigned NOT NULL,
+DROP TABLE IF EXISTS order_status;
+CREATE TABLE order_status (
+    idStatus int(6) UNSIGNED NOT NULL,
     Name varchar(90) NOT NULL UNIQUE,
     PRIMARY KEY(idStatus)
 ) ENGINE=InnoDB;
-	
+
+INSERT INTO order_status (idStatus, Name) VALUES
+(1, 'Formalizing');
+
+DROP TABLE IF EXISTS pay_methods;
+CREATE TABLE pay_methods(
+    idPayMethod INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(45) NOT NULL UNIQUE,
+    PRIMARY KEY(idPayMethod)
+) Engine = InnoDB;
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(
+    idUser INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
+    Email VARCHAR(45) NOT NULL UNIQUE,
+    Password VARCHAR(45) NOT NULL,
+    idDiscount INT(6) UNSIGNED,
+    PRIMARY KEY(idUser),
+    FOREIGN KEY(idDiscount) REFERENCES discounts(idDiscount)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+) Engine = InnoDB;
+
+
+DROP TABLE IF EXISTS users2books;
+CREATE TABLE users2books(
+    idUser INT(6) UNSIGNED NOT NULL,
+    idBook INT(6) UNSIGNED NOT NULL,
+    Quantity INT(6) UNSIGNED NOT NULL,
+    Price DECIMAL(6,2) UNSIGNED NOT NULL,
+	FOREIGN KEY(idUser) REFERENCES users(idUser)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY(idBook) REFERENCES books(idBook)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+) Engine = InnoDB;
+
+DROP TABLE IF EXISTS authors2books;
 CREATE TABLE authors2books(
     idAuthor INT(6) UNSIGNED NOT NULL,
     idBook INT(6) UNSIGNED NOT NULL,
@@ -523,7 +566,8 @@ CREATE TABLE authors2books(
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
 ) Engine = InnoDB;
-	
+
+DROP TABLE IF EXISTS genres2books;
 CREATE TABLE genres2books(
     idGenre INT(6) UNSIGNED NOT NULL,
     idBook INT(6) UNSIGNED NOT NULL,
@@ -535,56 +579,32 @@ CREATE TABLE genres2books(
 		ON DELETE CASCADE
 ) Engine = InnoDB;
 
-CREATE TABLE pay_methods(
-    idPayMethod INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-    Name VARCHAR(45) NOT NULL UNIQUE,
-    PRIMARY KEY(idPayMethod)
-) Engine = InnoDB;
-
-CREATE TABLE users(
-    idUser INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-    Login VARCHAR(45) NOT NULL UNIQUE,
-    Password VARCHAR(45) NOT NULL,
-    idDiscount INT(6) UNSIGNED,
-    PRIMARY KEY(idUser),
-    FOREIGN KEY(idDiscount) REFERENCES discounts(idDiscount)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-) Engine = InnoDB;
-
+DROP TABLE IF EXISTS orders;
 CREATE TABLE orders(
     idOrder INT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
     idUser INT(6) UNSIGNED NOT NULL,
     idPayMethod INT(6) UNSIGNED NOT NULL,
     Date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    idStatus INT(6) UNSIGNED NOT NULL,
     PRIMARY KEY(idOrder),
 	FOREIGN KEY(idUser) REFERENCES users(idUser)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	FOREIGN KEY(idPayMethod) REFERENCES pay_methods(idPayMethod)
 		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+    FOREIGN KEY(idStatus) REFERENCES order_status(idStatus)
+		ON UPDATE CASCADE
 		ON DELETE CASCADE
 ) Engine = InnoDB;
 
+DROP TABLE IF EXISTS orders2books;
 CREATE TABLE orders2books(
     idOrder INT(6) UNSIGNED NOT NULL,
     idBook INT(6) UNSIGNED NOT NULL,
     Quantity INT(6) UNSIGNED NOT NULL,
     Price DECIMAL(6,2) UNSIGNED NOT NULL,
 	FOREIGN KEY(idOrder) REFERENCES orders(idOrder)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	FOREIGN KEY(idBook) REFERENCES books(idBook)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
-) Engine = InnoDB;
-
-CREATE TABLE users2books(
-    idUser INT(6) UNSIGNED NOT NULL,
-    idBook INT(6) UNSIGNED NOT NULL,
-    Quantity INT(6) UNSIGNED NOT NULL,
-    Price DECIMAL(6,2) UNSIGNED NOT NULL,
-	FOREIGN KEY(idUser) REFERENCES users(idUser)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	FOREIGN KEY(idBook) REFERENCES books(idBook)

@@ -23,4 +23,10 @@
 				setParam([$idUser, $idPayMethod])->
 				execute()->getResult();
 		}
+		public function getOrders($idUser)
+		{
+			return $this->objFactory->getObjDatabase()->
+				setQuery('CALL getOrders(?)')->
+				setParam([$idUser])->execute()->getResult();
+		}
 	}

@@ -9,4 +9,7 @@ bookShop.service('orderService', function ($http) {
         $http.get('index.php?controller=Order&action=addOrder&payMethod='
             + payMethod).success(callback);
     };
+    this.getOrders = function (callback) {
+        $http.get('index.php?controller=Order&action=getOrders').success(callback);
+    };
 });
