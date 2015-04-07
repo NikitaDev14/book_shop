@@ -1,43 +1,47 @@
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
+<div header></div>
+
+<div class="row">
+    <div class="col-xs-3">
+        <h4>Date</h4>
+    </div>
+    <div class="col-xs-3">
+        <h4>Pay method</h4>
+    </div>
+    <div class="col-xs-3">
+        <h4>Sum</h4>
+    </div>
+    <div class="col-xs-3">
+        <h4>Status</h4>
+    </div>
+</div>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" ng-controller="orderController as orderCtrl">
+    <div class="panel panel-default" ng-repeat="order in orderCtrl.orders">
         <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Collapsible Group Item #1
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href=".o{{order.idOrder}}" aria-expanded="true" aria-controls="collapseOne" ng-click="orderCtrl.getOrderDetails(order.idOrder)">
+                    <div class="row">
+                        <div class="col-xs-3" ng-bind="order.Date"></div>
+                        <div class="col-xs-3" ng-bind="order.PayMethod"></div>
+                        <div class="col-xs-3" ng-bind="order.Summ | currency"></div>
+                        <div class="col-xs-3" ng-bind="order.OrderStatus"></div>
+                    </div>
                 </a>
             </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-collapse collapse o{{order.idOrder}}" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
-                Text
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingTwo">
-            <h4 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Collapsible Group Item #2
-                </a>
-            </h4>
-        </div>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="panel-body">
-                Text
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingThree">
-            <h4 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Collapsible Group Item #3
-                </a>
-            </h4>
-        </div>
-        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-            <div class="panel-body">
-                Text
+                <div class="row">
+                    <div class="col-xs-4">Book name</div>
+                    <div class="col-xs-4">Quantity</div>
+                    <div class="col-xs-4">Book price</div>
+                </div>
+                <div class="row" ng-repeat="book in orderCtrl.orderDetails track by $index">
+                    <div class="col-xs-4">
+                        <a ng-href="#/book/{{book.idBook}}">{{book.BookName}}</a>
+                    </div>
+                    <div class="col-xs-4" ng-bind="book.Quantity"></div>
+                    <div class="col-xs-4" ng-bind="book.Price | currency"></div>
+                </div>
             </div>
         </div>
     </div>

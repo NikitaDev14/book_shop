@@ -2,13 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: Developer
- * Date: 06.04.2015
- * Time: 20:34
+ * Date: 07.04.2015
+ * Time: 19:05
  */
 
 	namespace Views\Pallets;
 
-	class OrderPallet
+	class OrderDetailsPallet
 	{
 		private $objFactory;
 
@@ -16,9 +16,9 @@
 		{
 			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
-		public function generate()
+		public function generate($params)
 		{
-			$data = $this->objFactory->getObjOrder()->getPayMethods();
+			$data = $this->objFactory->getObjOrder()->getOrderDetails($params['idOrder'], $params['idUser']);
 
 			echo json_encode($data);
 		}

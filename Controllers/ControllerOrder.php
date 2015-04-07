@@ -54,4 +54,23 @@
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => $nextPage, 'result' => $result]);
 		}
+		public function getOrderDetails()
+		{
+			$formData = $this->objFactory->getObjHttp()->
+				setParams($this->form)->getParams();
+
+			$result = $this->objFactory->getObjValidatorUser()->isValidUser();
+
+			$nextPage = 'Echo';
+
+			if(false !== $result)
+			{
+				$nextPage = 'OrderDetails';
+			}
+
+			$this->objFactory->getObjDataContainer()->
+				setParams(['nextPage' => $nextPage,
+					'result' => ['idUser' => $result,
+							'idOrder' => $formData['idOrder']]]);
+		}
 	}

@@ -1,11 +1,20 @@
 <div class="row">
     <div class="col-xs-6" ng-controller="cartController as cartCtrl">
-        <a class="btn btn-warning" href="#/" role="button">Main page</a>
-        <a class="btn btn-info" href="#/cart" role="button" ng-class="{'disabled': !cartCtrl.isValidUser}">
+        <a class="btn btn-warning" ng-href="#/" role="button">Main page</a>
+        <a class="btn btn-info" ng-href="#/cart" role="button" ng-class="{'disabled': !cartCtrl.isValidUser}">
             Cart <span class="badge" ng-bind="cartCtrl.cart.getBookCount()"></span>
         </a>
+        <a class="btn btn-primary" ng-href="#/my_orders" role="button" ng-class="{'disabled': !cartCtrl.isValidUser}">My Orders</a>
     </div>
-    <div class="col-xs-6 text-right" ng-controller="userController as userCtrl">
+    <div class="col-xs-3">
+        <button class="btn btn-default" type="button">
+            <img class="lang-button" src="Resources/img/ua_icon.jpg">
+        </button>
+        <button class="btn btn-default" type="button">
+            <img class="lang-button" src="Resources/img/usa_icon.png">
+        </button>
+    </div>
+    <div class="col-xs-3 text-right" ng-controller="userController as userCtrl">
         <a class="btn btn-default" ng-href="#/login" ng-hide="userCtrl.isValidUser" role="button">Login</a>
         <a class="btn btn-success" ng-href="#/signup" ng-hide="userCtrl.isValidUser" role="button">Sign up</a>
 

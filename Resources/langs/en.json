@@ -3,6 +3,7 @@
   {
     "mainPage": "Main page",
     "cart": "Cart",
+    "orders": "My orders",
     "login": "Login",
     "signup": "Sign up",
     "logout": "Logout"

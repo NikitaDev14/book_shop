@@ -12,4 +12,8 @@ bookShop.service('orderService', function ($http) {
     this.getOrders = function (callback) {
         $http.get('index.php?controller=Order&action=getOrders').success(callback);
     };
+    this.getOrderDetails = function (idOrder, callback) {
+        $http.get('index.php?controller=Order&action=getOrderDetails&idOrder='
+            + idOrder).success(callback);
+    };
 });

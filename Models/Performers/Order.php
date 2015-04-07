@@ -29,4 +29,11 @@
 				setQuery('CALL getOrders(?)')->
 				setParam([$idUser])->execute()->getResult();
 		}
+		public function getOrderDetails($idOrder, $idUser)
+		{
+			return $this->objFactory->getObjDatabase()->
+				setQuery('CALL getOrderDetails(?, ?)')->
+				setParam([$idOrder, $idUser])->
+				execute()->getResult();
+		}
 	}

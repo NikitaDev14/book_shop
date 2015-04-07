@@ -26,13 +26,16 @@ bookShop.controller('orderController', function ($scope, userService, orderServi
                     });
                 };
             }
-            else{
-                $location.path('/');
-            }
 
             orderService.getOrders(function (orders) {
-                console.log(orders);
+                self.orders = orders;
             });
+
+            self.getOrderDetails = function (idOrder) {
+                orderService.getOrderDetails(idOrder, function (data) {
+                    self.orderDetails = data;
+                });
+            };
         }
         else
         {
