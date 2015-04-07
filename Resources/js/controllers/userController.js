@@ -10,7 +10,7 @@ bookShop.controller('userController', function ($scope, $http, userService, $loc
     var self = this;
 
     userService.isValidUser(function (data) {
-        self.isValidUser = data;
+        self.isValidUser = Boolean(data);
     });
 
     this.login = function () {
@@ -19,7 +19,7 @@ bookShop.controller('userController', function ($scope, $http, userService, $loc
                 self.response = 'Wrong data';
             }
             else {
-                $location.path('/');
+                $location.path('/signup');
             }
         });
     };

@@ -1,10 +1,9 @@
 <div class="container" ng-controller="userController as userCtrl">
-    <div header></div>
     <form class="form-horizontal" name="signupForm" ng-submit="userCtrl.signup()">
         <div class="form-group has-feedback" ng-class="(signupForm.email.$valid)? 'has-success' : 'has-error'">
             <label for="inputEmail" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-                <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" aria-describedby="emailStatus" ng-model="email" ng-pattern="signCtrl.template.email" required>
+                <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" aria-describedby="emailStatus" ng-model="email" ng-pattern="userCtrl.template.email" required>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signupForm.email.$valid"></span>
                 <span id="emailStatus" class="sr-only" ng-show="signupForm.email.$valid">(success)</span>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signupForm.email.$invalid"></span>
@@ -15,7 +14,7 @@
         <div class="form-group has-feedback" ng-class="(signupForm.password.$valid)? 'has-success' : 'has-error'">
             <label for="inputPassword" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" aria-describedby="passwordStatus" ng-maxlength="45" ng-model="password" ng-pattern="signCtrl.template.password" required>
+                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" aria-describedby="passwordStatus" ng-maxlength="45" ng-model="password" ng-pattern="userCtrl.template.password" required>
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signupForm.password.$valid"></span>
                 <span id="passwordStatus" class="sr-only" ng-show="signupForm.password.$valid">(success)</span>
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signupForm.password.$invalid"></span>

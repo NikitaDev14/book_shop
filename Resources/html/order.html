@@ -1,5 +1,4 @@
 <div class="container-fluid" ng-controller="orderController as orderCtrl">
-    <div header></div>
     <h3>Please, select pay method.</h3>
     <select class="form-control" data-ng-attr-size="{{orderCtrl.payMethods.length+1}}" ng-model="payMethod" >
         <option value="{{pm.idPayMethod}}" ng-repeat="pm in orderCtrl.payMethods" ng-bind="pm.Name"></option>

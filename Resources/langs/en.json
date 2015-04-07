@@ -1,11 +1,28 @@
 {
   "header":
   {
-    "mainPage": "Main page",
+    "mainPage": "Main",
     "cart": "Cart",
     "orders": "My orders",
     "login": "Login",
     "signup": "Sign up",
-    "logout": "Logout"
+    "logout": "Logout",
+    "admin": "Admin"
+  },
+  "login":
+  {
+    "email": "Email",
+    "pass": "Password",
+    "login": "Login"
+  },
+  "signup":
+  {
+    "email": "Email",
+    "emailMess": "Invalid email.",
+    "pass": "Password",
+    "passMess": "Password length should be from 4 to 45 symbols.",
+    "passRep": "Repeat password",
+    "passRepMess": "Passwords are not identical.",
+    "signup": "Signup"
   }
 }
