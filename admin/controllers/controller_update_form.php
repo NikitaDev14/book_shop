@@ -40,7 +40,7 @@
 		function action_author()
 		{
 			$id = $_POST['id_item'];
-			$data = $this->model->select_item('author', $id);
+			$data = $this->model->select_item('Author', $id);
 			
 			$_POST['result'] = $data;
 			$this->view->form('view_update_form_author.php');

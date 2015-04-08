@@ -19,7 +19,7 @@ bookShop.controller('userController', function ($scope, $http, userService, $loc
                 self.response = 'Wrong data';
             }
             else {
-                $location.path('/signup');
+                $location.path('/');
             }
         });
     };

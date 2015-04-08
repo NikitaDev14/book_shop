@@ -3,7 +3,7 @@
 		<title>Book catalogue</title>
 	</head>
 	<body>
-		<form action="/bookcatalogue/admin/add_res/book" method="post">
+		<form action="<?php echo BASE_URL_ADMIN ?>add_res/book" method="post">
 			<?php
 				$authors = $_POST['authors'];
 				$genres = $_POST['genres'];
@@ -12,14 +12,14 @@
 				
 				foreach($authors as $row)
 				{
-					echo "<br/><input type='checkbox' name='authors[]' value=".$row['id']."/>".$row['author'];
+					echo "<br/><input type='checkbox' name='authors[]' value=".$row['idAuthor']."/>".$row['Name'];
 				}
 				
 				echo "<h3>Жанры</h3>";
 				
 				foreach($genres as $row)
 				{
-					echo "<br/><input type='checkbox' name='genres[]' value=".$row['id']."/>".$row['genre'];
+					echo "<br/><input type='checkbox' name='genres[]' value=".$row['idGenre']."/>".$row['Name'];
 				}
 
 				echo "<h3>Название</h3>";

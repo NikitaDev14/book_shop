@@ -1,24 +1,15 @@
 ﻿<?php
-	class Model_admin extends Model {
-		
-		public function get_email($path)
-		{
-			return parent::get_email($path);
-		}
-		public function set_email($email)
-		{
-			$f = fopen('email.txt', 'w');
-			
-			fwrite($f, $email);
-			
-			fclose($f);
-		}
+	class Model_admin extends Model
+	{
 		public function add_item($field)
 		{
 			$db = parent::connection();
-			$table = $field.'s';
 			$value = $_POST[$field];
-			$result = $db->exec("INSERT INTO $table SET $field='$value'");
+
+			$stmt = $db->prepare('CALL add' . $field . '(?)');
+			$stmt->bindParam(1, $value);
+
+			$result = $stmt->execute();
 			
 			if($result)
 			{
@@ -28,6 +19,22 @@
 			{
 				return "При вставке информации в БД произошла ошибка!";
 			}
+		}
+		private function upload_image($login, $avatar) // обработка фотографии пользователя
+		{
+			if(is_uploaded_file($avatar['tmp_name']))
+			{
+				$format = end(explode('.', $avatar['name'])); // получение формата файла
+
+				$fname = $login . '.' . $format; // формирование имени файла на основании логина
+
+				move_uploaded_file($avatar['tmp_name'], 'images/' . $fname); // перемещение файла в папку images
+
+				$image = 'images/' . $fname;
+			}
+			else { $image = null; }
+
+			return $image;
 		}
 		public function add_book()
 		{
@@ -77,10 +84,14 @@
 		public function update_item($field, $id)
 		{
 			$db = parent::connection();
-			$table = $field.'s';
-			$value = $_POST[$field];
-			$result = $db->exec("UPDATE $table SET $field='$value' WHERE id='$id'");
-			
+			$value = $_POST[strtolower($field)];
+
+			$stmt = $db->prepare('CALL update' . $field . '(?, ?)');
+			$stmt->bindParam(1, $id);
+			$stmt->bindParam(2, $value);
+
+			$result = $stmt->execute();
+
 			if($result)
 			{
 				return "Информация в БД изменена успешно";

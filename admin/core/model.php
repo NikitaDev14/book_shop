@@ -1,16 +1,10 @@
 ﻿<?php
 	class Model {
-	
 		protected function connection()
 		{
-			$host = 'localhost';
-			$user = 'root';
-			$db = 'bookcatalogue';
-			$pass = '';
-			
 			try
 			{
-			  $db = new PDO('mysql:host='.$host.';dbname='.$db, $user, $pass);
+			  $db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
 			  
 			  $db->query("set_client='utf8'");
 			  $db->query("set character_set_results='utf8'");
@@ -23,15 +17,6 @@
 			{
 			  die( 'Ошибка! Невозможно подключиться к базе данных.'.$e->getMessage() );
 			}
-		}
-		public function get_email($path)
-		{
-			$f = fopen($path, 'r');
-			$email = fgets($f);
-			
-			fclose($f);
-			
-			return $email;
 		}
 		public function select_book($cond)
 		{
@@ -124,16 +109,13 @@
 		{
 			$db = $this->connection();
 			$table = $field.'s';
-			$query = "SELECT * FROM $table";
-			
-			if($cond)
-			{
-				$query .= " WHERE id=$cond";
-			}
-			
-			$result = $db->query($query);
 
-			return	$result;
+			$stmt = $db->prepare('CALL get' . $table . '(?)');
+			$stmt->bindParam(1, $cond);
+
+			$stmt->execute();
+
+			return	$stmt->fetchAll();
 		}
 		public function select_book_id($id_book)
 		{

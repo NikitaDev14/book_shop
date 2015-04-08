@@ -3,7 +3,7 @@
 		<title>Book catalogue</title>
 	</head>
 	<body>
-		<form action="/bookcatalogue/admin/add_res/author" method="post">
+		<form action="<?php echo BASE_URL_ADMIN; ?>add_res/author" method="post">
 			<p>Автор (ФИО)</p>
 			<input type="text" name="author" size="30"/>
 			<input type="submit" name="submit" value="Добавить"/>

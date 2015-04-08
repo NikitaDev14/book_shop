@@ -16,10 +16,10 @@
 		}
 		function action_book()
 		{	
-			$data = $this->model->select_item('author');
+			$data = $this->model->select_item('Author', 0);
 			$_POST['authors'] = $data;
 			
-			$data = $this->model->select_item('genre');
+			$data = $this->model->select_item('Genre', 0);
 			$_POST['genres'] = $data;
 			
 			$this->view->form('view_add_book.php');

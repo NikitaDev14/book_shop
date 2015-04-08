@@ -8,13 +8,13 @@
 			
 			foreach($content as $row)
 			{
-				$author = $row['author'];
-				$id = $row['id'];
+				$author = $row['Name'];
+				$id = $row['idAuthor'];
 			}
 		?>
-		<form action="/bookcatalogue/admin/update_res/author/id=<?php echo $id ?>" method="post">
+		<form action="<?php echo BASE_URL_ADMIN ?>update_res/author/id=<?php echo $id ?>" method="post">
 			<br/>
-			<input type="text" name="author" value="<?php echo $row['author'] ?>"/>
+			<input type="text" name="author" value="<?php echo $row['Name'] ?>"/>
 			<input type="submit" name="submit" value="Изменить"/>
 		</form>
 	</body>

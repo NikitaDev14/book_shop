@@ -8,7 +8,7 @@
 		}
 		function action_author()
 		{
-			$data = $this->model->select_item('author');
+			$data = $this->model->select_item('Author');
 			$_POST['result'] = $data;
 			$this->view->form('view_update_author.php');
 		}

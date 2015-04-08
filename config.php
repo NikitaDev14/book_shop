@@ -6,6 +6,7 @@
 
 	define('ADMIN_EMAIL', 'somemail@mail.com');
 	define('BASE_URL', '/book_shop/');
+	define('BASE_URL_ADMIN', '/book_shop/admin/');
 
 	define('EMAIL_TEMPLATE', '/[0-9a-z_]+@[0-9a-z_]+\\.[a-z]{1,5}/i');
 	define('PASSWORD_TEMPLATE', '/.{4,}/');

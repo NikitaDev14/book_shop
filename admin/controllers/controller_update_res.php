@@ -9,13 +9,13 @@
 		function action_author()
 		{
 			$id = $_POST['id_item'];
-			$data = $this->model->update_item('author', $id);
+			$data = $this->model->update_item('Author', $id);
 			$this->view->message($data);
 		}
 		function action_genre()
 		{
 			$id = $_POST['id_item'];
-			$data = $this->model->update_item('genre', $id);
+			$data = $this->model->update_item('Genre', $id);
 			$this->view->message($data);
 		}
 		function action_book()

@@ -3,13 +3,13 @@
 		<title>Book catalogue</title>
 	</head>
 	<body>
-		<form action="/bookcatalogue/admin/delete_res/author" method="post">
+		<form action="<?php echo BASE_URL_ADMIN; ?>delete_res/author" method="post">
 			<?php
 				$content = $_POST['result'];
 				
 				foreach($content as $row)
 				{
-					echo "<br/><input type='checkbox' name='item[]' value=".$row['id']."/>".$row['author'];
+					echo "<br/><input type='checkbox' name='item[]' value=".$row['idAuthor']."/>".$row['Name'];
 				}
 			?>
 			<br/>
