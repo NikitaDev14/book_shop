@@ -11,9 +11,9 @@
         <div class="form-group">
             <div class="input-group">
                 <div class="input-group-addon">Quantity</div>
-                <input type="number" class="form-control" name="count" ng-model="count" ng-init="count = 1" min="1" required>
+                <input type="number" class="form-control" name="count" ng-model="count" ng-init="count = 1" ng-disabled="!bkCtrl.isValidUser" min="1" required>
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" ng-class="{'disabled': countForm.count.$invalid}" ng-click="cartCtrl.cart.add(bkCtrl.books, count)">Add to cart</button>
+                    <button class="btn btn-default" type="button" ng-class="{'disabled': countForm.count.$invalid || !bkCtrl.isValidUser}" ng-click="cartCtrl.cart.add(bkCtrl.books, count)">Add to cart</button>
                 </span>
             </div>
         </div>

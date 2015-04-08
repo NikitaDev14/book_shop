@@ -20,14 +20,15 @@
 		}
 		function action_book()
 		{	
-			$authors = $_POST['author'];
-			$genres = $_POST['genre'];
+			$authors = $_POST['Author'];
+			$genres = $_POST['Genre'];
 			$name = $_POST['name'];
 			$description = $_POST['description'];
 			$price = $_POST['price'];
 			$id_book = $_POST['id_item'];
+			$image = $_POST['image'];
 			
-			$data = $this->model->update_book($authors, $genres, $name, $description, $price, $id_book);
+			$data = $this->model->update_book($authors, $genres, $name, $description, $price, $id_book, $image);
 			
 			$this->view->message($data);
 		}

@@ -40,37 +40,38 @@
 		{
 			$db = parent::connection();
 
+			$author = implode(',', $_POST['authors']);
+			$genre = implode(',', $_POST['genres']);
 			$name = $_POST['name'];
 			$description = $_POST['description'];
 			$price = $_POST['price'];
-			$author = $_POST['authors'];
-			$genre = $_POST['genres'];
-			
-			$db->exec("INSERT INTO books SET name='$name', price='$price'");
-			
-			$id_book = $db->lastInsertId();
-			
-			$query = NULL;
-			
-			$sql_descr = "INSERT INTO descriptions SET id_book='$id_book', description='$description'";
-			
-			foreach($author as $id_author)
-			{
-				$id_author = (int)$id_author;
-				
-				$query .= "INSERT INTO authors_books SET id_author='$id_author', id_book='$id_book';";
-			}
-			
-			foreach($genre as $id_genre)
-			{
-				$id_genre = (int)$id_genre;
-				
-				$query .= "INSERT INTO genres_books SET id_genre='$id_genre', id_book='$id_book';";
-			}
-			
-			$query .= $sql_descr;
+			$image = $_FILES['image'];
 
-			$result = $db->exec($query);
+			if(is_uploaded_file($image['tmp_name']))
+			{
+				$format = end(explode('.', $image['name']));
+
+				if(in_array($format, ['jpg', 'png', 'gif'], false))
+				{
+					$stmt = $db->prepare('CALL addBook(?, ?, ?, ?, ?, ?)');
+					$stmt->bindParam(1, $author);
+					$stmt->bindParam(2, $genre);
+					$stmt->bindParam(3, $name);
+					$stmt->bindParam(4, $description);
+					$stmt->bindParam(5, $price);
+					$stmt->bindParam(6, $format);
+
+					$stmt->execute();
+
+					$result = $stmt->fetchAll();
+
+					$fname = $result[0]['idNewBook'] . '.' . $format;
+
+					move_uploaded_file($image['tmp_name'], '../Resources/img/' . $fname);
+				}
+				else { $result = false; }
+			}
+			else { $result = false; }
 			
 			if($result)
 			{
@@ -101,29 +102,39 @@
 				return "При изменении информации в БД произошла ошибка!";
 			}
 		}
-		public function update_book($authors, $genres, $name, $description, $price, $id_book)
+		public function update_book($authors, $genres, $name, $description, $price, $id_book, $image)
 		{
 			$db = parent::connection();
-			
-			$query = "UPDATE books SET name='$name', price='$price' WHERE id='$id_book';";
-			$query .= "UPDATE descriptions SET description='$description' WHERE id_book='$id_book';";
-			
-			$query .= "DELETE FROM authors_books WHERE id_book='$id_book';";
-			$query .= "DELETE FROM genres_books WHERE id_book='$id_book';";
-			
-			foreach($authors as $id_author)
-			{
-				$query .= "INSERT INTO authors_books SET id_author='$id_author', id_book='$id_book';";
-			}
-			
-			foreach($genres as $id_genre)
-			{
-				$query .= "INSERT INTO genres_books SET id_genre='$id_genre', id_book='$id_book';";
-			}
-			
-			$query = substr($query,0,-1);
 
-			$result = $db->exec($query);
+			$format = '';
+
+			if(is_uploaded_file($image['tmp_name']))
+			{
+				$format = end(explode('.', $image['name']));
+
+				if(in_array($format, ['jpg', 'png', 'gif'], false))
+				{
+					$fname = $id_book . '.' . $format;
+
+					move_uploaded_file($image['tmp_name'], '../Resources/img/' . $fname);
+				}
+				else { $format = ''; }
+			}
+
+			$stmt = $db->prepare('CALL updateBook(?, ?, ?, ?, ?, ?, ?)');
+			$stmt->bindParam(1, implode(',', $authors));
+			$stmt->bindParam(2, implode(',', $genres));
+			$stmt->bindParam(3, $name);
+			$stmt->bindParam(4, $description);
+			$stmt->bindParam(5, $price);
+			$stmt->bindParam(6, $id_book);
+			$stmt->bindParam(7, $format);
+
+			$stmt->execute();
+
+			$result = $stmt->fetchAll();
+
+			var_dump($result);
 			
 			if($result)
 			{

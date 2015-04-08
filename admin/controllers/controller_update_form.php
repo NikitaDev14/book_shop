@@ -6,7 +6,7 @@
 			$this->view = new View();
 			$this->model = new Model_admin();
 		}
-		function get_checkbox($catalogue,$book,$param)
+		function get_checkbox($catalogue, $book, $param)
 		{
 			$checkbox = null;
 			
@@ -16,7 +16,7 @@
 				
 				foreach($book[$param.'s'] as $key => $b)
 				{
-					if($key==$item['id'])
+					if($key==$item['id' . $param])
 					{
 						$isChecked = true;
 						
@@ -25,13 +25,13 @@
 				}
 				if($isChecked)
 				{
-					$checkbox .= "<br/><input type='checkbox' name=".$param.'[]'."
-						value=".$item['id']." checked/>".$item[$param];
+					$checkbox .= "</br><label><input type='checkbox' name=".$param.'[]'."
+						value= '".$item['id' . $param]."' checked/>".$item['Name'].'</label>';
 				}
 				else
 				{
-					$checkbox .= "<br/><input type='checkbox' name=".$param.'[]'."
-						value=".$item['id']."/>".$item[$param];
+					$checkbox .= "</br><label><input type='checkbox' name=".$param.'[]'."
+						value= '".$item['id' . $param]."' />".$item['Name'].'</label>';
 				}
 			}
 			
@@ -57,12 +57,12 @@
 		{
 			$id = $_POST['id_item'];
 			$book = $this->model->select_book_id($id);
+
+			$authors = $this->model->select_item('Author', 0);
+			$genres = $this->model->select_item('Genre', 0);
 			
-			$authors = $this->model->select_item('author');
-			$genres = $this->model->select_item('genre');
-			
-			$authors = $this->get_checkbox($authors, $book, 'author');
-			$genres = $this->get_checkbox($genres, $book, 'genre');
+			$authors = $this->get_checkbox($authors, $book, 'Author');
+			$genres = $this->get_checkbox($genres, $book, 'Genre');
 			
 			$_POST['book'] = $book;
 			$_POST['authors'] = $authors;

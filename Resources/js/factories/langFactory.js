@@ -11,6 +11,5 @@ bookShop.factory('langFactory', function () {
         return localStorage.getItem('lang') || 'ua';
     };
 
-
     return this.lang;
 });

@@ -8,8 +8,8 @@
 			
 			foreach($content as $row)
 			{
-				$strLink = "<a href = '/bookcatalogue/admin/update_form
-					/genre/id=".$row["id"]."'>".$row["genre"]."</a>";
+				$strLink = "<a href = '" . BASE_URL_ADMIN . "update_form
+					/genre/id=".$row["idGenre"]."'>".$row["Name"]."</a>";
 				
 				echo $strLink."<br/>";
 			}		

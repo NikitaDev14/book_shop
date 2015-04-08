@@ -7,37 +7,37 @@ bookShop.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('index', {
             url: '/',
-            templateUrl: '/book_shop/Resources/html/bookList.html',
+            templateUrl: 'Resources/html/bookList.html',
             controller: 'bookController'
         })
         .state('bookDetails', {
             url: '/book/:id',
-            templateUrl: '/book_shop/Resources/html/bookDetails.html',
+            templateUrl: 'Resources/html/bookDetails.html',
             controller: 'bookController'
         })
         .state('signup', {
             url: '/signup',
-            templateUrl: '/book_shop/Resources/html/signup.html',
+            templateUrl: 'Resources/html/signup.html',
             controller: 'userController'
         })
         .state('cart', {
             url: '/cart',
-            templateUrl: '/book_shop/Resources/html/cart.html',
+            templateUrl: 'Resources/html/cart.html',
             controller: 'cartController'
         })
         .state('login', {
             url: '/login',
-            templateUrl: '/book_shop/Resources/html/login.html',
+            templateUrl: 'Resources/html/login.html',
             controller: 'userController'
         })
         .state('order', {
             url: '/order',
-            templateUrl: '/book_shop/Resources/html/order.html',
+            templateUrl: 'Resources/html/order.html',
             controller: 'orderController'
         })
         .state('orderList', {
             url: '/my_orders',
-            templateUrl: '/book_shop/Resources/html/orderList.html',
+            templateUrl: 'Resources/html/orderList.html',
             controller: 'orderController'
         })
 });

@@ -24,5 +24,39 @@
     "passRep": "Repeat password",
     "passRepMess": "Passwords are not identical.",
     "signup": "Signup"
+  },
+  "main":
+  {
+    "authors": "Filter by authors",
+    "genres": "Filter by genres",
+    "btnDetails": "Details",
+    "btnAdd": "Add to cart"
+  },
+  "bookDet":
+  {
+    "name": "Name",
+    "authors": "Authors",
+    "genres": "Genres",
+    "descr": "Description",
+    "price": "Price",
+    "quantt": "Quantity",
+    "btnAdd": "Add to cart"
+  },
+  "cart":
+  {
+    "name": "Name",
+    "price": "Price",
+    "quantt": "Quantity",
+    "amount": "Amount",
+    "del": "Delete",
+    "total": "Total amount",
+    "btnOrder": "Validate order"
+  },
+  "order":
+  {
+    "head": "Please, select pay method",
+    "btnOrder": "Order",
+    "messHead": "Order",
+    "messText": "Thanks for your order"
   }
 }

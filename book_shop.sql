@@ -64,14 +64,12 @@ CREATE PROCEDURE `addBook`(IN `auth` VARCHAR(1000) CHARSET utf8, IN `genr` VARCH
     COMMENT '@authors @genres @name @descr @price @imgType'
 BEGIN
     DECLARE idNewBook INT(6) UNSIGNED;
-    
-    INSERT INTO books (books.Name, books.Price) VALUES (name, price);
-   
+
+    INSERT INTO books (books.Name, books.Price, books.Description) VALUES (name, price, descr);
+
     SELECT LAST_INSERT_ID() INTO idNewBook;
-    
+
     UPDATE books SET Image = CONCAT(idNewBook, '.', imgType) WHERE books.idBook = idNewBook;
-    
-    INSERT INTO descriptions (descriptions.idBook, descriptions.Content) VALUES (idNewBook, descr);
     
     CALL addAuthorsOfBooks(auth, idNewBook);
     
@@ -419,13 +417,19 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `updateBook`$$
-CREATE PROCEDURE `updateBook`(IN `auth` VARCHAR(1000) CHARSET utf8, IN `genr` VARCHAR(1000) CHARSET utf8, IN `name` VARCHAR(1000) CHARSET utf8, IN `descr` VARCHAR(1000) CHARSET utf8, IN `price` DECIMAL(6,2) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `imgType` INT)
+CREATE PROCEDURE `updateBook`(IN `auth` VARCHAR(1000) CHARSET utf8, IN `genr` VARCHAR(1000) CHARSET utf8, IN `name` VARCHAR(1000) CHARSET utf8, IN `descr` VARCHAR(1000) CHARSET utf8, IN `price` DECIMAL(6,2) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `imgType` VARCHAR(10) CHARSET utf8)
     MODIFIES SQL DATA
     COMMENT '@auth @genr @name @descr @price @idBook @imgType'
 BEGIN
-    UPDATE books SET books.Name = name, books.Price = price, books.Image = CONCAT(idBook, '.', imgType) WHERE books.idBook = idBook;
-    
-    UPDATE descriptions SET descriptions.Content = descr WHERE descriptions.idBook = idBook;
+IF(imgType = '') THEN
+        UPDATE books
+        SET books.Name = name, books.Price = price, books.Description = descr
+        WHERE books.idBook = idBook;
+    ELSE
+    	UPDATE books
+        SET books.Name = name, books.Price = price, books.Description = descr, books.Image = CONCAT(idBook, '.', imgType)
+        WHERE books.idBook = idBook;
+    END IF;
     
     DELETE FROM authors2books WHERE authors2books.idBook = idBook;
     
@@ -526,22 +530,6 @@ CREATE TABLE IF NOT EXISTS `authors2books` (
   `idBook` int(6) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `authors2books`
---
-
-INSERT INTO `authors2books` (`idAuthor`, `idBook`) VALUES
-(1, 18),
-(2, 18),
-(2, 19),
-(3, 19),
-(3, 20),
-(4, 20),
-(1, 21),
-(4, 21),
-(2, 22),
-(4, 22);
-
 -- --------------------------------------------------------
 
 --
@@ -556,17 +544,6 @@ CREATE TABLE IF NOT EXISTS `books` (
   `Image` varchar(25) NOT NULL,
   `Description` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `books`
---
-
-INSERT INTO `books` (`idBook`, `Name`, `Price`, `Image`, `Description`) VALUES
-(18, 'qwe', '15.00', '18.jpg', 'asd'),
-(19, 'asd', '23.00', '19.png', 'zxc'),
-(20, 'zxc', '34.00', '20.jpg', 'ert'),
-(21, 'fgh', '45.00', '21.jpg', 'dfg'),
-(22, 'bnm', '65.00', '22.jpg', 'cvb');
 
 -- --------------------------------------------------------
 
@@ -619,20 +596,6 @@ CREATE TABLE IF NOT EXISTS `genres2books` (
   `idBook` int(6) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `genres2books`
---
-
-INSERT INTO `genres2books` (`idGenre`, `idBook`) VALUES
-(1, 18),
-(2, 18),
-(1, 19),
-(2, 19),
-(2, 20),
-(1, 21),
-(2, 21),
-(2, 22);
-
 -- --------------------------------------------------------
 
 --
@@ -648,16 +611,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `idStatus` int(6) unsigned NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `orders`
---
-
-INSERT INTO `orders` (`idOrder`, `idUser`, `idPayMethod`, `Date`, `idStatus`) VALUES
-(12, 46, 1, '2015-04-06 23:50:43', 1),
-(13, 46, 2, '2015-04-06 23:51:34', 1),
-(14, 46, 4, '2015-04-06 23:52:27', 1),
-(15, 46, 4, '2015-04-06 23:56:28', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -671,22 +624,6 @@ CREATE TABLE IF NOT EXISTS `orders2books` (
   `Quantity` int(6) unsigned NOT NULL,
   `Price` decimal(6,2) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `orders2books`
---
-
-INSERT INTO `orders2books` (`idOrder`, `idBook`, `Quantity`, `Price`) VALUES
-(12, 18, 2, '14.25'),
-(12, 19, 2, '21.85'),
-(12, 20, 2, '32.30'),
-(12, 21, 2, '42.75'),
-(12, 22, 1, '61.75'),
-(13, 18, 1, '14.25'),
-(14, 18, 1, '14.25'),
-(15, 18, 1, '14.25'),
-(15, 19, 1, '21.85'),
-(15, 21, 1, '42.75');
 
 -- --------------------------------------------------------
 
@@ -705,7 +642,9 @@ CREATE TABLE IF NOT EXISTS `order_status` (
 --
 
 INSERT INTO `order_status` (`idStatus`, `Name`) VALUES
-(1, 'Formalizing');
+(1, 'Formalizing'),
+(2, 'Shipping'),
+(3, 'Waiting');
 
 -- --------------------------------------------------------
 
@@ -743,13 +682,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `idDiscount` int(6) unsigned DEFAULT '1',
   `SessionId` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `users`
---
-
-INSERT INTO `users` (`idUser`, `Email`, `Password`, `idDiscount`, `SessionId`) VALUES
-(46, 'max@i.ua', '*A4B6157319038724E3560894F7F932C8886EBFCF', 1, 'ib0fodcgsqdl5ihrf02hlttg70');
 
 -- --------------------------------------------------------
 
@@ -841,50 +773,6 @@ ALTER TABLE `users`
 ALTER TABLE `users2books`
  ADD KEY `idUser` (`idUser`), ADD KEY `idBook` (`idBook`);
 
---
--- AUTO_INCREMENT для сохранённых таблиц
---
-
---
--- AUTO_INCREMENT для таблицы `authors`
---
-ALTER TABLE `authors`
-MODIFY `idAuthor` int(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT для таблицы `books`
---
-ALTER TABLE `books`
-MODIFY `idBook` int(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
---
--- AUTO_INCREMENT для таблицы `discounts`
---
-ALTER TABLE `discounts`
-MODIFY `idDiscount` int(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT для таблицы `genres`
---
-ALTER TABLE `genres`
-MODIFY `idGenre` int(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT для таблицы `orders`
---
-ALTER TABLE `orders`
-MODIFY `idOrder` int(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT для таблицы `order_status`
---
-ALTER TABLE `order_status`
-MODIFY `idStatus` int(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT для таблицы `pay_methods`
---
-ALTER TABLE `pay_methods`
-MODIFY `idPayMethod` int(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT для таблицы `users`
---
-ALTER TABLE `users`
-MODIFY `idUser` int(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=47;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --

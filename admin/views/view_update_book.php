@@ -7,11 +7,16 @@
 			echo "<ol>";
 			
 			$content = $_POST['result'];
-			
-			foreach($content as $key => $item)
+
+			foreach($content as $item)
 			{
-				echo "<li><a href = '/bookcatalogue/admin/update_form/book
-					/id=".$key."'>".$item."</a></li>";
+				echo "<li><a href = '" . BASE_URL_ADMIN . "update_form/book
+					/id=" . $item['idBook']
+					. "'>" . $item['Authors'] . ', '
+					. $item['Genres'] . ', '
+					. $item['Name'] . ', '
+					. $item['Price'] . ', '
+					. "</a></li>";
 			}
 			
 			echo "</ol>";

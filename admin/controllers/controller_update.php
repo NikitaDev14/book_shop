@@ -8,13 +8,13 @@
 		}
 		function action_author()
 		{
-			$data = $this->model->select_item('Author');
+			$data = $this->model->select_item('Author', 0);
 			$_POST['result'] = $data;
 			$this->view->form('view_update_author.php');
 		}
 		function action_genre()
 		{
-			$data = $this->model->select_item('genre');
+			$data = $this->model->select_item('Genre', 0);
 			$_POST['result'] = $data;
 			$this->view->form('view_update_genre.php');
 		}
