@@ -4,11 +4,11 @@
         <table class="table table-bordered table-hover">
             <tr class="info">
                 <th>№</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Count</th>
-                <th>Amount</th>
-                <th>Delete</th>
+                <th>{{cartCtrl.lang.template.cart.name}}</th>
+                <th>{{cartCtrl.lang.template.cart.price}}</th>
+                <th>{{cartCtrl.lang.template.cart.quantt}}</th>
+                <th>{{cartCtrl.lang.template.cart.amount}}</th>
+                <th>{{cartCtrl.lang.template.cart.del}}</th>
             </tr>
             <tr ng-repeat="book in cartCtrl.cart.books">
                 <td ng-bind="book.idBook"></td>
@@ -29,7 +29,10 @@
                 </td>
             </tr>
         </table>
-        <h3>Total amount: {{cartCtrl.cart.getTotalAmount() | currency}}</h3>
-        <a class="btn btn-primary" ng-href="#/order" role="button" ng-class="{'disabled': cartForm.$invalid || !cartCtrl.cart.getTotalAmount()}">Validate order</a>
+        <h3>{{cartCtrl.lang.template.cart.total}}: {{cartCtrl.cart.getTotalAmount() | currency}}</h3>
+        <a class="btn btn-primary" ng-href="#/order" role="button"
+           ng-class="{'disabled': cartForm.$invalid || !cartCtrl.cart.getTotalAmount()}">
+            {{cartCtrl.lang.template.cart.btnOrder}}
+        </a>
     </form>
 </div>

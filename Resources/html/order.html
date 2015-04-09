@@ -1,10 +1,15 @@
 <div header></div>
 <div class="container-fluid" ng-controller="orderController as orderCtrl">
-    <h3>Please, select pay method.</h3>
+    <h3>
+        {{orderCtrl.lang.template.order.head}}
+    </h3>
     <select class="form-control" data-ng-attr-size="{{orderCtrl.payMethods.length+1}}" ng-model="payMethod" >
         <option value="{{pm.idPayMethod}}" ng-repeat="pm in orderCtrl.payMethods" ng-bind="pm.Name"></option>
     </select>
-    <button class="btn btn-success" data-toggle="modal" data-target="#order" ng-class="{'disabled': !payMethod}" ng-click="orderCtrl.sendOrder(payMethod)">Order</button>
+    <button class="btn btn-success" data-toggle="modal" data-target="#order" ng-class="{'disabled': !payMethod}"
+            ng-click="orderCtrl.sendOrder(payMethod)">
+        {{orderCtrl.lang.template.order.btnOrder}}
+    </button>
 
     <!-- Modal -->
 
@@ -12,11 +17,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title text-center" id="myModalLabel">Order</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="myModalLabel">
+                        {{orderCtrl.lang.template.order.messHead}}</h4>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center">Thanks for your order</p>
+                    <p class="text-center">{{orderCtrl.lang.template.order.messText}}</p>
                 </div>
             </div>
         </div>

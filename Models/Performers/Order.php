@@ -26,7 +26,7 @@
 		public function getOrders($idUser)
 		{
 			return $this->objFactory->getObjDatabase()->
-				setQuery('CALL getOrders(?)')->
+			setQuery('CALL getOrdersByUser(?)')->
 				setParam([$idUser])->execute()->getResult();
 		}
 		public function getOrderDetails($idOrder, $idUser)

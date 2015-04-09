@@ -30,7 +30,8 @@
     "authors": "Filter by authors",
     "genres": "Filter by genres",
     "btnDetails": "Details",
-    "btnAdd": "Add to cart"
+    "btnAdd": "Add to cart",
+    "price": "Price"
   },
   "bookDet":
   {
@@ -56,7 +57,16 @@
   {
     "head": "Please, select pay method",
     "btnOrder": "Order",
-    "messHead": "Order",
+    "messHead": "Book shop",
     "messText": "Thanks for your order"
+  },
+  "myOrders": {
+    "date": "Date",
+    "payMeth": "Pay method",
+    "sum": "Amount",
+    "status": "Status",
+    "bkName": "Book name",
+    "quantt": "Quantity",
+    "price": "Book price"
   }
 }

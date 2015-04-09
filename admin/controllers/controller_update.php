@@ -26,5 +26,14 @@
 			
 			$this->view->form('view_update_book.php');
 		}
+
+		public function action_order()
+		{
+			$data = $this->model->getOrders();
+
+			$_POST['result'] = $data;
+
+			$this->view->form('view_update_order.php');
+		}
 	}
 ?>

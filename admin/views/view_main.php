@@ -44,7 +44,7 @@
 					<a href="user/list">Пользователи</a>
 				</td>
 				<td>
-					<a href="delete/genre">Заказы</a>
+					<a href="update/order">Заказы</a>
 				</td>
 				<td>
 					<a href="user/discount">Скидки</a>

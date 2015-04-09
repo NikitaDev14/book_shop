@@ -1,16 +1,16 @@
 <div header></div>
-<div class="row">
+<div class="row" ng-controller="orderController as orderCtrl">
     <div class="col-xs-3">
-        <h4>Date</h4>
+        <h4>{{orderCtrl.lang.template.myOrders.date}}</h4>
     </div>
     <div class="col-xs-3">
-        <h4>Pay method</h4>
+        <h4>{{orderCtrl.lang.template.myOrders.payMeth}}</h4>
     </div>
     <div class="col-xs-3">
-        <h4>Sum</h4>
+        <h4>{{orderCtrl.lang.template.myOrders.sum}}</h4>
     </div>
     <div class="col-xs-3">
-        <h4>Status</h4>
+        <h4>{{orderCtrl.lang.template.myOrders.status}}</h4>
     </div>
 </div>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" ng-controller="orderController as orderCtrl">
@@ -30,9 +30,15 @@
         <div class="panel-collapse collapse o{{order.idOrder}}" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-4">Book name</div>
-                    <div class="col-xs-4">Quantity</div>
-                    <div class="col-xs-4">Book price</div>
+                    <div class="col-xs-4">
+                        {{orderCtrl.lang.template.myOrders.bkName}}
+                    </div>
+                    <div class="col-xs-4">
+                        {{orderCtrl.lang.template.myOrders.quantt}}
+                    </div>
+                    <div class="col-xs-4">
+                        {{orderCtrl.lang.template.myOrders.price}}
+                    </div>
                     <hr>
                 </div>
                 <div class="row" ng-repeat="book in orderCtrl.orderDetails track by $index">

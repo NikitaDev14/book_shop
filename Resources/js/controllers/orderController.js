@@ -1,31 +1,30 @@
 /**
  * Created by Developer on 06.04.2015.
  */
-bookShop.controller('orderController', function ($scope, userService, orderService, cartFactory, $location) {
+bookShop.controller('orderController', function ($scope, userService, orderService, cartFactory, langFactory, $location) {
     var self = this;
 
-    self.location = $location;
+    this.lang = langFactory;
+
+    this.location = $location;
 
     userService.isValidUser(function (isValid) {
 
         if('1' === isValid) {
 
-            if(0 < cartFactory.getBookCount()) {
+            orderService.getPayMethods(function (data) {
+                self.payMethods = data;
+            });
 
-                orderService.getPayMethods(function (data) {
-                    self.payMethods = data;
+            self.sendOrder = function (payMethod) {
+
+                orderService.sendOrder(payMethod, function (isSent) {
+
+                    if ('1' === isSent) {
+                        cartFactory.clean();
+                    }
                 });
-
-                self.sendOrder = function (payMethod) {
-
-                    orderService.sendOrder(payMethod, function (isSent) {
-
-                        if('1' === isSent) {
-                            cartFactory.clean();
-                        }
-                    });
-                };
-            }
+            };
 
             orderService.getOrders(function (orders) {
                 self.orders = orders;

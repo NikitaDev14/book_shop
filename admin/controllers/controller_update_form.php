@@ -6,20 +6,57 @@
 			$this->view = new View();
 			$this->model = new Model_admin();
 		}
+
+		function action_author()
+		{
+			$id = $_POST['id_item'];
+			$data = $this->model->select_item('Author', $id);
+
+			$_POST['result'] = $data;
+			$this->view->form('view_update_form_author.php');
+		}
+
+		function action_genre()
+		{
+			$id = $_POST['id_item'];
+			$data = $this->model->select_item('genre', $id);
+
+			$_POST['result'] = $data;
+			$this->view->form('view_update_form_genre.php');
+		}
+
+		function action_book()
+		{
+			$id = $_POST['id_item'];
+			$book = $this->model->select_book_id($id);
+
+			$authors = $this->model->select_item('Author', 0);
+			$genres = $this->model->select_item('Genre', 0);
+
+			$authors = $this->get_checkbox($authors, $book, 'Author');
+			$genres = $this->get_checkbox($genres, $book, 'Genre');
+
+			$_POST['book'] = $book;
+			$_POST['authors'] = $authors;
+			$_POST['genres'] = $genres;
+
+			$this->view->form('view_update_form_book.php');
+		}
+
 		function get_checkbox($catalogue, $book, $param)
 		{
 			$checkbox = null;
-			
+
 			foreach($catalogue as $item)
 			{
 				$isChecked = false;
-				
+
 				foreach($book[$param.'s'] as $key => $b)
 				{
 					if($key==$item['id' . $param])
 					{
 						$isChecked = true;
-						
+
 						break;
 					}
 				}
@@ -34,10 +71,26 @@
 						value= '".$item['id' . $param]."' />".$item['Name'].'</label>';
 				}
 			}
-			
+
 			return $checkbox;
 		}
-		public function get_radioDiscount($discount, $user)
+
+		public function action_user()
+		{
+			$id = $_POST['id_item'];
+			$user = $this->model->getUser($id);
+
+			$discounts = $this->model->getAllDiscounts();
+
+			$discounts = $this->get_radioDiscount($discounts, $user);
+
+			$_POST['user'] = $user;
+			$_POST['discount'] = $discounts;
+
+			$this->view->form('view_update_form_user.php');
+		}
+
+		private function get_radioDiscount($discount, $user)
 		{
 			$radio = '';
 
@@ -57,53 +110,7 @@
 
 			return $radio;
 		}
-		function action_author()
-		{
-			$id = $_POST['id_item'];
-			$data = $this->model->select_item('Author', $id);
-			
-			$_POST['result'] = $data;
-			$this->view->form('view_update_form_author.php');
-		}
-		function action_genre()
-		{
-			$id = $_POST['id_item'];
-			$data = $this->model->select_item('genre', $id);
-			
-			$_POST['result'] = $data;
-			$this->view->form('view_update_form_genre.php');
-		}
-		function action_book()
-		{
-			$id = $_POST['id_item'];
-			$book = $this->model->select_book_id($id);
 
-			$authors = $this->model->select_item('Author', 0);
-			$genres = $this->model->select_item('Genre', 0);
-			
-			$authors = $this->get_checkbox($authors, $book, 'Author');
-			$genres = $this->get_checkbox($genres, $book, 'Genre');
-			
-			$_POST['book'] = $book;
-			$_POST['authors'] = $authors;
-			$_POST['genres'] = $genres;
-			
-			$this->view->form('view_update_form_book.php');
-		}
-		public function action_user()
-		{
-			$id = $_POST['id_item'];
-			$user = $this->model->getUser($id);
-
-			$discounts = $this->model->getAllDiscounts();
-
-			$discounts = $this->get_radioDiscount($discounts, $user);
-
-			$_POST['user'] = $user;
-			$_POST['discount'] = $discounts;
-
-			$this->view->form('view_update_form_user.php');
-		}
 		public function action_discount()
 		{
 			$id = $_POST['id_item'];
@@ -111,6 +118,41 @@
 
 			$_POST['result'] = $data;
 			$this->view->form('view_update_form_discount.php');
+		}
+
+		public function action_order()
+		{
+			$id = $_POST['id_item'];
+			$order = $this->model->getOrder($id);
+
+			$statuses = $this->model->getStatuses();
+
+			$statuses = $this->get_radioStatus($statuses, $order);
+
+			$_POST['order'] = $order;
+			$_POST['status'] = $statuses;
+
+			$this->view->form('view_update_form_status.php');
+		}
+
+		private function get_radioStatus($status, $order)
+		{
+			$radio = '';
+
+			foreach ($status as $item) {
+				$radio .= "</br><label><input type='radio' name='status'
+					value='" . $item['idStatus'] . "'";
+
+				if ($item['idStatus'] ==
+					$order[0]['idStatus']
+				) {
+					$radio .= ' checked';
+				}
+
+				$radio .= '>' . $item['Name'] . '</label>';
+			}
+
+			return $radio;
 		}
 	}
 ?>

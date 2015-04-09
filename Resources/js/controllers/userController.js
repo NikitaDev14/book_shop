@@ -1,13 +1,15 @@
 /**
  * Created by Developer on 05.04.2015.
  */
-bookShop.controller('userController', function ($scope, $http, userService, $location) {
+bookShop.controller('userController', function ($scope, $http, userService, langFactory, $location) {
     this.template = {
         email: '[0-9a-z_]+@[0-9a-z_]+\\.[a-z]{1,3}',
         password: '.{4,}'
     };
 
     var self = this;
+
+    this.lang = langFactory;
 
     userService.isValidUser(function (data) {
         self.isValidUser = Boolean(data);

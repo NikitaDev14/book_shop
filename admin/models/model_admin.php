@@ -81,6 +81,68 @@
 				return "При изменении информации в БД произошла ошибка!";
 			}
 		}
+
+		public function getOrders()
+		{
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL getAllOrders()');
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+		public function getOrder($id)
+		{
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL getOrderById(?)');
+			$stmt->bindParam(1, $id);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+		public function getStatuses()
+		{
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL getOrderStatuses()');
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+		public function getOrderStatuses()
+		{
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL getOrderStatuses()');
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+		public function updateOrderStatus($idOrder, $idStatus)
+		{
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL updateOrderStatus(?, ?)');
+			$stmt->bindParam(1, $idOrder);
+			$stmt->bindParam(2, $idStatus);
+
+			$stmt->execute();
+
+			if ($stmt->fetchAll()) {
+				return "Информация в БД изменена успешно";
+			} else {
+				return "При изменении информации в БД произошла ошибка!";
+			}
+		}
 		public function updateUser($idUser, $idDiscount)
 		{
 			$db = parent::connection();

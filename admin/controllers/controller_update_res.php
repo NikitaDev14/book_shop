@@ -50,5 +50,15 @@
 
 			$this->view->message($data);
 		}
+
+		public function action_order()
+		{
+			$id_order = $_POST['id_item'];
+			$status = $_POST['status'];
+
+			$data = $this->model->updateOrderStatus($id_order, $status);
+
+			$this->view->message($data);
+		}
 	}
 ?>

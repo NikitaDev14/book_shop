@@ -1,10 +1,12 @@
 /**
  * Created by Developer on 02.04.2015.
  */
-bookShop.controller('cartController', function (userService, cartService, cartFactory, $location) {
+bookShop.controller('cartController', function (userService, cartService, cartFactory, langFactory, $location) {
     var self = this;
 
-    self.countTemplate = '[0-9]+';
+    this.lang = langFactory;
+
+    this.countTemplate = '[0-9]+';
 
     userService.isValidUser(function (isValid) {
         self.isValidUser = Boolean(isValid);

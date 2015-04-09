@@ -1,28 +1,37 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <div class="row" ng-controller="langController as langCtrl">
-            <div class="col-xs-5" ng-controller="cartController as cartCtrl">
-                <a class="btn btn-warning" ng-href="#/" role="button" ng-bind="langCtrl.template.header.mainPage"></a>
+        <div class="row" ng-controller="cartController as cartCtrl">
+            <div class="col-xs-5">
+                <a class="btn btn-warning" ng-href="#/" role="button"
+                   ng-bind="cartCtrl.lang.template.header.mainPage"></a>
                 <a class="btn btn-info" ng-href="#/cart" role="button" ng-class="{'disabled': !cartCtrl.isValidUser}">
-                    {{langCtrl.template.header.cart}} <span class="badge" ng-bind="cartCtrl.cart.getBookCount()"></span>
+                    {{cartCtrl.lang.template.header.cart}} <span class="badge"
+                                                                 ng-bind="cartCtrl.cart.getBookCount()"></span>
                 </a>
-                <a class="btn btn-primary" ng-href="#/my_orders" role="button" ng-class="{'disabled': !cartCtrl.isValidUser}" ng-bind="langCtrl.template.header.orders"></a>
+                <a class="btn btn-primary" ng-href="#/my_orders" role="button"
+                   ng-class="{'disabled': !cartCtrl.isValidUser}" ng-bind="cartCtrl.lang.template.header.orders"></a>
             </div>
             <div class="col-xs-3 text-center">
-                <button class="btn btn-default" type="button" ng-click="langCtrl.changeLang('ua')" ng-class="{'active': langCtrl.lang.get() === 'ua'}">
+                <button class="btn btn-default" type="button" ng-click="cartCtrl.lang.changeLang('ua')"
+                        ng-class="{'active': cartCtrl.lang.get() === 'ua'}">
                     <img class="lang-button" src="Resources/img/ua_icon.jpg">
                 </button>
-                <button class="btn btn-default" type="button" ng-click="langCtrl.changeLang('en')" ng-class="{'active': langCtrl.lang.get() === 'en'}">
+                <button class="btn btn-default" type="button" ng-click="cartCtrl.lang.changeLang('en')"
+                        ng-class="{'active': cartCtrl.lang.get() === 'en'}">
                     <img class="lang-button" src="Resources/img/usa_icon.png">
                 </button>
             </div>
             <div class="col-xs-4 text-right" ng-controller="userController as userCtrl">
-                <a class="btn btn-danger" href="admin" ng-hide="userCtrl.isValidUser" role="button" ng-bind="langCtrl.template.header.admin"></a>
-                <a class="btn btn-default" ng-href="#/login" ng-hide="userCtrl.isValidUser" role="button" ng-bind="langCtrl.template.header.login"></a>
-                <a class="btn btn-success" ng-href="#/signup" ng-hide="userCtrl.isValidUser" role="button" ng-bind="langCtrl.template.header.signup"></a>
+                <a class="btn btn-danger" href="admin" ng-hide="userCtrl.isValidUser" role="button"
+                   ng-bind="cartCtrl.lang.template.header.admin"></a>
+                <a class="btn btn-default" ng-href="#/login" ng-hide="userCtrl.isValidUser" role="button"
+                   ng-bind="cartCtrl.lang.template.header.login"></a>
+                <a class="btn btn-success" ng-href="#/signup" ng-hide="userCtrl.isValidUser" role="button"
+                   ng-bind="cartCtrl.lang.template.header.signup"></a>
 
                 <form action="index.php?controller=User&action=logout" method="post">
-                    <button class="btn btn-default" type="submit" ng-show="userCtrl.isValidUser" ng-bind="langCtrl.template.header.logout"></button>
+                    <button class="btn btn-default" type="submit" ng-show="userCtrl.isValidUser"
+                            ng-bind="cartCtrl.lang.template.header.logout"></button>
                 </form>
             </div>
         </div>

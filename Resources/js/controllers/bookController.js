@@ -2,9 +2,11 @@
  * Created by Developer on 01.04.2015.
  */
 bookShop.controller('bookController',
-    function ($scope, bookService, userService, bookFactory, $stateParams) {
+    function ($scope, bookService, userService, bookFactory, langFactory, $stateParams) {
 
     var self = this;
+
+        this.lang = langFactory;
 
     userService.isValidUser(function (data) {
         self.isValidUser = Boolean(data);

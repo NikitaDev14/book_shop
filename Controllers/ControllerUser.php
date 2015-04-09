@@ -60,7 +60,8 @@
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => 'Logout', 'result' => $result]);
 		}
-		public function singup()
+
+		public function signup()
 		{
 			$formData = $this->objFactory->getObjHttp()->
 				setParams($this->form)->getParams();

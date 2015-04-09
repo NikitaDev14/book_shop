@@ -4,8 +4,8 @@
 	</head>
 	<body>
 		<table border="1">
-			<tr>Email</tr>
-			<tr>Discount size</tr>
+			<th>Email</th>
+			<th>Discount size</th>
 	<?php
 		$content = $_POST['result'];
 
@@ -13,7 +13,7 @@
 		{
 			$tr = "<tr><td><a href = '" . BASE_URL_ADMIN . "update_form
 					/user/id=".$row["idUser"]."'>".$row["Email"]."</a></td>
-					</td><td>" . $row['Discount'] . "</td></tr>";
+					<td>" . $row['Discount'] . "</td></tr>";
 
 			echo $tr;
 		}
