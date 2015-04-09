@@ -32,5 +32,23 @@
 			
 			$this->view->message($data);
 		}
+		public function action_user()
+		{
+			$id_user = $_POST['id_item'];
+			$discount = $_POST['discount'];
+
+			$data = $this->model->updateUser($id_user, $discount);
+
+			$this->view->message($data);
+		}
+		public function action_discount()
+		{
+			$id_discount = $_POST['id_item'];
+			$discount = $_POST['discount'];
+
+			$data = $this->model->updateDiscount($id_discount, $discount);
+
+			$this->view->message($data);
+		}
 	}
 ?>

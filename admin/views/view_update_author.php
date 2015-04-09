@@ -12,7 +12,7 @@
 					/author/id=".$row["idAuthor"]."'>".$row["Name"]."</a>";
 				
 				echo $strLink."<br/>";
-			}		
+			}
 		?>
 	</body>
 </html>

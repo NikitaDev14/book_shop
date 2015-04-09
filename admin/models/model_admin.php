@@ -20,21 +20,85 @@
 				return "При вставке информации в БД произошла ошибка!";
 			}
 		}
-		private function upload_image($login, $avatar) // обработка фотографии пользователя
+		public function getAllUsers()
 		{
-			if(is_uploaded_file($avatar['tmp_name']))
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL getAllUsers()');
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+		public function getUser($idUser)
+		{
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL getUser(?)');
+			$stmt->bindParam(1, $idUser);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+		public function getAllDiscounts()
+		{
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL getAllDiscounts()');
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+		public function getDiscount($id)
+		{
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL getDiscount(?)');
+			$stmt->bindParam(1, $id);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+		public function updateDiscount($id, $size)
+		{
+			$db = parent::connection();
+
+			$stmt = $db->prepare('CALL updateDiscount(?, ?)');
+			$stmt->bindParam(1, $id);
+			$stmt->bindParam(2, $size);
+
+			$stmt->execute();
+
+			if($stmt->fetchAll())
 			{
-				$format = end(explode('.', $avatar['name'])); // получение формата файла
-
-				$fname = $login . '.' . $format; // формирование имени файла на основании логина
-
-				move_uploaded_file($avatar['tmp_name'], 'images/' . $fname); // перемещение файла в папку images
-
-				$image = 'images/' . $fname;
+				return "Информация в БД изменена успешно";
 			}
-			else { $image = null; }
+			else
+			{
+				return "При изменении информации в БД произошла ошибка!";
+			}
+		}
+		public function updateUser($idUser, $idDiscount)
+		{
+			$db = parent::connection();
 
-			return $image;
+			$stmt = $db->prepare('CALL updateUserDiscount(?, ?)');
+			$stmt->bindParam(1, $idUser);
+			$stmt->bindParam(2, $idDiscount);
+
+			$stmt->execute();
+
+			if($stmt->fetchAll())
+			{
+				return "Информация в БД изменена успешно";
+			}
+			else
+			{
+				return "При изменении информации в БД произошла ошибка!";
+			}
 		}
 		public function add_book()
 		{

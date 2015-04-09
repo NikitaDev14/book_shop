@@ -39,6 +39,17 @@
 					<a href="update/book">Изменить книгу</a>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<a href="user/list">Пользователи</a>
+				</td>
+				<td>
+					<a href="delete/genre">Заказы</a>
+				</td>
+				<td>
+					<a href="user/discount">Скидки</a>
+				</td>
+			</tr>
 			<!--
 			<tr>
 				<td>

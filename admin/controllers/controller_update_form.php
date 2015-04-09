@@ -37,6 +37,26 @@
 			
 			return $checkbox;
 		}
+		public function get_radioDiscount($discount, $user)
+		{
+			$radio = '';
+
+			foreach($discount as $item)
+			{
+				$radio .= "</br><label><input type='radio' name='discount'
+					value='".$item['idDiscount']."'";
+
+				if($item['idDiscount'] ==
+					$user[0]['idDiscount'])
+				{
+					$radio .= ' checked';
+				}
+
+				$radio .= '>'.$item['Size'].'</label>';
+			}
+
+			return $radio;
+		}
 		function action_author()
 		{
 			$id = $_POST['id_item'];
@@ -69,6 +89,28 @@
 			$_POST['genres'] = $genres;
 			
 			$this->view->form('view_update_form_book.php');
+		}
+		public function action_user()
+		{
+			$id = $_POST['id_item'];
+			$user = $this->model->getUser($id);
+
+			$discounts = $this->model->getAllDiscounts();
+
+			$discounts = $this->get_radioDiscount($discounts, $user);
+
+			$_POST['user'] = $user;
+			$_POST['discount'] = $discounts;
+
+			$this->view->form('view_update_form_user.php');
+		}
+		public function action_discount()
+		{
+			$id = $_POST['id_item'];
+			$data = $this->model->getDiscount($id);
+
+			$_POST['result'] = $data;
+			$this->view->form('view_update_form_discount.php');
 		}
 	}
 ?>

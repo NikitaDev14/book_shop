@@ -9,7 +9,7 @@ DELIMITER $$
 -- Процедуры
 --
 DROP PROCEDURE IF EXISTS `addAuthor`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addAuthor`(IN `author` VARCHAR(45) CHARSET utf8)
+CREATE PROCEDURE `addAuthor`(IN `author` VARCHAR(45) CHARSET utf8)
     MODIFIES SQL DATA
     COMMENT '@name'
 BEGIN
@@ -19,7 +19,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `addAuthorsOfBooks`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addAuthorsOfBooks`(IN `auth` VARCHAR(1000) CHARSET utf8, IN `idNewBook` INT(6) UNSIGNED)
+CREATE PROCEDURE `addAuthorsOfBooks`(IN `auth` VARCHAR(1000) CHARSET utf8, IN `idNewBook` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idAuthors @idBook'
 BEGIN
@@ -42,19 +42,17 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `addBook`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addBook`(IN `auth` VARCHAR(1000) CHARSET utf8, IN `genr` VARCHAR(1000) CHARSET utf8, IN `name` VARCHAR(45) CHARSET utf8, IN `descr` TEXT CHARSET utf8, IN `price` DECIMAL(6,2) UNSIGNED, IN `imgType` VARCHAR(10) CHARSET utf8)
+CREATE PROCEDURE `addBook`(IN `auth` VARCHAR(1000) CHARSET utf8, IN `genr` VARCHAR(1000) CHARSET utf8, IN `name` VARCHAR(45) CHARSET utf8, IN `descr` TEXT CHARSET utf8, IN `price` DECIMAL(6,2) UNSIGNED, IN `imgType` VARCHAR(10) CHARSET utf8)
     MODIFIES SQL DATA
     COMMENT '@authors @genres @name @descr @price @imgType'
 BEGIN
     DECLARE idNewBook INT(6) UNSIGNED;
 
-    INSERT INTO books (books.Name, books.Price) VALUES (name, price);
+    INSERT INTO books (books.Name, books.Price, books.Description) VALUES (name, price, descr);
 
     SELECT LAST_INSERT_ID() INTO idNewBook;
 
     UPDATE books SET Image = CONCAT(idNewBook, '.', imgType) WHERE books.idBook = idNewBook;
-
-    INSERT INTO descriptions (descriptions.idBook, descriptions.Content) VALUES (idNewBook, descr);
 
     CALL addAuthorsOfBooks(auth, idNewBook);
 
@@ -64,7 +62,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `addGenre`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addGenre`(IN `genre` VARCHAR(45) CHARSET utf8)
+CREATE PROCEDURE `addGenre`(IN `genre` VARCHAR(45) CHARSET utf8)
     MODIFIES SQL DATA
     COMMENT '@name'
 BEGIN
@@ -74,7 +72,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `addGenresOfBooks`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addGenresOfBooks`(IN `genr` VARCHAR(1000) CHARSET utf8, IN `idNewBook` INT(6) UNSIGNED)
+CREATE PROCEDURE `addGenresOfBooks`(IN `genr` VARCHAR(1000) CHARSET utf8, IN `idNewBook` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idGenres @idBook'
 BEGIN
@@ -97,7 +95,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `addOrder`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addOrder`(IN `idUser` INT(6) UNSIGNED, IN `idPayMethod` INT(6) UNSIGNED)
+CREATE PROCEDURE `addOrder`(IN `idUser` INT(6) UNSIGNED, IN `idPayMethod` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idUser @idPayMethod'
 BEGIN
@@ -121,7 +119,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `addToCart`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addToCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `quantity` INT(6) UNSIGNED)
+CREATE PROCEDURE `addToCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `quantity` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idUser @idBook @quantity'
 BEGIN
@@ -161,7 +159,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `addUser`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `addUser`(IN `email` VARCHAR(255) CHARSET utf8, IN `passw` VARCHAR(45) CHARSET utf8)
+CREATE PROCEDURE `addUser`(IN `email` VARCHAR(255) CHARSET utf8, IN `passw` VARCHAR(45) CHARSET utf8)
     MODIFIES SQL DATA
     COMMENT '@email @password'
 BEGIN
@@ -172,7 +170,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deleteAuthor`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteAuthor`(IN `idAuthor` INT(6) UNSIGNED)
+CREATE PROCEDURE `deleteAuthor`(IN `idAuthor` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idAuthor'
 BEGIN
@@ -183,7 +181,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deleteBook`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteBook`(IN `idBook` INT(6) UNSIGNED)
+CREATE PROCEDURE `deleteBook`(IN `idBook` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idBook'
 BEGIN
@@ -194,7 +192,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deleteFromCart`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteFromCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED)
+CREATE PROCEDURE `deleteFromCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idUser @idBook'
 BEGIN
@@ -206,7 +204,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `deleteGenre`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteGenre`(IN `idGenre` INT(6) UNSIGNED)
+CREATE PROCEDURE `deleteGenre`(IN `idGenre` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idGenre'
 BEGIN
@@ -217,7 +215,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `exsistsUser`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `exsistsUser`(IN `email` VARCHAR(255) CHARSET utf8)
+CREATE PROCEDURE `exsistsUser`(IN `email` VARCHAR(255) CHARSET utf8)
     READS SQL DATA
     COMMENT '@email'
 BEGIN
@@ -226,8 +224,26 @@ BEGIN
     WHERE users.Email = email;
 END$$
 
+DROP PROCEDURE IF EXISTS `getAllDiscounts`$$
+CREATE PROCEDURE `getAllDiscounts`()
+    READS SQL DATA
+BEGIN
+	SELECT d.idDiscount, d.Size
+    FROM discounts AS d;
+END$$
+
+DROP PROCEDURE IF EXISTS `getAllUsers`$$
+CREATE PROCEDURE `getAllUsers`()
+    READS SQL DATA
+BEGIN
+	SELECT users.idUser, users.Email, discounts.Size AS Discount
+    FROM users
+    	JOIN discounts
+        	ON users.idDiscount = discounts.idDiscount;
+END$$
+
 DROP PROCEDURE IF EXISTS `getAuthors`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getAuthors`(IN `idAuthor` INT(6) UNSIGNED)
+CREATE PROCEDURE `getAuthors`(IN `idAuthor` INT(6) UNSIGNED)
     READS SQL DATA
     COMMENT 'get all authors if @idAuthor is not specified'
 BEGIN
@@ -243,7 +259,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `getBookCount`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBookCount`(IN `idUser` INT(6) UNSIGNED)
+CREATE PROCEDURE `getBookCount`(IN `idUser` INT(6) UNSIGNED)
     READS SQL DATA
     COMMENT '@idUser'
 BEGIN
@@ -253,7 +269,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `getBookDetails`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBookDetails`(IN `id` INT(6) UNSIGNED)
+CREATE PROCEDURE `getBookDetails`(IN `id` INT(6) UNSIGNED)
     READS SQL DATA
     COMMENT '@idBook'
 BEGIN
@@ -273,7 +289,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `getBooks`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getBooks`(IN `idUser` INT(6) UNSIGNED)
+CREATE PROCEDURE `getBooks`(IN `idUser` INT(6) UNSIGNED)
     READS SQL DATA
     COMMENT '[@idUser]'
 BEGIN
@@ -297,7 +313,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `getCart`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getCart`(IN `idUser` INT(6) UNSIGNED)
+CREATE PROCEDURE `getCart`(IN `idUser` INT(6) UNSIGNED)
     READS SQL DATA
     COMMENT '@idUser'
 BEGIN
@@ -308,8 +324,18 @@ BEGIN
     WHERE u2b.idUser = idUser;
 END$$
 
+DROP PROCEDURE IF EXISTS `getDiscount`$$
+CREATE PROCEDURE `getDiscount`(IN `idDiscount` INT(6) UNSIGNED)
+    READS SQL DATA
+    COMMENT '@idDiscount'
+BEGIN
+	SELECT d.idDiscount, d.Size
+    FROM discounts AS d
+    WHERE d.idDiscount = idDiscount;
+END$$
+
 DROP PROCEDURE IF EXISTS `getGenres`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getGenres`(IN `idGenre` INT(6) UNSIGNED)
+CREATE PROCEDURE `getGenres`(IN `idGenre` INT(6) UNSIGNED)
     READS SQL DATA
     COMMENT 'get all genres if @idGenre is not specified'
 BEGIN
@@ -324,8 +350,42 @@ BEGIN
     END IF;
 END$$
 
+DROP PROCEDURE IF EXISTS `getOrderDetails`$$
+CREATE PROCEDURE `getOrderDetails`(IN `idOrder` INT(6) UNSIGNED, IN `idUser` INT(6) UNSIGNED)
+    READS SQL DATA
+    COMMENT '@idOrder @idUser'
+BEGIN
+    SELECT o2b.idBook, b.Name AS BookName, o2b.Quantity, o2b.Price
+    FROM orders AS o
+        JOIN orders2books AS o2b
+        	ON o2b.idOrder = o.idOrder
+        JOIN books AS b
+        	ON b.idBook = o2b.idBook
+    WHERE o.idUser = idUser
+    	AND o.idOrder = idOrder
+    ORDER BY(o.idOrder);
+END$$
+
+DROP PROCEDURE IF EXISTS `getOrders`$$
+CREATE PROCEDURE `getOrders`(IN `idUser` INT(6) UNSIGNED)
+    READS SQL DATA
+    COMMENT '@idUser'
+BEGIN
+    SELECT o.idOrder, o.Date, pm.Name AS PayMethod, SUM(o2b.Price) AS Summ, os.Name AS OrderStatus
+    FROM orders AS o
+    	JOIN pay_methods AS pm
+        	ON pm.idPayMethod = o.idPayMethod
+        JOIN orders2books AS o2b
+        	ON o2b.idOrder = o.idOrder
+        JOIN order_status AS os
+        	ON os.idStatus = o.idStatus
+    WHERE o.idUser = idUser
+    GROUP BY(o.idOrder)
+    ORDER BY(o.Date) DESC;
+END$$
+
 DROP PROCEDURE IF EXISTS `getPayMethods`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getPayMethods`()
+CREATE PROCEDURE `getPayMethods`()
     READS SQL DATA
 BEGIN
 	SELECT pm.idPayMethod, pm.Name
@@ -333,19 +393,19 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `getUser`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getUser`(IN `idUser` INT(6) UNSIGNED)
+CREATE PROCEDURE `getUser`(IN `idUser` INT(6) UNSIGNED)
     READS SQL DATA
     COMMENT '@idUser'
 BEGIN
-	SELECT users.idUser, users.Email, discounts.Size AS Discount
-    FROM users
-    	JOIN discounts
-        	ON users.idDiscount = discounts.idDiscount
-    WHERE users.idUser = idUser;
+	SELECT u.idUser, u.Email, d.idDiscount, d.Size AS Discount
+    FROM users AS u
+    	JOIN discounts AS d
+        	ON u.idDiscount = d.idDiscount
+    WHERE u.idUser = idUser;
 END$$
 
 DROP PROCEDURE IF EXISTS `isValidLogin`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `isValidLogin`(IN `email` VARCHAR(255) CHARSET utf8, IN `passw` VARCHAR(45) CHARSET utf8)
+CREATE PROCEDURE `isValidLogin`(IN `email` VARCHAR(255) CHARSET utf8, IN `passw` VARCHAR(45) CHARSET utf8)
     READS SQL DATA
     COMMENT '@email @password'
 BEGIN
@@ -356,7 +416,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `isValidUser`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `isValidUser`(IN `idUser` INT(6) UNSIGNED, IN `sessionId` VARCHAR(45) CHARSET utf8)
+CREATE PROCEDURE `isValidUser`(IN `idUser` INT(6) UNSIGNED, IN `sessionId` VARCHAR(45) CHARSET utf8)
     READS SQL DATA
     COMMENT '@idUser @sessionId'
 BEGIN
@@ -366,7 +426,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sessionDestroy`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sessionDestroy`(IN `idUser` INT(6) UNSIGNED)
+CREATE PROCEDURE `sessionDestroy`(IN `idUser` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idUser'
 BEGIN
@@ -378,7 +438,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `sessionStart`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sessionStart`(IN `idUser` INT(6) UNSIGNED, IN `sessionId` VARCHAR(45) CHARSET utf8)
+CREATE PROCEDURE `sessionStart`(IN `idUser` INT(6) UNSIGNED, IN `sessionId` VARCHAR(45) CHARSET utf8)
     MODIFIES SQL DATA
     COMMENT '@idUser @sessionId'
 BEGIN
@@ -390,7 +450,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `updateAuthor`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateAuthor`(IN `idAuthor` INT(6) UNSIGNED, IN `newName` VARCHAR(45) CHARSET utf8)
+CREATE PROCEDURE `updateAuthor`(IN `idAuthor` INT(6) UNSIGNED, IN `newName` VARCHAR(45) CHARSET utf8)
     MODIFIES SQL DATA
     COMMENT '@idAuthor @newName'
 BEGIN
@@ -402,13 +462,19 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `updateBook`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateBook`(IN `auth` VARCHAR(1000) CHARSET utf8, IN `genr` VARCHAR(1000) CHARSET utf8, IN `name` VARCHAR(1000) CHARSET utf8, IN `descr` VARCHAR(1000) CHARSET utf8, IN `price` DECIMAL(6,2) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `imgType` INT)
+CREATE PROCEDURE `updateBook`(IN `auth` VARCHAR(1000) CHARSET utf8, IN `genr` VARCHAR(1000) CHARSET utf8, IN `name` VARCHAR(1000) CHARSET utf8, IN `descr` VARCHAR(1000) CHARSET utf8, IN `price` DECIMAL(6,2) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `imgType` VARCHAR(10) CHARSET utf8)
     MODIFIES SQL DATA
     COMMENT '@auth @genr @name @descr @price @idBook @imgType'
 BEGIN
-    UPDATE books SET books.Name = name, books.Price = price, books.Image = CONCAT(idBook, '.', imgType) WHERE books.idBook = idBook;
-
-    UPDATE descriptions SET descriptions.Content = descr WHERE descriptions.idBook = idBook;
+	IF(imgType = '') THEN
+        UPDATE books
+        SET books.Name = name, books.Price = price, books.Description = descr
+        WHERE books.idBook = idBook;
+    ELSE
+    	UPDATE books
+        SET books.Name = name, books.Price = price, books.Description = descr, books.Image = CONCAT(idBook, '.', imgType)
+        WHERE books.idBook = idBook;
+    END IF;
 
     DELETE FROM authors2books WHERE authors2books.idBook = idBook;
 
@@ -421,8 +487,20 @@ BEGIN
     SELECT ROW_COUNT();
 END$$
 
+DROP PROCEDURE IF EXISTS `updateDiscount`$$
+CREATE PROCEDURE `updateDiscount`(IN `idDiscount` INT(6) UNSIGNED, IN `size` DECIMAL(3,3) UNSIGNED)
+    MODIFIES SQL DATA
+    COMMENT '@idDiscount @size'
+BEGIN
+	UPDATE discounts
+    SET discounts.Size = size
+    WHERE discounts.idDiscount = idDiscount;
+
+    SELECT ROW_COUNT();
+END$$
+
 DROP PROCEDURE IF EXISTS `updateGenre`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateGenre`(IN `idGenre` INT(6) UNSIGNED, IN `newName` VARCHAR(45) CHARSET utf8)
+CREATE PROCEDURE `updateGenre`(IN `idGenre` INT(6) UNSIGNED, IN `newName` VARCHAR(45) CHARSET utf8)
     READS SQL DATA
     COMMENT '@idGenre @name'
 BEGIN
@@ -434,7 +512,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `updateQuantityInCart`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateQuantityInCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `quantity` INT(6) UNSIGNED)
+CREATE PROCEDURE `updateQuantityInCart`(IN `idUser` INT(6) UNSIGNED, IN `idBook` INT(6) UNSIGNED, IN `quantity` INT(6) UNSIGNED)
     MODIFIES SQL DATA
     COMMENT '@idUser @idBook @quantity'
 BEGIN
@@ -446,11 +524,23 @@ BEGIN
     SELECT ROW_COUNT();
 END$$
 
+DROP PROCEDURE IF EXISTS `updateUserDiscount`$$
+CREATE PROCEDURE `updateUserDiscount`(IN `idUser` INT(6) UNSIGNED, IN `idDiscount` INT(6) UNSIGNED)
+    MODIFIES SQL DATA
+    COMMENT '@idUser @idDiscount'
+BEGIN
+	UPDATE users
+    SET users.idDiscount = idDiscount
+    WHERE users.idUser = idUser;
+
+    SELECT ROW_COUNT();
+END$$
+
 --
 -- Функции
 --
 DROP FUNCTION IF EXISTS `getDiscount`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `getDiscount`(`idUser` INT(6) UNSIGNED) RETURNS decimal(3,3) unsigned
+CREATE FUNCTION `getDiscount`(`idUser` INT(6) UNSIGNED) RETURNS decimal(3,3) unsigned
     READS SQL DATA
     COMMENT '@idUser'
 BEGIN
@@ -467,7 +557,7 @@ BEGIN
 END$$
 
 DROP FUNCTION IF EXISTS `strSplit`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `strSplit`(`str` TEXT CHARSET utf8, `pos` INT(6) UNSIGNED) RETURNS text CHARSET utf8
+CREATE FUNCTION `strSplit`(`str` TEXT CHARSET utf8, `pos` INT(6) UNSIGNED) RETURNS text CHARSET utf8
     NO SQL
 BEGIN
     RETURN REPLACE(substring(substring_index(str, ',', pos), length(substring_index(str, ',', pos - 1)) + 1), ',', '');
