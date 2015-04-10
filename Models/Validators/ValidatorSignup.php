@@ -8,17 +8,10 @@
 
 	namespace Models\Validators;
 
-	class ValidatorSignup
+	class ValidatorSignup extends \BaseClass
 	{
-		private $form;
-		private $objFactory;
-
 		private static $instance;
-
-		private function __construct()
-		{
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
-		}
+		private $form;
 
 		public static function getInstance()
 		{
@@ -33,6 +26,13 @@
 		public function setForm($form)
 		{
 			$this->form = $form;
+		}
+
+		public function isValidForm()
+		{
+			return $this->isValidEmail() &&
+			$this->isValidPassword() &&
+			$this->isValidPasswordRepeat();
 		}
 
 		public function isValidEmail()
@@ -52,12 +52,5 @@
 		public function isValidPasswordRepeat()
 		{
 			return $this->form['password'] === $this->form['passwordRepeat'];
-		}
-
-		public function isValidForm()
-		{
-			return $this->isValidEmail() &&
-				$this->isValidPassword() &&
-				$this->isValidPasswordRepeat();
 		}
 	}

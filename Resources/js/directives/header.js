@@ -5,6 +5,6 @@ bookShop.directive('header', function () {
     return {
         restrict: 'A',
         replace: true,
-        templateUrl: '/book_shop/Resources/html/header.html'
+        templateUrl: 'Resources/html/header.html'
     }
 });

@@ -8,17 +8,10 @@
 
 	namespace Models\Validators;
 
-	class ValidatorLogin
+	class ValidatorLogin extends \BaseClass
 	{
-		private $form;
-		private $objFactory;
-
 		private static $instance;
-
-		private function __construct()
-		{
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
-		}
+		private $form;
 
 		public static function getInstance()
 		{

@@ -8,7 +8,7 @@
 
 	namespace Models\Performers;
 
-	class User extends \Models\Model
+	class User extends \Models\BaseModel
 	{
 		public function addUser($email, $password)
 		{

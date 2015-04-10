@@ -7,7 +7,7 @@
 	 */
 	namespace Models\Performers;
 
-	class Book extends \Models\Model
+	class Book extends \Models\BaseModel
 	{
 		public function getBooks($idUser)
 		{

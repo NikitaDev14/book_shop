@@ -8,16 +8,10 @@
 
 	namespace Models\Validators;
 
-	class ValidatorUser
+	class ValidatorUser extends \BaseClass
 	{
-		private $objFactory;
-
 		private static $instance;
 
-		private function __construct()
-		{
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
-		}
 		public static function getInstance()
 		{
 			if(null === self::$instance)

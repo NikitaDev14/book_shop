@@ -7,7 +7,7 @@
  */
 	namespace Models\Performers;
 
-	class Genre extends \Models\Model
+	class Genre extends \Models\BaseModel
 	{
 		public function getGenres()
 		{

@@ -7,7 +7,7 @@
  */
 	namespace Models\Performers;
 
-	class Author extends \Models\Model
+	class Author extends \Models\BaseModel
 	{
 		public function getAuthors()
 		{

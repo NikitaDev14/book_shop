@@ -8,13 +8,10 @@
 
 	namespace Models;
 
-	class Model
+	class BaseModel extends \BaseClass
 	{
-		protected $objFactory;
-
 		public function __construct()
 		{
-			$this->objFactory =
-				\Models\Utilities\ObjFactory::getInstance();
+			parent::__construct();
 		}
 	}

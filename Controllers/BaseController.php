@@ -8,14 +8,14 @@
 
 	namespace Controllers;
 
-	class BaseController
+	class BaseController extends \BaseClass
 	{
-		protected $objFactory;
 		protected $form;
 
 		public function __construct($form)
 		{
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
+			parent::__construct();
+
 			$this->form = $form;
 		}
 	}

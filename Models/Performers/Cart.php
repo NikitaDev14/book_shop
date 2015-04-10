@@ -8,7 +8,7 @@
 
 	namespace Models\Performers;
 
-	class Cart extends \Models\Model
+	class Cart extends \Models\BaseModel
 	{
 		public function getCart($idUser)
 		{

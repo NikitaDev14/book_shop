@@ -33,14 +33,6 @@
 			{
 				$this->sth->bindParam($i, $params[$i - 1]);
 			}
-			/*
-			foreach($params as $key => $val)
-			{
-				echo $key . ' ; ' . $val . '</br>';
-
-				$this->sth->bindParam($key, $val);
-			}
-			*/
 
 			return $this;
 		}
@@ -52,9 +44,6 @@
 			return $this;
 		}
 
-		/**
-		 * @return mixed
-		 */
 		public function getResult()
 		{
 			return $this->sth->fetchAll();

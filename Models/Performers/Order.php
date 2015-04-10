@@ -8,7 +8,7 @@
 
 	namespace Models\Performers;
 
-	class Order extends \Models\Model
+	class Order extends \Models\BaseModel
 	{
 		public function getPayMethods()
 		{
