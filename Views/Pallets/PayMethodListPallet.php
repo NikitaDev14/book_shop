@@ -8,14 +8,8 @@
 
 	namespace Views\Pallets;
 
-	class PayMethodListPallet
+	class PayMethodListPallet extends BasePallet
 	{
-		private $objFactory;
-
-		public function __construct()
-		{
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
-		}
 		public function generate()
 		{
 			$data = $this->objFactory->getObjOrder()->getPayMethods();

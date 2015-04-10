@@ -26,7 +26,7 @@
 			$description = $_POST['description'];
 			$price = $_POST['price'];
 			$id_book = $_POST['id_item'];
-			$image = $_POST['image'];
+			$image = $_FILE['image'];
 			
 			$data = $this->model->update_book($authors, $genres, $name, $description, $price, $id_book, $image);
 			

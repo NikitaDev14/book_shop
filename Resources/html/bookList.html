@@ -12,7 +12,7 @@
     </div>
     <div class="col-sm-9">
         <div class="col-md-4" ng-repeat="book in bkCtrl.books.filter(filterAuthor.Name, filterGenre.Name)">
-            <img class="img-responsive img-thumbnail img-list" ng-src="/book_shop/Resources/img/{{book.Image}}"/>
+            <img class="img-responsive img-thumbnail img-list" ng-src="Resources/img/{{book.Image}}"/>
             <p ng-bind="book.Name"></p>
 
             <p>{{bkCtrl.lang.template.main.price}}: {{book.Price | currency}}</p>

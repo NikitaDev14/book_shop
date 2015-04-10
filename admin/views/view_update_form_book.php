@@ -33,7 +33,7 @@ echo <<<HERE
 
 				<h3>Иллюстрация (jpg, png, gif)</h3>
 
-				<img height='300px' src="../Resources/img/$image" />
+				<img height='300px' src="../../Resources/img/$image" />
 
 				<input type='file' name='image'/>
 				

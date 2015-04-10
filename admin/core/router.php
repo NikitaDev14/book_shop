@@ -8,19 +8,19 @@
 			
 			$routes = explode('/', $_SERVER['REQUEST_URI']);
 
-			if ( !empty($routes[3]) )
+			if ( !empty($routes[6]) )
 			{	
-				$controller_name = $routes[3];
+				$controller_name = $routes[6];
 			}
 			
-			if ( !empty($routes[4]) )
+			if ( !empty($routes[7]) )
 			{
-				$action_name = $routes[4];
+				$action_name = $routes[7];
 			}
 			
-			if ( !empty($routes[5]) )
+			if ( !empty($routes[8]) )
 			{
-				$_POST['id_item'] = substr($routes[5],3);
+				$_POST['id_item'] = substr($routes[8],3);
 			}
 
 			$model_name = 'Model_admin';

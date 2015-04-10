@@ -172,7 +172,7 @@
 			$description = $_POST['description'];
 			$price = $_POST['price'];
 			$image = $_FILES['image'];
-
+			
 			if(is_uploaded_file($image['tmp_name']))
 			{
 				$format = end(explode('.', $image['name']));
@@ -233,6 +233,7 @@
 			$db = parent::connection();
 
 			$format = '';
+	var_dump($image);
 
 			if(is_uploaded_file($image['tmp_name']))
 			{

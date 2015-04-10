@@ -8,14 +8,8 @@
 
 	namespace Views\Pallets;
 
-	class OrderDetailsPallet
+	class OrderDetailsPallet extends BasePallet
 	{
-		private $objFactory;
-
-		public function __construct()
-		{
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
-		}
 		public function generate($params)
 		{
 			$data = $this->objFactory->getObjOrder()->getOrderDetails($params['idOrder'], $params['idUser']);

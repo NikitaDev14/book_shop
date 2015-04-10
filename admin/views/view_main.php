@@ -1,7 +1,7 @@
 ﻿<html>
 	<head>
 		<title>Book catalogue</title>
-		<base href="/book_shop/admin/">
+		<base href="<?php echo BASE_URL_ADMIN; ?>">
 	</head>
 	<body>
 		<h1>Администрирование</h1>
@@ -11,7 +11,7 @@
 					<a href="">Главная</a>
 				</td>
 				<td>
-					<a href="/book_shop">Клиентская часть</a>
+					<a href="<?php echo BASE_URL; ?>">Клиентская часть</a>
 				</td>
 				<td>
 					<a href="help.html" target="_blank">Справка</a>
@@ -19,7 +19,7 @@
 			</tr>
 			<tr>
 				<td>
-					<a href="add/author">Добавить автора</a>
+					<a href="<?php echo BASE_URL_ADMIN; ?>add/author">Добавить автора</a>
 				</td>
 				<td>
 					<a href="add/genre">Добавить жанр</a>
