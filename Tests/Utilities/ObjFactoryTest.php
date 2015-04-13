@@ -10,43 +10,20 @@
 
 	require_once '../requires.php';
 
-	class ObjFactoryTest extends \PHPUnit_Framework_TestCase
+	class ObjFactoryTest extends \Tests\SingletonTest
 	{
-		private $objFactory;
-
 		public function __construct()
 		{
-			parent::__construct();
-
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
-		}
-
-		public function testConstructSingleton()
-		{
-			$obj1 = $this->objFactory->getInstance();
-			$obj2 = $this->objFactory->getInstance();
-
-			$this->assertSame($obj1, $obj2, 'Objects are not the same');
-		}
-
-		public function testConstruct()
-		{
-			$obj = $this->objFactory->getInstance();
-
-			$this->assertInstanceOf('\Models\Utilities\ObjFactory', $obj);
-		}
-
-		public function testHasInstance()
-		{
-			$this->assertClassHasStaticAttribute('instance', '\Models\Utilities\ObjFactory');
+			parent::__construct('\Models\Utilities\ObjFactory',
+				\Models\Utilities\ObjFactory::getInstance());
 		}
 
 		public function testHasDatabase()
 		{
-			$this->assertClassHasStaticAttribute('database', '\Models\Utilities\ObjFactory');
+			$this->assertClassHasStaticAttribute('database',
+				'\Models\Utilities\ObjFactory');
 		}
 
-		/*
 		public function testGetDatabase()
 		{
 			$obj1 = \Models\Utilities\ObjFactory::getInstance()->getObjDatabase();
@@ -54,45 +31,36 @@
 
 			$this->assertSame($obj1, $obj2, 'Objects are not the same');
 		}
-		*/
+
 		public function testGetDataContainer()
 		{
-			$obj1 = $this->objFactory->getInstance()->getObjDataContainer();
-			$obj2 = $this->objFactory->getInstance()->getObjDataContainer();
+			$obj = $this->instance->getObjDataContainer();
 
-			$this->assertSame($obj1, $obj2, 'Objects are not the same');
+			$this->assertInstanceOf('\Models\Utilities\DataContainer', $obj);
 		}
 
 		public function testGetValidatorSignup()
 		{
-			$obj1 = $this->objFactory->getInstance()->getObjValidatorSignup();
-			$obj2 = $this->objFactory->getInstance()->getObjValidatorSignup();
-
-			$this->assertSame($obj1, $obj2, 'Objects are not the same');
+			$this->assertInstanceOf('\Models\Validators\ValidatorSignup',
+				$this->instance->getObjValidatorSignup());
 		}
 
 		public function testGetValidatorUser()
 		{
-			$obj1 = $this->objFactory->getInstance()->getObjValidatorUser();
-			$obj2 = $this->objFactory->getInstance()->getObjValidatorUser();
-
-			$this->assertSame($obj1, $obj2, 'Objects are not the same');
+			$this->assertInstanceOf('\Models\Validators\ValidatorUser',
+				$this->instance->getObjValidatorUser());
 		}
 
 		public function testGetValidatorLogin()
 		{
-			$obj1 = $this->objFactory->getInstance()->getObjValidatorLogin();
-			$obj2 = $this->objFactory->getInstance()->getObjValidatorLogin();
-
-			$this->assertSame($obj1, $obj2, 'Objects are not the same');
+			$this->assertInstanceOf('\Models\Validators\ValidatorLogin',
+				$this->instance->getObjValidatorLogin());
 		}
 
 		public function testGetHttp()
 		{
-			$obj1 = $this->objFactory->getInstance()->getObjHttp();
-			$obj2 = $this->objFactory->getInstance()->getObjHttp();
-
-			$this->assertSame($obj1, $obj2, 'Objects are not the same');
+			$this->assertInstanceOf('\Models\Interfaces\Http',
+				$this->instance->getObjHttp());
 		}
 
 		/*
@@ -105,49 +73,49 @@
 		*/
 		public function testGetCookie()
 		{
-			$obj = $this->objFactory->getInstance()->getObjCookie();
+			$obj = $this->instance->getObjCookie();
 
 			$this->assertInstanceOf('\Models\Interfaces\Cookie', $obj);
 		}
 
 		public function testGetBook()
 		{
-			$obj = $this->objFactory->getInstance()->getObjBook();
+			$obj = $this->instance->getObjBook();
 
 			$this->assertInstanceOf('\Models\Performers\Book', $obj);
 		}
 
 		public function testGetAuthor()
 		{
-			$obj = $this->objFactory->getInstance()->getObjAuthor();
+			$obj = $this->instance->getObjAuthor();
 
 			$this->assertInstanceOf('\Models\Performers\Author', $obj);
 		}
 
 		public function testGetGenre()
 		{
-			$obj = $this->objFactory->getInstance()->getObjGenre();
+			$obj = $this->instance->getObjGenre();
 
 			$this->assertInstanceOf('\Models\Performers\Genre', $obj);
 		}
 
 		public function testGetUser()
 		{
-			$obj = $this->objFactory->getInstance()->getObjUser();
+			$obj = $this->instance->getObjUser();
 
 			$this->assertInstanceOf('\Models\Performers\User', $obj);
 		}
 
 		public function testGetCart()
 		{
-			$obj = $this->objFactory->getInstance()->getObjCart();
+			$obj = $this->instance->getObjCart();
 
 			$this->assertInstanceOf('\Models\Performers\Cart', $obj);
 		}
 
 		public function testGetOrder()
 		{
-			$obj = $this->objFactory->getInstance()->getObjOrder();
+			$obj = $this->instance->getObjOrder();
 
 			$this->assertInstanceOf('\Models\Performers\Order', $obj);
 		}

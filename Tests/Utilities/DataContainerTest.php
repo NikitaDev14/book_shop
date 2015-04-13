@@ -10,24 +10,16 @@
 
 	require_once '../requires.php';
 
-	class DataContainerTest extends \PHPUnit_Framework_TestCase
+	class DataContainerTest extends \Tests\SingletonTest
 	{
-		private $dataContainer;
-		private $className;
 		private $testParam;
 
 		public function __construct()
 		{
-			parent::__construct();
+			parent::__construct('\Models\Utilities\DataContainer',
+				\Models\Utilities\DataContainer::getInstance());
 
-			$this->dataContainer = \Models\Utilities\DataContainer::getInstance();
-			$this->className = '\Models\Utilities\DataContainer';
 			$this->testParam = ['nextPage' => 'index', 'result' => true];
-		}
-
-		public function testHasInstance()
-		{
-			$this->assertClassHasStaticAttribute('instance', $this->className);
 		}
 
 		public function testHasParams()
@@ -35,30 +27,17 @@
 			$this->assertClassHasAttribute('params', $this->className);
 		}
 
-		public function testConstructSingleton()
-		{
-			$obj1 = $this->dataContainer->getInstance();
-			$obj2 = $this->dataContainer->getInstance();
-
-			$this->assertSame($obj1, $obj2, 'Objects are not the same');
-		}
-
-		public function testConstruct()
-		{
-			$this->assertInstanceOf($this->className, $this->dataContainer);
-		}
-
 		public function testGetParams()
 		{
-			$this->dataContainer->setParams($this->testParam);
+			$this->instance->setParams($this->testParam);
 
 			$this->assertArrayHasKey('nextPage',
-				$this->dataContainer->getParams());
+				$this->instance->getParams());
 		}
 
 		public function testSetParams()
 		{
 			$this->assertInstanceOf($this->className,
-				$this->dataContainer->setParams($this->testParam));
+				$this->instance->setParams($this->testParam));
 		}
 	}

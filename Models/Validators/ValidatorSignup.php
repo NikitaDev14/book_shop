@@ -26,6 +26,8 @@
 		public function setForm($form)
 		{
 			$this->form = $form;
+
+			return self::$instance;
 		}
 
 		public function isValidForm()
@@ -46,7 +48,8 @@
 
 		public function isValidPassword()
 		{
-			return preg_match(PASSWORD_TEMPLATE, $this->form['password']);
+			return (bool)preg_match(PASSWORD_TEMPLATE,
+				$this->form['password']);
 		}
 
 		public function isValidPasswordRepeat()
