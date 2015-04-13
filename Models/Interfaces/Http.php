@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 02.04.2015
- * Time: 23:32
- */
 
 	namespace Models\Interfaces;
 
@@ -12,7 +6,7 @@
 	{
 		private static $instance;
 
-		private $params;
+		private $params; // data from HTTP form
 
 		private function __construct() {}
 
@@ -26,6 +20,11 @@
 			return self::$instance;
 		}
 
+		public function getParams()
+		{
+			return $this->params;
+		}
+
 		public function setParams($params)
 		{
 			foreach($params as $key => $val)
@@ -34,10 +33,5 @@
 			}
 
 			return self::$instance;
-		}
-
-		public function getParams()
-		{
-			return $this->params;
 		}
 	}

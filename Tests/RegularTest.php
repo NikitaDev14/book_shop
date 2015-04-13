@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 13.04.2015
-	 * Time: 13:35
-	 */
 
 	namespace Tests;
 
@@ -12,6 +6,7 @@
 	{
 		protected $className;
 		protected $instance;
+		protected $objFactory;
 
 		public function __construct($className, $instance)
 		{
@@ -19,6 +14,7 @@
 
 			$this->className = $className;
 			$this->instance = $instance;
+			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
 		}
 
 		public function testHasObjFactory()

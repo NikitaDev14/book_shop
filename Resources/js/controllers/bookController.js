@@ -1,8 +1,6 @@
-/**
- * Created by Developer on 01.04.2015.
- */
 bookShop.controller('bookController',
-    function ($scope, bookService, userService, bookFactory, langFactory, $stateParams) {
+    function ($scope, bookService, userService, bookFactory,
+              langFactory, $stateParams) {
 
     var self = this;
 

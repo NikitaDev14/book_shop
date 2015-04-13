@@ -1,6 +1,3 @@
-/**
- * Created by Developer on 07.04.2015.
- */
 bookShop.factory('langFactory', function (langService) {
     var self = this;
 

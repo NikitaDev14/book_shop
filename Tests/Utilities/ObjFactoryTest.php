@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 10.04.2015
-	 * Time: 10:16
-	 */
 
 	namespace Tests\Utilities;
 
@@ -26,8 +20,11 @@
 
 		public function testGetDatabase()
 		{
-			$obj1 = \Models\Utilities\ObjFactory::getInstance()->getObjDatabase();
-			$obj2 = \Models\Utilities\ObjFactory::getInstance()->getObjDatabase();
+			$obj1 = \Models\Utilities\ObjFactory::getInstance()
+				->getObjDatabase();
+
+			$obj2 = \Models\Utilities\ObjFactory::getInstance()
+				->getObjDatabase();
 
 			$this->assertSame($obj1, $obj2, 'Objects are not the same');
 		}
@@ -63,14 +60,6 @@
 				$this->instance->getObjHttp());
 		}
 
-		/*
-		public function testGetSession()
-		{
-			$obj = $this->objFactory->getInstance()->getObjSession();
-
-			$this->assertNotEmpty($obj, gettype($obj));
-		}
-		*/
 		public function testGetCookie()
 		{
 			$obj = $this->instance->getObjCookie();

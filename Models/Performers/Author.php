@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 02.04.2015
- * Time: 10:21
- */
+
 	namespace Models\Performers;
 
-	class Author extends \Models\BaseModel
+	class Author extends \BaseRegular
 	{
+		/**
+		 * @return all authors (idAuthor, Name)
+		 */
 		public function getAuthors()
 		{
 			return $this->objFactory->getObjDatabase()->

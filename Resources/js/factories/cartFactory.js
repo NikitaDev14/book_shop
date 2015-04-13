@@ -1,6 +1,3 @@
-/**
- * Created by Developer on 05.04.2015.
- */
 bookShop.factory('cartFactory', function (cartService) {
     this.cart = {
         books: {}

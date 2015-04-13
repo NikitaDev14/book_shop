@@ -1,13 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 03.04.2015
- * Time: 11:27
- */
 
 	namespace Models\Utilities;
 
+	/**
+	 * make objects with set parameters
+	 */
 	class ObjFactory
 	{
 		private static $database;
@@ -28,8 +25,8 @@
 		{
 			if(null === self::$database)
 			{
-				self::$database =
-					new \Models\Interfaces\Database(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+				self::$database = new \Models\Interfaces\Database(
+					DB_NAME, DB_HOST, DB_USER, DB_PASS);
 			}
 
 			return self::$database;

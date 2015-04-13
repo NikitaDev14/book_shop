@@ -16,14 +16,21 @@
 
 			return self::$instance;
 		}
+
+		/**
+		 * application start
+		 */
 		public function start()
 		{
-			$controllerName = 'Index';
-			$actionName = 'index';
+			$controllerName = 'Index'; // default controller
+			$actionName = 'index'; // default action
 
 			$view = new \Views\View();
 
 			$form = false;
+
+			// from HTTP request define needed controller its action,
+			// and set HTTP form
 
 			if(!empty($_GET['controller']))
 			{

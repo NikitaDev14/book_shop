@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 02.04.2015
- * Time: 10:44
- */
+
 	namespace Models\Performers;
 
-	class Genre extends \Models\BaseModel
+	class Genre extends \BaseRegular
 	{
+		/**
+		 * @return all genre (idGenre, Name)
+		 */
 		public function getGenres()
 		{
 			return $this->objFactory->getObjDatabase()->

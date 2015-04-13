@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 04.04.2015
- * Time: 19:01
- */
 
 	namespace Models\Validators;
 
-	class ValidatorLogin extends \BaseClass
+	class ValidatorLogin extends \BaseSingleton
 	{
 		private static $instance;
-		private $form;
+		private $form; // data from HTTP form
 
 		public static function getInstance()
 		{
@@ -29,12 +23,18 @@
 
 			return self::$instance;
 		}
+
+		/**
+		 * @return idUser if he's valid
+		 * otherwise false
+		 */
 		public function isValidForm()
 		{
 			if(isset($this->form['email'], $this->form['password']))
 			{
 				$result = $this->objFactory->getObjUser()->
-					isValidLogin($this->form['email'], $this->form['password']);
+				isValidLogin($this->form['email'],
+					$this->form['password']);
 			}
 			else
 			{

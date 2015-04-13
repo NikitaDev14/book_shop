@@ -1,7 +1,7 @@
-/**
- * Created by Developer on 06.04.2015.
- */
-bookShop.controller('orderController', function ($scope, userService, orderService, cartFactory, langFactory, $location) {
+bookShop.controller('orderController',
+    function ($scope, userService, orderService,
+              cartFactory, langFactory, $location) {
+
     var self = this;
 
     this.lang = langFactory;

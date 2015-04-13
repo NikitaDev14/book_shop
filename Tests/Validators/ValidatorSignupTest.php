@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 13.04.2015
-	 * Time: 9:19
-	 */
 
 	namespace Tests\Validators;
 

@@ -1,15 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 04.04.2015
- * Time: 18:42
- */
 
 	namespace Controllers;
 
 	class ControllerBook extends \Controllers\BaseController
 	{
+		/**
+		 * if user is logged, get books from DB
+		 * with personal price, normal price otherwise
+		 */
 		public function getList()
 		{
 			$result = $this->objFactory->getObjValidatorUser()->isValidUser();

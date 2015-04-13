@@ -1,14 +1,16 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 01.04.2015
-	 * Time: 19:33
-	 */
+
 	namespace Models\Performers;
 
-	class Book extends \Models\BaseModel
+	class Book extends \BaseRegular
 	{
+		/**
+		 * @param $idUser if it's specified,
+		 * price will reduced on user discount
+		 * otherwise normal price
+		 * @return all books (Authors, Genres, idBook,
+		 *      Name, Image, Price, Description)
+		 */
 		public function getBooks($idUser)
 		{
 			return $this->objFactory->getObjDatabase()->

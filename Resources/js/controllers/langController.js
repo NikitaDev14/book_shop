@@ -1,6 +1,3 @@
-/**
- * Created by Developer on 07.04.2015.
- */
 bookShop.controller('langController', function (langService, langFactory) {
     var self = this;
 

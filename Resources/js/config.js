@@ -1,6 +1,3 @@
-/**
- * Created by Developer on 01.04.2015.
- */
 bookShop.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 

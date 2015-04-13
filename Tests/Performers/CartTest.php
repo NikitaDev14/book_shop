@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 13.04.2015
-	 * Time: 13:48
-	 */
 
 	namespace Tests\Performers;
 
@@ -22,19 +16,21 @@
 		public function testAddToCart()
 		{
 			$this->assertTrue($this->instance->
-			addToCart(TEST_ID_USER, TEST_ID_BOOK, 1));
-		}
-
-		public function testGetCart()
-		{
-			$this->assertArrayHasKey('idBook',
-				$this->instance->getCart(TEST_ID_USER)[0]);
+			addToCart(TEST_ID_USER, TEST_ID_BOOK, TEST_QUANTITY));
 		}
 
 		public function testUpdateQuantity()
 		{
 			$this->assertTrue($this->instance->
-			updateQuantity(TEST_ID_USER, TEST_ID_BOOK, 2));
+			updateQuantity(TEST_ID_USER, TEST_ID_BOOK, TEST_QUANTITY));
+		}
+
+		public function testGetCart()
+		{
+			$result = $this->instance->getCart(TEST_ID_USER)[0];
+
+			$this->assertTrue(TEST_ID_BOOK == $result['idBook']
+				&& TEST_QUANTITY == $result['Quantity']);
 		}
 
 		public function testDeleteFromCart()

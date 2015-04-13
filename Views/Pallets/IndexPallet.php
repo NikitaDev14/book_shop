@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 04.04.2015
- * Time: 14:14
- */
 
 	namespace Views\Pallets;
 

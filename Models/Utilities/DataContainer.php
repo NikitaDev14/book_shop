@@ -1,18 +1,17 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 01.04.2015
-	 * Time: 17:07
-	 */
 
 	namespace Models\Utilities;
 
+	/**
+	 * this is link between controller and view
+	 * controller push data here
+	 * view pull data here
+	 */
 	class DataContainer
 	{
 		private static $instance;
 
-		private $params;
+		private $params; // data set by controller
 
 		private function __construct() {}
 

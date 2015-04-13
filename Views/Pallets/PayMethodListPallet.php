@@ -8,8 +8,11 @@
 
 	namespace Views\Pallets;
 
-	class PayMethodListPallet extends BasePallet
+	class PayMethodListPallet extends \BaseRegular
 	{
+		/**
+		 * send all available pay methods of order
+		 */
 		public function generate()
 		{
 			$data = $this->objFactory->getObjOrder()->getPayMethods();

@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 05.04.2015
- * Time: 21:33
- */
 
 	namespace Controllers;
 
-	class BaseController extends \BaseClass
+	class BaseController extends \BaseRegular
 	{
-		protected $form;
+		protected $form; // http form from user
 
 		public function __construct($form)
 		{

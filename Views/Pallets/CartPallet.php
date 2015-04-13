@@ -1,15 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 05.04.2015
- * Time: 14:06
- */
 
 	namespace Views\Pallets;
 
-	class CartPallet extends BasePallet
+	class CartPallet extends \BaseRegular
 	{
+		/**
+		 * @param $idUser
+		 * show all books in the cart
+		 */
 		public function generate($idUser)
 		{
 			$data = $this->objFactory->getObjCart()->getCart($idUser);

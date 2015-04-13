@@ -1,15 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 05.04.2015
- * Time: 12:57
- */
 
 	namespace Models\Performers;
 
-	class Cart extends \Models\BaseModel
+	class Cart extends \BaseRegular
 	{
+		/**
+		 * @param $idUser
+		 * get cart content of specified user
+		 * @return (idBook, Quantity, Price, Name)
+		 */
 		public function getCart($idUser)
 		{
 			return $this->objFactory->getObjDatabase()->
@@ -17,6 +16,15 @@
 				setParam([$idUser])->
 				execute()->getResult();
 		}
+
+		/**
+		 * @param $idUser
+		 * @param $idBook
+		 * @param $quantity
+		 * add to user cart the book with specified quantity
+		 * @return if success true
+		 * otherwise false
+		 */
 		public function addToCart($idUser, $idBook, $quantity)
 		{
 			return (bool) $this->objFactory->getObjDatabase()->
@@ -24,6 +32,14 @@
 				setParam([$idUser, $idBook, $quantity])->
 				execute()->getResult();
 		}
+
+		/**
+		 * @param $idUser
+		 * @param $idBook
+		 * delete from user cart the book
+		 * @return if success true
+		 * otherwise false
+		 */
 		public function deleteFromCart($idUser, $idBook)
 		{
 			return (bool) $this->objFactory->getObjDatabase()->
@@ -31,6 +47,15 @@
 				setParam([$idUser, $idBook])->
 				execute()->getResult();
 		}
+
+		/**
+		 * @param $idUser
+		 * @param $idBook
+		 * @param $quantity
+		 * change quantity of the book witch exists in the user cart
+		 * @return  if success true
+		 * otherwise false
+		 */
 		public function updateQuantity($idUser, $idBook, $quantity)
 		{
 			return (bool) $this->objFactory->getObjDatabase()->

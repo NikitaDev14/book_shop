@@ -1,7 +1,6 @@
-/**
- * Created by Developer on 02.04.2015.
- */
-bookShop.controller('cartController', function (userService, cartService, cartFactory, langFactory, $location) {
+bookShop.controller('cartController',
+    function (userService, cartService, cartFactory, langFactory) {
+
     var self = this;
 
     this.lang = langFactory;
@@ -18,10 +17,6 @@ bookShop.controller('cartController', function (userService, cartService, cartFa
 
                 self.cart.init(data);
             });
-        }
-        else
-        {
-            //$location.path('/login');
         }
     });
 });

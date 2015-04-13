@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 13.04.2015
-	 * Time: 13:32
-	 */
 
 	namespace Tests\Performers;
 
@@ -20,6 +14,7 @@
 
 		public function testGetBooksKey()
 		{
-			$this->assertArrayHasKey('idBook', $this->instance->getBooks(0)[0]);
+			$this->assertArrayHasKey('idBook',
+				$this->instance->getBooks(0)[0]);
 		}
 	}

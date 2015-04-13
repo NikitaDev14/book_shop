@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 11.04.2015
-	 * Time: 20:53
-	 */
 
 	namespace Tests\Utilities;
 

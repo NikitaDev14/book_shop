@@ -1,22 +1,27 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 04.04.2015
- * Time: 23:15
- */
 
 	namespace Controllers;
 
 	class ControllerUser extends \Controllers\BaseController
 	{
+		/**
+		 * if user is logged
+		 * set response true, false otherwise
+		 */
 		public function validate()
 		{
-			$result = (bool) $this->objFactory->getObjValidatorUser()->isValidUser();
+			$result = (bool)$this->objFactory->getObjValidatorUser()
+				->isValidUser();
 
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => 'Echo', 'result' => $result]);
 		}
+
+		/**
+		 * get from HTTP form an email and password
+		 * if this pair is valid begin session and set cookie,
+		 * set response true, false otherwise
+		 */
 		public function login()
 		{
 			$formData = $this->objFactory->getObjHttp()->
@@ -31,9 +36,11 @@
 			{
 				$userId = $userId[0]['idUser'];
 
-				$sessionId = $this->objFactory->getObjSession()->getSessionId();
+				$sessionId = $this->objFactory->getObjSession()
+					->getSessionId();
 
-				$this->objFactory->getObjUser()->sessionStart($userId, $sessionId);
+				$this->objFactory->getObjUser()
+					->sessionStart($userId, $sessionId);
 
 				$this->objFactory->getObjCookie()->
 					setCookie('id', $userId)->
@@ -45,6 +52,11 @@
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => 'Echo', 'result' => $result]);
 		}
+
+		/**
+		 * if user is logged delete cookie and session
+		 * set response true, false otherwise
+		 */
 		public function logout()
 		{
 			$result = $this->objFactory->getObjValidatorUser()->isValidUser();
@@ -61,6 +73,11 @@
 				setParams(['nextPage' => 'Logout', 'result' => $result]);
 		}
 
+		/**
+		 * get from HTTP form an email, password and repeated password
+		 * if this params is valid add a new user,
+		 * set response true, false otherwise
+		 */
 		public function signup()
 		{
 			$formData = $this->objFactory->getObjHttp()->

@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 13.04.2015
-	 * Time: 10:30
-	 */
 
 	namespace Tests\Interfaces;
 
@@ -36,6 +30,7 @@
 
 		public function testGetParamsValue()
 		{
-			$this->assertSame(TEST_ID_USER, $this->instance->getParams()['id']);
+			$this->assertSame(TEST_ID_USER,
+				$this->instance->getParams()['id']);
 		}
 	}

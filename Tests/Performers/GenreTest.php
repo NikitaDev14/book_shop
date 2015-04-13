@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 13.04.2015
-	 * Time: 14:11
-	 */
 
 	namespace Tests\Performers;
 
@@ -12,5 +6,15 @@
 
 	class GenreTest extends \Tests\RegularTest
 	{
+		public function __construct()
+		{
+			parent::__construct('\Models\Performers\Genre',
+				new \Models\Performers\Genre());
+		}
 
+		public function testGetBooksKey()
+		{
+			$this->assertArrayHasKey('idGenre',
+				$this->instance->getGenres(0)[0]);
+		}
 	}

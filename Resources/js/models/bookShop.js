@@ -1,15 +1,14 @@
-/**
- * Created by Developer on 05.04.2015.
- */
 var bookShop = angular.module('bookShop', ['ui.router'], function ($httpProvider) {
-    // Используем x-www-form-urlencoded Content-Type
-    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
-    // Переопределяем дефолтный transformRequest в $http-сервисе
+    // use x-www-form-urlencoded Content-Type
+    $httpProvider.defaults.headers.post['Content-Type'] =
+        'application/x-www-form-urlencoded;charset=utf-8';
+
+    // set default transformRequest in $http-service
     $httpProvider.defaults.transformRequest = [function(data)
     {
         /**
-         * рабочая лошадка; преобразует объект в x-www-form-urlencoded строку.
+         * convert object in x-www-form-urlencoded string.
          * @param {Object} obj
          * @return {String}
          */
@@ -46,13 +45,15 @@ var bookShop = angular.module('bookShop', ['ui.router'], function ($httpProvider
                 }
                 else if(value !== undefined && value !== null)
                 {
-                    query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+                    query += encodeURIComponent(name) +
+                    '=' + encodeURIComponent(value) + '&';
                 }
             }
 
             return query.length ? query.substr(0, query.length - 1) : query;
         };
 
-        return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+        return angular.isObject(data) && String(data) !==
+        '[object File]' ? param(data) : data;
     }];
 });

@@ -1,15 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 03.04.2015
- * Time: 11:10
- */
 
 	namespace Models\Performers;
 
-	class User extends \Models\BaseModel
+	class User extends \BaseRegular
 	{
+		/**
+		 * @param $email
+		 * @param $password
+		 * add new email and password
+		 * @return (LAST_INSERT_ID())
+		 */
 		public function addUser($email, $password)
 		{
 			return $this->objFactory->getObjDatabase()->
@@ -17,12 +17,25 @@
 				setParam([$email, $password])->
 				execute()->getResult();
 		}
+
+		/**
+		 * @param $email
+		 * @return if $email is set true
+		 * false otherwise
+		 */
 		public function exsistsUser($email)
 		{
 			return (bool) $this->objFactory->getObjDatabase()->
 				setQuery('CALL exsistsUser(?)')->
 				setParam([$email])->execute()->getResult();
 		}
+
+		/**
+		 * @param $email
+		 * @param $password
+		 * check existing pair $email and $password
+		 * @return (idUser)
+		 */
 		public function isValidLogin($email, $password)
 		{
 			return $this->objFactory->getObjDatabase()->
@@ -30,6 +43,13 @@
 				setParam([$email, $password])->
 				execute()->getResult();
 		}
+
+		/**
+		 * @param $idUser
+		 * @param $sessionId
+		 * set new session for specified user
+		 * @return (ROW_COUNT())
+		 */
 		public function sessionStart($idUser, $sessionId)
 		{
 			return $this->objFactory->getObjDatabase()->
@@ -37,6 +57,13 @@
 				setParam([$idUser, $sessionId])->
 				execute()->getResult();
 		}
+
+		/**
+		 * @param $idUser
+		 * @param $sessionId
+		 * check session of specified user
+		 * @return (idUser, SessionId)
+		 */
 		public function isValidUser($idUser, $sessionId)
 		{
 			return $this->objFactory->getObjDatabase()->
@@ -44,6 +71,12 @@
 				setParam([$idUser, $sessionId])->
 				execute()->getResult();
 		}
+
+		/**
+		 * @param $idUser
+		 * stop session of specified user
+		 * @return (ROW_COUNT())
+		 */
 		public function sessionDestroy($idUser)
 		{
 			return $this->objFactory->getObjDatabase()->

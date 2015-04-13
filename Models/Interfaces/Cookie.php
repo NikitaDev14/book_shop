@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 04.04.2015
- * Time: 19:40
- */
 
 	namespace Models\Interfaces;
 
 	class Cookie
 	{
-		private $expire;
+		private $expire; // date of expire
 
 		public function __construct($expire)
 		{

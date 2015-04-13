@@ -1,6 +1,3 @@
-/**
- * Created by Developer on 05.04.2015.
- */
 bookShop.service('cartService', function ($http) {
     this.getCart = function (callback) {
         $http.get('index.php?' +

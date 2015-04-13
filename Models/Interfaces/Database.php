@@ -1,21 +1,16 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 01.04.2015
-	 * Time: 18:43
-	 */
 
 	namespace Models\Interfaces;
 
 	class Database
 	{
-		private $db;
-		private $sth;
+		private $db; // database connection
+		private $sth; // prepared query
 
 		public function __construct($name, $host, $user, $pass)
 		{
-			$this->db = new \PDO('mysql:dbname=' . $name . ';host=' . $host, $user, $pass);
+			$this->db = new \PDO('mysql:dbname=' . $name .
+				';host=' . $host, $user, $pass);
 		}
 
 		public function setQuery($query)

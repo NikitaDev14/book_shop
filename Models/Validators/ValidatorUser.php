@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 04.04.2015
- * Time: 22:37
- */
 
 	namespace Models\Validators;
 
-	class ValidatorUser extends \BaseClass
+	class ValidatorUser extends \BaseSingleton
 	{
 		private static $instance;
 
@@ -21,6 +15,11 @@
 
 			return self::$instance;
 		}
+
+		/**
+		 * @return idUser if session is set and cookie is not expired
+		 * otherwise delete cookie and session, return false
+		 */
 		public function isValidUser()
 		{
 			$cookie = $this->objFactory->getObjCookie();

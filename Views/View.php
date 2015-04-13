@@ -8,15 +8,11 @@
 
 	namespace Views;
 
-	class View
+	class View extends \BaseRegular
 	{
-		private $objFactory;
-
-		public function __construct()
-		{
-			$this->objFactory = \Models\Utilities\ObjFactory::getInstance();
-		}
-
+		/**
+		 * define needed pallet and call it
+		 */
 		public function render()
 		{
 			$params = $this->objFactory->getObjDataContainer()->getParams();

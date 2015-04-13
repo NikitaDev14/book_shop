@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 13.04.2015
-	 * Time: 11:35
-	 */
 
 	namespace Tests\Interfaces;
 
@@ -20,8 +14,13 @@
 			parent::__construct();
 
 			$this->className = '\Models\Interfaces\Database';
-			$this->instance =
-				new \Models\Interfaces\Database(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+			$this->instance = new \Models\Interfaces\Database
+			(
+				DB_NAME,
+				DB_HOST,
+				DB_USER,
+				DB_PASS
+			);
 		}
 
 		public function testHasDb()

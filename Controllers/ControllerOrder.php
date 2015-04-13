@@ -1,18 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 06.04.2015
- * Time: 20:11
- */
 
 	namespace Controllers;
 
 	class ControllerOrder extends \Controllers\BaseController
 	{
+		/**
+		 * if user is logged next page will show list of pay methods
+		 */
 		public function getPayMethods()
 		{
-			$result = (bool) $this->objFactory->getObjValidatorUser()->isValidUser();
+			$result = (bool)$this->objFactory->getObjValidatorUser()
+				->isValidUser();
 
 			$nextPage = 'Echo';
 
@@ -24,6 +22,12 @@
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => $nextPage, 'result' => $result]);
 		}
+
+		/**
+		 * get from HTTP form idPayMethod
+		 * if user is logged add new order for this user with
+		 * chosen pay method, set response true, false otherwise
+		 */
 		public function addOrder()
 		{
 			$formData = $this->objFactory->getObjHttp()->
@@ -40,6 +44,10 @@
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => 'Echo', 'result' => $result]);
 		}
+
+		/**
+		 * if user is logged get all his orders
+		 */
 		public function getOrders()
 		{
 			$result = $this->objFactory->getObjValidatorUser()->isValidUser();
@@ -54,6 +62,10 @@
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => $nextPage, 'result' => $result]);
 		}
+
+		/**
+		 * if user is logged get details of the clicked order
+		 */
 		public function getOrderDetails()
 		{
 			$formData = $this->objFactory->getObjHttp()->

@@ -8,8 +8,13 @@
 
 	namespace Views\Pallets;
 
-	class OrderListPallet extends BasePallet
+	class OrderListPallet extends \BaseRegular
 	{
+		/**
+		 * @param $idUser
+		 * show idOrder, Date, PayMethod, Summ, OrderStatus of all orders,
+		 * of specified user
+		 */
 		public function generate($idUser)
 		{
 			$data = $this->objFactory->getObjOrder()->getOrders($idUser);

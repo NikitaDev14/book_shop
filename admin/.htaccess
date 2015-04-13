@@ -1,4 +1,13 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule .* index.php [L]
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteBase /~user10/PHP/book_shop/
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    #DirectoryIndex /~user10/PHP/book_shop/admin/index.php
+    DirectoryIndex /book_shop/admin/index.php
+
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>

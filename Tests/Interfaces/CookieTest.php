@@ -1,10 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: Developer
-	 * Date: 13.04.2015
-	 * Time: 9:56
-	 */
 
 	namespace Tests\Interfaces;
 
@@ -20,7 +14,8 @@
 			parent::__construct();
 
 			$this->className = '\Models\Interfaces\Cookie';
-			$this->objCookie = new \Models\Interfaces\Cookie(TEST_COOKIE_EXPIRE);
+			$this->objCookie =
+				new \Models\Interfaces\Cookie(TEST_COOKIE_EXPIRE);
 		}
 
 		public function testHasExpire()
