@@ -6,3 +6,5 @@
 	define('TEST_ID_USER', 46);
 
 	define('TEST_COOKIE_EXPIRE', 30);
+
+	define('TEST_ID_BOOK', 35);

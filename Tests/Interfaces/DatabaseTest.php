@@ -43,8 +43,32 @@
 		{
 			$query = 'SELECT u.idUser, u.Email
 					FROM users AS u
-					WHERE u.idUser = ' . TEST_ID_USER;
+					WHERE u.idUser = ?';
+
 			$this->assertInstanceOf($this->className,
 				$this->instance->setQuery($query));
+		}
+
+		public function testSetParam()
+		{
+			$this->assertInstanceOf($this->className,
+				$this->instance->setParam([TEST_ID_USER]));
+		}
+
+		public function testExecute()
+		{
+			$this->assertInstanceOf($this->className,
+				$this->instance->execute());
+		}
+
+		public function testGetResultKeys()
+		{
+			$this->assertArrayHasKey('idUser', $this->instance->getResult());
+		}
+
+		public function testGetResult()
+		{
+			$this->assertEquals(TEST_ID_USER,
+				$this->instance->getResult()['idUser']);
 		}
 	}

@@ -4,6 +4,7 @@
 	require_once '../config.php';
 
 	require_once '../SingletonTest.php';
+	require_once '../RegularTest.php';
 
 	require_once BASE_PATH_FOR_TESTS . 'BaseClass.php';
 
