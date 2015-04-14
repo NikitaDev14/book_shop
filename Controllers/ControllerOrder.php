@@ -82,7 +82,9 @@
 
 			$this->objFactory->getObjDataContainer()->
 				setParams(['nextPage' => $nextPage,
-					'result' => ['idUser' => $result,
-							'idOrder' => $formData['idOrder']]]);
+				'result' =>
+					['idUser' => $result,
+						'idOrder' => $formData['idOrder']]
+			]);
 		}
 	}

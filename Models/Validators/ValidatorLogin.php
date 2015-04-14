@@ -33,8 +33,10 @@
 			if(isset($this->form['email'], $this->form['password']))
 			{
 				$result = $this->objFactory->getObjUser()->
-				isValidLogin($this->form['email'],
-					$this->form['password']);
+				isValidLogin(
+					$this->form['email'],
+					$this->form['password']
+				);
 			}
 			else
 			{
